@@ -1,6 +1,6 @@
 import React, { useEffect, useCallbac, useState, useContext } from "react";
 import { StyleSheet, View, Text, Alert, SafeAreaView, ActivityIndicator, Modal, Pressable, TouchableOpacity } from "react-native";
-import WeekView, { addLocale } from 'react-native-week-view';
+import WeekView from 'react-native-week-view';
 import { fetchAPI } from "../../../utils/fetchAPI";
 import { UserContext } from "../../../useContext/useContect";
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -9,12 +9,6 @@ import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
 import EditButton from "../../SharedComp/Buttons/EditButton";
 import Button from "../../SharedComp/Buttons/Button";
 import Feather from 'react-native-vector-icons/Feather'
-// addLocale('gr', {
-//   months: 'Ιανουάριος_Φεβρουάριος_Μάρτιος_Απρίλιος_Μάϊος_Ιούνιος_Ιούλιος_Άυγουστος_Σεπτέμβρης_Οκτώβρης_Νοέμβρης_Δεκέμβρης'.split('_'),
-//   monthsShort: 'Ιαν_Φεβ_Μαρ_Απρ_Μάϊ_Ιουν_Ιουλ_Αυγ_Σεπ_Οκτ_Νοε_Δεκ'.split('_'),
-//   weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
-//   weekdaysShort: 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
-// });
 
 
 
@@ -156,7 +150,6 @@ const DayViewCalendar = () => {
         gridColumnStyle={styles.gridColumn}
         eventContainerStyle={styles.eventContainer}
         onTimeScrolled={onTimeScrolled}
-        locale="gr"
         EventComponent={CustomComp}
         timesColumnWidth={0.25}
         beginAgendaAt={8 * 60}
