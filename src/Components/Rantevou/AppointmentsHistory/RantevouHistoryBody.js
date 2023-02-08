@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet } from "react-native"
+import { View, ScrollView, StyleSheet, FlatList } from "react-native"
 import { useState } from "react"
 
 import { List } from "react-native-paper"
@@ -14,34 +14,66 @@ const RantevouListBody = (props) => {
     setEnabled((prev) => !prev)
   }
 
-  return (
-    <ScrollView style={styles.container}>
-      {props?.data && props?.data.map((data, index) => {
-        return (
-          <View key={index}>
-            <View
-              style={[
-                styles.itemWrapper,
-                data.color === "LightSteelBlue" && styles.lightSteelBlue,
-                data.color === "LimeGreen" && styles.limeGreen,
-                data.color === "Silver" && styles.silver,
-                data.color === "lightred" && styles.lightred,
-                data.personal == 1 && styles.pink
-              ]} >
-              <List.Accordion
-                description={<DescriptionTitle value={data['Πελάτης'] ? data['Πελάτης'] : "Δεν βρέθηκε όνομα"} />}
-                descriptionStyle={styles.itemDescription}
-                title={<ListTitle value={`${data["Ημ/νία"]} - ${data["'Ωρα"]}`} Icon={Enty} iconName="calendar" />}
-                style={{ backgroundColor: 'white' }}
-              >
-                <ListBodyRantevou data={data} enabled={enabled} onPress={onPress} />
-              </List.Accordion>
-            </View>
-          </View>
-        )
+  const Item = ({ data }) => {
+    return (
+      <View
+        style={[
+          styles.itemWrapper,
+          data.color === "LightSteelBlue" && styles.lightSteelBlue,
+          data.color === "LimeGreen" && styles.limeGreen,
+          data.color === "Silver" && styles.silver,
+          data.color === "lightred" && styles.lightred,
+          data.personal == 1 && styles.pink
+        ]} >
+        <List.Accordion
+          description={<DescriptionTitle value={data['Πελάτης'] ? data['Πελάτης'] : "Δεν βρέθηκε όνομα"} />}
+          descriptionStyle={styles.itemDescription}
+          title={<ListTitle value={`${data["Ημ/νία"]} - ${data["'Ωρα"]}`} Icon={Enty} iconName="calendar" />}
+          style={{ backgroundColor: 'white' }}
+        >
+          <ListBodyRantevou data={data} enabled={enabled} onPress={onPress} />
+        </List.Accordion>
+      </View>
+    )
+  }
 
-      })}
-    </ScrollView>
+  return (
+    //   <ScrollView style={styles.container}>
+
+    //     {props?.data && props?.data.map((data, index) => {
+    //       return (
+    //         <View key={index}>
+    //           <View
+    //             style={[
+    //               styles.itemWrapper,
+    //               data.color === "LightSteelBlue" && styles.lightSteelBlue,
+    //               data.color === "LimeGreen" && styles.limeGreen,
+    //               data.color === "Silver" && styles.silver,
+    //               data.color === "lightred" && styles.lightred,
+    //               data.personal == 1 && styles.pink
+    //             ]} >
+    //             <List.Accordion
+    //               description={<DescriptionTitle value={data['Πελάτης'] ? data['Πελάτης'] : "Δεν βρέθηκε όνομα"} />}
+    //               descriptionStyle={styles.itemDescription}
+    //               title={<ListTitle value={`${data["Ημ/νία"]} - ${data["'Ωρα"]}`} Icon={Enty} iconName="calendar" />}
+    //               style={{ backgroundColor: 'white' }}
+    //             >
+    //               <ListBodyRantevou data={data} enabled={enabled} onPress={onPress} />
+    //             </List.Accordion>
+    //           </View>
+    //         </View>
+    //       )
+
+    //     })}
+    //   </ScrollView>
+    <FlatList
+      data={props.data}
+      renderItem={({ item }) => <Item data={item} />}
+      keyExtractor={(item, index) => {
+        return item.id;
+      }}
+      initialNumToRender={8}
+    />
 
   )
 }

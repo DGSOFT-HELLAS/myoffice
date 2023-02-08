@@ -102,7 +102,7 @@ const WeekViewCalendar = () => {
     let sun = new Date(state.monday)
     let nextMonday = new Date(mon.getTime() + (7 * 24 * 60 * 60 * 1000));
     let nextSunday = new Date(sun.getTime() + (13 * 24 * 60 * 60 * 1000));
-
+    console.log(nextMonday, nextSunday)
     commonWeekView(nextMonday, nextSunday)
   }
 
@@ -111,6 +111,7 @@ const WeekViewCalendar = () => {
     let mon = new Date(state.monday)
     let prevMonday = new Date(mon.getTime() - (7 * 24 * 60 * 60 * 1000));
     let prevSunday = new Date(mon.getTime() - (1 * 24 * 60 * 60 * 1000));
+    console.log(prevMonday, prevSunday)
     commonWeekView(prevMonday, prevSunday)
 
   }
