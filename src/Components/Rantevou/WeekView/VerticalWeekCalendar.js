@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { View, StyleSheet, ScrollView, Flatlist } from "react-native";
 import Text from "../../Atoms/Text";
 import { List } from 'react-native-paper';
@@ -18,7 +18,7 @@ const VerticalWeekView = ({ week, data, days, loading, state, setState }) => {
         setEnabled((prev) => !prev)
     }
 
-    const ItemWeek = ({ day, index }) => {
+    const ItemWeek = memo(({ day, index }) => {
         return (
             <View style={styles.dayRow} key={index}>
                 <View style={styles.dayView} >
@@ -40,9 +40,9 @@ const VerticalWeekView = ({ week, data, days, loading, state, setState }) => {
 
             </View>
         )
-    }
+    })
 
-    const Item = ({ data, day }) => {
+    const Item = memo(({ data, day }) => {
         return (
             <View>
                 {data["Ημ/νία"] === day.toLocaleDateString() && (
@@ -69,7 +69,7 @@ const VerticalWeekView = ({ week, data, days, loading, state, setState }) => {
             </View>
         )
     }
-
+    )
 
     return (
         <>

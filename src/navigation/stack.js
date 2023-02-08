@@ -9,6 +9,7 @@ import AddRantevou from '../Components/Rantevou/AddRantevou/AddRantevou';
 import Login from '../Components/Login/Login';
 import NavStyle from './navStyle';
 import DayViewCalendar from '../Components/Rantevou/DayViewCalendar/DayViewCalendar';
+import DayViewCalendarMain from '../Components/Rantevou/DayViewCalendarMain/DayViewCalendarMain';
 //------------------Import Screens:
 //Sreen Incoming:
 import IncomingCalls from '../Components/screenIncoming/IncomingCalls/IncomingCalls';
@@ -72,6 +73,15 @@ export const IncomingStack = () => {
           options={{
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα'} showDayModal={true} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="DayViewCalendarMain"
+          component={DayViewCalendarMain}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα 3'} showDayModal={true} />
             ),
           }}
         />
