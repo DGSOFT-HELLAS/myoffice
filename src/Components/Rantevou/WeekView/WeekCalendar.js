@@ -43,8 +43,8 @@ const WeekViewCalendar = () => {
     displayMonth: '',
   })
 
-  console.log('--------------------------- STATEEEE _________________')
-  console.log(state)
+  // console.log('--------------------------- STATEEEE _________________')
+  // console.log(state)
 
 
   const [raw, setRaw] = useState({
@@ -109,9 +109,8 @@ const WeekViewCalendar = () => {
 
   const handlePreviousWeek = () => {
     let mon = new Date(state.monday)
-    let sun = new Date(state.sunday)
     let prevMonday = new Date(mon.getTime() - (7 * 24 * 60 * 60 * 1000));
-    let prevSunday = new Date(sun.getTime() - (1 * 24 * 60 * 60 * 1000));
+    let prevSunday = new Date(mon.getTime() - (1 * 24 * 60 * 60 * 1000));
     commonWeekView(prevMonday, prevSunday)
 
   }
