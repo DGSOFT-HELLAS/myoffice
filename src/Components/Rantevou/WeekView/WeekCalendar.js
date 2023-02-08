@@ -172,13 +172,13 @@ const WeekViewCalendar = () => {
 
   useEffect(() => {
     handleFetch();
+    handleStartEndWeek()
+    // const unsubscribe = navigation.addListener('focus', () => {
+    //   handleStartEndWeek()
+    // });
 
-    const unsubscribe = navigation.addListener('focus', () => {
-      handleStartEndWeek()
-    });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
+    // // Return the function to unsubscribe from the event so it gets removed on unmount
+    // return unsubscribe;
   }, [state.delete, state.monday, state.sunday, raw.stelexos, navigation])
 
 

@@ -10,7 +10,72 @@ import EditButton from "../../SharedComp/Buttons/EditButton";
 import Button from "../../SharedComp/Buttons/Button";
 import Feather from 'react-native-vector-icons/Feather'
 
+const myEvents = [
+  {
+    id: 1,
+    description: 'Event 1',
+    startDate: '2023-02-08 10:10', // Day may be passed as string
+    endDate: '2023-02-08 10:20', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  {
+    id: 2,
+    description: 'Event 1',
+    startDate: '2023-02-08 10:10', // Day may be passed as string
+    endDate: '2023-02-08 10:20', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  {
+    id: 3,
+    description: 'Event 1',
+    startDate: '2023-02-08 10:10', // Day may be passed as string
+    endDate: '2023-02-08 10:20', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  {
+    id: 1142324243,
+    description: 'Event 1',
+    startDate: '2023-02-08 10:10', // Day may be passed as string
+    endDate: '2023-02-08 10:20', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  {
+    id: 4,
+    description: 'Event 1',
+    startDate: '2023-02-08 10:30', // Day may be passed as string
+    endDate: '2023-02-08 10:40', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  {
+    id: 6,
+    description: 'Event 3',
+    startDate: '2023-02-08 10:30', // Day may be passed as string
+    endDate: '2023-02-08 10:40', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  {
+    id: 5,
+    description: 'Event 1',
+    startDate: '2023-02-08 10:00', // Day may be passed as string
+    endDate: '2023-02-08 11:00', // Or as number, 1 = monday
+    color: 'blue',
+  },
+  // {
+  //   id: 2,
+  //   description: 'Event 1',
+  //   startDate: '2023-02-08 10:20', // Day may be passed as string
+  //   endDate: '2023-02-08 10:30', // Or as number, 1 = monday
+  //   color: 'blue',
+  // },
+  // {
+  //   id: 3,
+  //   description: 'Event 1',
+  //   startDate: '2023-02-08 10:30', // Day may be passed as string
+  //   endDate: '2023-02-08 10:40', // Or as number, 1 = monday
+  //   color: 'blue',
+  // },
 
+];
 
 
 
@@ -89,32 +154,32 @@ const DayViewCalendar = () => {
 
 
   const handleFetch = async () => {
-    setState(prev => {
-      return {
-        ...prev, loading: true
-      }
-    })
-    setEvent([]);
-    let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
-      startDate: state.startDate,
-      endDate: state.endDate,
-      trdr: trdr,
-      stelexos: state.stelexos,
-      query: "wpFetchRDVForCalendar",
-      action: 'format'
+    // setState(prev => {
+    //   return {
+    //     ...prev, loading: true
+    //   }
+    // })
+    // setEvent([]);
+    // let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
+    //   startDate: state.startDate,
+    //   endDate: state.endDate,
+    //   trdr: trdr,
+    //   stelexos: state.stelexos,
+    //   query: "wpFetchRDVForCalendar",
+    //   action: 'format'
 
-    })
+    // })
 
-    res.map(event => {
-      setEvent((prev) => {
-        return [...prev, { startDate: new Date(event.start), endDate: new Date(event.end), id: event.soaction, description: event.title, time: event["'Ωρα"] }]
-      })
-    })
-    setState(prev => {
-      return {
-        ...prev, loading: false
-      }
-    })
+    // res.map(event => {
+    //   setEvent((prev) => {
+    //     return [...prev, { startDate: new Date(event.start), endDate: new Date(event.end), id: event.soaction, description: event.title, time: event["'Ωρα"], eventKind: 'standard' }]
+    //   })
+    // })
+    // setState(prev => {
+    //   return {
+    //     ...prev, loading: false
+    //   }
+    // })
 
 
   }
@@ -128,10 +193,11 @@ const DayViewCalendar = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <WeekView
+      {/* <WeekView
         timeStep={30}
         startHour={8}
-        events={event ? event : null}
+        // events={event ? event : null}
+        events={myEvents}
         selectedDate={new Date()}
         numberOfDays={1}
         onEventPress={handlePressEvent}
@@ -146,11 +212,10 @@ const DayViewCalendar = () => {
         headerStyle={styles.header}
         headerTextStyle={styles.headerText}
         hourTextStyle={styles.hourText}
-        gridRowStyle={styles.gridRow}
+        // gridRowStyle={styles.gridRow}
         gridColumnStyle={styles.gridColumn}
-        eventContainerStyle={styles.eventContainer}
+        // eventContainerStyle={styles.eventContainer}
         onTimeScrolled={onTimeScrolled}
-        EventComponent={CustomComp}
         timesColumnWidth={0.25}
         beginAgendaAt={8 * 60}
         showTitle={true}
@@ -158,16 +223,50 @@ const DayViewCalendar = () => {
         formatDateHeader={'MMM D'}
         RefreshComponent={RefreshComponent}
         isRefreshing={state.loading}
-
+      /> */}
+      <WeekView
+        events={myEvents}
+        fixedHorizontally={true}
+        // Recommended props:
+        showTitle={false} // if true, shows this month and year
+        numberOfDays={1}
+        formatDateHeader="ddd" // display short name days, e.g. Mon, Tue, etc
+        selectedDate={new Date()}
+        timeStep={15}
+      // ... other props
       />
+
     </SafeAreaView>
   )
 }
 
+// const CustomComp = ({ event, position }) => {
+//   return (
+//     <>
+//       <View style={styles.customContainer}>
+//         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+//           <Icon style={styles.eventIcon} name="clockcircleo" />
+//           <Text style={styles.eventHeaderText} >{event.time}</Text>
+//         </View>
+//         <View>
+//           <TouchableOpacity style={styles.editBtn}>
+//             <Feather name="edit" />
+//           </TouchableOpacity>
+//         </View>
+//       </View>
+//       <View style={styles.eventBodyView}>
+//         <Text>
+//           {event.description}
+//         </Text>
+//       </View>
+
+//     </>
+//   )
+// }
 const CustomComp = ({ event, position }) => {
   return (
     <>
-      <View style={styles.customContainer}>
+      {/* <View style={styles.customContainer}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Icon style={styles.eventIcon} name="clockcircleo" />
           <Text style={styles.eventHeaderText} >{event.time}</Text>
@@ -182,8 +281,10 @@ const CustomComp = ({ event, position }) => {
         <Text>
           {event.description}
         </Text>
+      </View> */}
+      <View>
+        <Text>{event.title}</Text>
       </View>
-
     </>
   )
 }
