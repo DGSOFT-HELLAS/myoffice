@@ -1,75 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { DayContext } from "../../../useContext/daysContext";
 import { fetchAPI } from "../../../utils/fetchAPI";
 import { UserContext } from "../../../useContext/useContect";
-
+import ModalFullEvent from "./ModalView";
 import { EventItem, HighlightDates, OnChangeProps, PackedEvent, RangeTime, TimelineCalendar, TimelineCalendarHandle, UnavailableItemProps, } from '@howljs/calendar-kit'
+import { COLORS } from "../../../shared/COLORS";
+import BoldText from "../../Atoms/Text/BoldText";
 
 
 
-
-const exampleEvents = [
-  {
-    id: '1',
-    title: 'Event 1',
-    start: new Date('2023-02-09 10:00'),
-    end: new Date('2023-02-09 10:15'),
-    color: '#A3C7D6',
-  },
-  {
-    id: '2',
-    title: 'Ραντεβού με καρδιολογολογολογολογλογ',
-    start: new Date('2023-02-09 10:15'),
-    end: new Date('2023-02-09 10:30'),
-    color: '#B1AFFF',
-  },
-  {
-    id: '23434',
-    title: 'Ραντεβού με καρδιολογολογολογολογλογ',
-    start: new Date('2023-02-09 10:15'),
-    end: new Date('2023-02-09 10:30'),
-    color: '#B1AFFF',
-  },
-  {
-    id: '2343e546te4t4',
-    title: 'Ραντεβού με καρδιολογολογολογολογλογ',
-    start: new Date('2023-02-09 10:15'),
-    end: new Date('2023-02-09 10:30'),
-    color: '#B1AFFF',
-  },
-  {
-    id: '3',
-    title: 'Ραντεβού με καρδιολογολογολογολογλογ',
-    start: new Date('2023-02-09 10:20'),
-    end: new Date('2023-02-09 10:30'),
-    color: '#B1AFFF',
-  },
-  {
-    id: '4',
-    title: 'Ραντεβού με καρδιολογολογολογολογλογ',
-    start: new Date('2023-02-09 10:30'),
-    end: new Date('2023-02-09 10:40'),
-    color: '#B1AFFF',
-  },
-  {
-    id: '5',
-    title: 'Ραντεβού με καρδιολογολογολογολογλογ',
-    start: new Date('2023-02-09 10:40'),
-    end: new Date('2023-02-09 10:50'),
-    color: '#B1AFFF',
-  },
-
-
-];
-
-// console.log(exampleEvents)
 
 const DayViewCalendarMain = () => {
   const { day } = useContext(DayContext)
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
-
+  const [event, setEvent] = useState([])
+  const [isVisible, setIsVisible] = useState(false)
   // console.log('day from context:' + day)
   // console.log(new Date('2023-02-09 10:30'))
   const handleFetch = async () => {
@@ -81,7 +28,7 @@ const DayViewCalendarMain = () => {
       trdr: trdr,
       stelexos: 0
     })
-    const updatedData = res.map(item => ({ id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
+    const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     console.log('--------- UPDATED DATA ---------------')
     console.log(res)
     setEvents(updatedData)
@@ -91,7 +38,17 @@ const DayViewCalendarMain = () => {
     handleFetch()
   }, [day])
 
-
+  const onDragCreateEnd = (event) => {
+    const randomId = Math.random().toString(36).slice(2, 10);
+    const newEvent = {
+      id: randomId,
+      title: randomId,
+      start: event.start,
+      end: event.end,
+      color: '#A3C7D6',
+    };
+    setEvents((prev) => [...prev, newEvent]);
+  };
   return (
     <View style={styles.container}>
       <TimelineCalendar
@@ -106,7 +63,21 @@ const DayViewCalendarMain = () => {
         overlapEventsSpacing={2}
         containerStyle={styles.customItem}
         renderEventContent={(event) => eventItem(event)}
+        onPressEvent={(evt) => {
+          setEvent(evt)
+          setIsVisible(true)
+        }}
+        onPressBackground={(time) => {
+          console.log(new Date(time))
+        }}
+        renderSelectedEventContent
+        onPressDayNum={(e) => console.log(e)}
+        allowDragToCreate
+        dragCreateInterval={30}
+        onDragCreateEnd={(e) => console.log(e)}
       />
+
+      <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} />
     </View>
   )
 
@@ -114,29 +85,16 @@ const DayViewCalendarMain = () => {
 }
 
 const eventItem = (event) => {
-  if (event.style === 'LimeGreen') {
-    return (
-      <View style={[styles.customItem, styles.limeGreen]}>
-        <Text style={styles.eventText}>{event.title}</Text>
-      </View>
-    )
-  }
-  if (event.style === 'LimeGreen') {
-    return (
-      <View style={[styles.customItem, styles.limeGreen]}>
-        <Text style={styles.eventText}>{event.title}</Text>
-      </View>
-    )
-  }
+  console.log('--------- EVENT ----------');
+  return (
+    <View style={[
+      styles.customItem,
 
-
-  else {
-    return (
-      <View style={[styles.customItem, styles.default]}>
-        <Text style={styles.eventText}>{event.title}</Text>
-      </View>
-    )
-  }
+    ]}>
+      <BoldText style={styles.eventText}>{`${event["'Ωρα"]}`}</BoldText>
+      <Text style={styles.eventText}>{` - ${event.title}`}</Text>
+    </View>
+  )
 
 }
 
@@ -147,20 +105,42 @@ const styles = StyleSheet.create({
     flex: 1
   },
   customItem: {
-    // marginVertical: 1,
-    borderWidth: 0.2,
-    borderColor: 'white',
-    height: '100%'
+    padding: 2,
+    height: '100%',
+    paddingLeft: 5,
+    borderLeftWidth: 4,
+    borderLeftColor: 'green',
+    backgroundColor: COLORS.secondaryColorShade003,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 1,
   },
   limeGreen: {
     backgroundColor: '#1fb90e',
     padding: 4,
   },
-  default: {
-    backgroundColor: 'red'
-  },
+
   eventText: {
-    fontSize: 12,
+    fontSize: 11,
+    color: 'black'
+  },
+  lightSteelBlue: {
+    backgroundColor: '#718FCE',
+  },
+  limeGreen: {
+    backgroundColor: '#2ab61a',
+  },
+  silver: {
+    backgroundColor: 'silver',
+  },
+  lightred: {
+    backgroundColor: 'red',
+  },
+  pink: {
+    backgroundColor: 'pink',
+  },
+  orange: {
+    backgroundColor: 'orange',
   }
 })
 
