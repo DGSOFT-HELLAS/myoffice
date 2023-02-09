@@ -197,7 +197,7 @@ const ModalCheck = ({ subscriberReschedule, customerReschedule }) => {
         }}>
         <View style={styles.modalContainer} >
           <View style={styles.modalView} >
-            <Text>Επαναπρογραμματισμός Ραντεβού από:
+            <Text style={styles.modalHeaderText}>Επαναπρογραμματισμός Ραντεβού από:
             </Text>
             <Button style={styles.modalBtn} text={"Πελάτη"} onPress={() => {
               setModalVisible(false);
@@ -297,10 +297,15 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  modalHeaderText: {
+    width: '80%',
+    color: 'black',
+  },
   modalBtn: {
     width: '80%',
     backgroundColor: COLORS.secondaryColor,
     border: 'none',
+    marginVertical: 6,
   },
   closeIcon: {
     marginTop: 10,
