@@ -19,7 +19,7 @@ const HorizontalWeekView = ({ handleNextWeek, handlePreviousWeek, today, week, d
 
     const onDayPress = (day, index) => {
         setDay(day)
-        navigation.navigate('DayView')
+        navigation.navigate('DayViewCalendarMain')
     }
 
     const onPress = () => {

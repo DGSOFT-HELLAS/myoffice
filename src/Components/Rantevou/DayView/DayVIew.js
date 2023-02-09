@@ -31,7 +31,7 @@ const DayView = () => {
   const { trdr } = useContext(UserContext)
 
   const [raw, setRaw] = useState({
-    startDate: "",
+    startDate: new Date(),
     endDate: "",
     stelexos: 0,
   })

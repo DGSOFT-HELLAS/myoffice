@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     padding: 2,
   },
   dayRow: {
-    marginVertical: 10,
+    marginVertical: 5,
   },
   leftCol: {
     marginRight: 4,
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: 'white',
     elevation: 3,
-    marginVertical: 10,
+    marginVertical: 5,
     borderTopWidth: 3,
   },
   accordionItem: {
