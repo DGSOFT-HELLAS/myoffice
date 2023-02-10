@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TimelineCalendar } from '@howljs/calendar-kit';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Calendar, CalendarList, Agenda, AgendaEntry } from 'react-native-calendars';
 
 
 const events = [
@@ -12,7 +12,7 @@ const events = [
 ]
 
 
-const Agenda = () => {
+const AgendaCalendar = () => {
   const [initialDate, setInitialDate] = useState(new Date())
   const [data, setData] = useState({})
 
@@ -42,7 +42,13 @@ const Agenda = () => {
     // console.log(items)
     setData(items)
   }
-
+  renderEmptyDate = () => {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>This is empty date!</Text>
+      </View>
+    );
+  }
 
   useEffect(() => {
     handleFetch();
@@ -52,7 +58,12 @@ const Agenda = () => {
       <Agenda
         initialDate={'2023-02-09'}
         // items={data}
+        selected={'2023-02-11'}
+        pastScrollRange={2}
+        futureScrollRange={2}
         items={data}
+        showClosingKnob={false}
+
         // items={{
         //   '2023-02-09': [{ startDate: '2023-02-09', endDate: '2023-02-09', title: '1: this is an original title' }, { startDate: '2023-02-09', endDate: '2023-02-09', title: '2: this is an original title' }],
         //   '2023-02-08': [{ startDate: '2023-02-08', endDate: '2023-02-08', title: '3: this is an original title' }, { startDate: '2023-02-08', endDate: '2023-02-08', title: '4: this is an original title' }],
@@ -61,6 +72,10 @@ const Agenda = () => {
           return (
             <RenderItem firstItemInDay={firstItemInDay} item={item} />
           )
+        }}
+        renderEmptyDate={() => <RenderEmptyDate />}
+        loadItemsForMonth={month => {
+          console.log('trigger items loading');
         }}
 
       />
@@ -76,6 +91,14 @@ const RenderItem = ({ item, firstItemInDay }) => {
       <Text>
         {item.title}
       </Text>
+    </View>
+  )
+}
+const RenderEmptyDate = () => {
+
+  return (
+    <View style={styles.emptyDate}>
+      <Text>This is empty date!</Text>
     </View>
   )
 }
@@ -97,8 +120,13 @@ const styles = StyleSheet.create({
   },
   firstItemInDay: {
     marginTop: 30
+  },
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30
   }
 })
 
 
-export default Agenda;
+export default AgendaCalendar;

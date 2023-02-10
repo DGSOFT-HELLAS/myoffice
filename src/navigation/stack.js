@@ -23,6 +23,7 @@ import EditCustomer from '../Components/Customers/EditCustomer';
 import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
 //Screen Calendar: 
 import CalendarMonth from '../Components/Calendar/Calendar/Calendar';
+import AgendaCalendar from '../Components/Calendar/Agenda/Agenda';
 const Stack = createNativeStackNavigator();
 
 
@@ -105,6 +106,16 @@ export const IncomingStack = () => {
 
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Μήνας'} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="AgendaCalendar"
+          component={AgendaCalendar}
+          options={{
+
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Eβδομάδα'} />
             ),
           }}
         />
