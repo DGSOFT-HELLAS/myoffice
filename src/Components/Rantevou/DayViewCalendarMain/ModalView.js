@@ -4,8 +4,8 @@ import { COLORS } from "../../../shared/COLORS";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
 import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
-import EditButton from "../../Atoms/Button";
 import Button from "../../SharedComp/Buttons/Button";
+import EditButton from "../../SharedComp/Buttons/EditButton";
 
 const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
 
@@ -41,19 +41,27 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
 
 
 const ListBody = ({ data }) => {
+  const [enabled, setEnabled] = useState(false);
+
+  const handleEdit = () => {
+    setEnabled((prev) => !prev)
+  }
   return (
     <ListBodyView>
-      <ListBodyDataSet title={'Στέλεχος'} value={data["Στέλεχος"]} enabled={false} />
-      <ListBodyDataSet title={'Ύπηρεσία/Τύπος'} value={data["Ύπηρεσία/Τύπος"]} enabled={false} />
-      <ListBodyDataSet title={'Σημείο'} value={data["Σημείο"]} enabled={false} />
-      <ListBodyDataSet title={'Κατάσταση'} value={data["Κατάσταση"]} enabled={false} />
-      <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
+      <ListBodyDataSet title={'Στέλεχος'} value={data["Στέλεχος"]} enabled={enabled} />
+      <ListBodyDataSet title={'Ύπηρεσία/Τύπος'} value={data["Ύπηρεσία/Τύπος"]} enabled={enabled} />
+      <ListBodyDataSet title={'Σημείο'} value={data["Σημείο"]} enabled={enabled} />
+      <ListBodyDataSet title={'Κατάσταση'} value={data["Κατάσταση"]} enabled={enabled} />
+      <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={enabled} />
 
       <View style={styles.buttonView}>
-        <EditButton onPress={() => onEditBtn(data)} />
+        {/* <EditButton onPress={() => onEditBtn(data)} /> */}
+        <EditButton />
         <ModalCheck title={"Aκύρωση από:"} Element={DeleteButton} elementStyle={{ marginLeft: 10 }} />
+
         {/* subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} */}
       </View>
+
 
     </ListBodyView>
   )

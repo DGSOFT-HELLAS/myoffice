@@ -10,14 +10,13 @@ import BoldText from "../../Atoms/Text/BoldText";
 
 
 
-
 const DayViewCalendarMain = () => {
   const { day } = useContext(DayContext)
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
-  // console.log('day from context:' + day)
+  console.log('day from context:' + day)
   // console.log(new Date('2023-02-09 10:30'))
   const handleFetch = async () => {
 
@@ -29,8 +28,6 @@ const DayViewCalendarMain = () => {
       stelexos: 0
     })
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
-    console.log('--------- UPDATED DATA ---------------')
-    console.log(res)
     setEvents(updatedData)
   }
 

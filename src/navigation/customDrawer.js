@@ -41,6 +41,14 @@ const CustomDrawer = (props) => {
         )}
       </View>
       <View style={styles.container}>
+        <DrawerItem title="Calendar" Icon={Entypo} iconName="calendar" index={4} id={id} setId={setId} />
+        {id == 4 && (
+          <DrawerSubItemView >
+            <DrawerSubItem title="Calendar" parent="Ραντεβού" screen="Calendar" setId={setId} />
+          </DrawerSubItemView>
+        )}
+      </View>
+      <View style={styles.container}>
         <DrawerItem title="Εισερχόμενα" Icon={Material} iconName="call-received" index={2} id={id} setId={setId} />
         {id == 2 && (
           <DrawerSubItemView>
