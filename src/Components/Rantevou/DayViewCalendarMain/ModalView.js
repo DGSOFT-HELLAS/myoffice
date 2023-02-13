@@ -6,9 +6,18 @@ import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
 import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
 import Button from "../../SharedComp/Buttons/Button";
 import EditButton from "../../SharedComp/Buttons/EditButton";
+import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
+
+import { useNavigation } from "@react-navigation/native";
+
+
 
 const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
+  const navigation = useNavigation()
 
+  const onEditBtn = (data) => {
+    navigation.navigate('Διόρθωση ραντεβού', { data: data })
+  }
 
   return (
     <Modal
@@ -32,15 +41,19 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.bodyView}>
-          <ListBody data={event} />
+          <ListBody data={event} onEditBtn={onEditBtn} />
+
         </View>
       </View>
     </Modal>
   );
 }
 
+const onDateChange = (selected) => {
 
-const ListBody = ({ data }) => {
+}
+
+const ListBody = ({ data, onEditBtn }) => {
   const [enabled, setEnabled] = useState(false);
 
   const handleEdit = () => {
@@ -53,10 +66,10 @@ const ListBody = ({ data }) => {
       <ListBodyDataSet title={'Σημείο'} value={data["Σημείο"]} enabled={enabled} />
       <ListBodyDataSet title={'Κατάσταση'} value={data["Κατάσταση"]} enabled={enabled} />
       <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={enabled} />
-
+      <ModalDatePickerComp day={data.start} onChange={onDateChange} />
       <View style={styles.buttonView}>
         {/* <EditButton onPress={() => onEditBtn(data)} /> */}
-        <EditButton />
+        <EditButton onPress={() => onEditBtn(data)} />
         <ModalCheck title={"Aκύρωση από:"} Element={DeleteButton} elementStyle={{ marginLeft: 10 }} />
 
         {/* subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} */}

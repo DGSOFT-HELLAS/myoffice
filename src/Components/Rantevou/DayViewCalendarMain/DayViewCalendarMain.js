@@ -7,7 +7,7 @@ import ModalFullEvent from "./ModalView";
 import { EventItem, HighlightDates, OnChangeProps, PackedEvent, RangeTime, TimelineCalendar, TimelineCalendarHandle, UnavailableItemProps, } from '@howljs/calendar-kit'
 import { COLORS } from "../../../shared/COLORS";
 import BoldText from "../../Atoms/Text/BoldText";
-
+import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 
 
 const DayViewCalendarMain = () => {
@@ -16,10 +16,12 @@ const DayViewCalendarMain = () => {
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
-  console.log('day from context:' + day)
   // console.log(new Date('2023-02-09 10:30'))
-  const handleFetch = async () => {
+  // console.log('------------- EVENT --------------')
+  // console.log(event)
 
+
+  const handleFetch = async () => {
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
       query: 'wpFetchRDVForCalendar',
       startDate: day,
@@ -27,6 +29,7 @@ const DayViewCalendarMain = () => {
       trdr: trdr,
       stelexos: 0
     })
+    // console.log(res)
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     setEvents(updatedData)
   }
@@ -44,7 +47,6 @@ const DayViewCalendarMain = () => {
       end: event.end,
       color: '#A3C7D6',
     };
-    setEvents((prev) => [...prev, newEvent]);
   };
   return (
     <View style={styles.container}>
@@ -61,7 +63,20 @@ const DayViewCalendarMain = () => {
         containerStyle={styles.customItem}
         renderEventContent={(event) => eventItem(event)}
         onPressEvent={(evt) => {
-          setEvent(evt)
+          const obj = Object.keys(evt)
+            .filter((key) => {
+              return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour'
+            })
+            .reduce((obj, key) => {
+              return Object.assign(obj, {
+                [key]: evt[key]
+              });
+            }, {});
+
+          console.log('-filtered-')
+          console.log(obj)
+
+          setEvent(obj)
           setIsVisible(true)
         }}
         onPressBackground={(time) => {
@@ -82,12 +97,8 @@ const DayViewCalendarMain = () => {
 }
 
 const eventItem = (event) => {
-  console.log('--------- EVENT ----------');
   return (
-    <View style={[
-      styles.customItem,
-
-    ]}>
+    <View style={[styles.customItem]}>
       <BoldText style={styles.eventText}>{`${event["'Ωρα"]}`}</BoldText>
       <Text style={styles.eventText}>{` - ${event.title}`}</Text>
     </View>
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
     borderLeftColor: 'green',
     backgroundColor: COLORS.secondaryColorShade003,
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginVertical: 1,
   },
   limeGreen: {

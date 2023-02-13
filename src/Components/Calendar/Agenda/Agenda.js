@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { TimelineCalendar } from '@howljs/calendar-kit';
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Calendar, CalendarList, Agenda, AgendaEntry } from 'react-native-calendars';
+import { fetchAPI } from "../../../utils/fetchAPI";
+import addDays from "date-fns/addDays";
+import CalendarMonthList from "../CalendarList/CalendarList";
+import { UserContext } from "../../../useContext/useContect";
+import { format, lastDayOfMonth } from 'date-fns'
 
 
 const events = [
@@ -12,13 +16,25 @@ const events = [
 ]
 
 
+
+
+
 const AgendaCalendar = () => {
-  const [initialDate, setInitialDate] = useState(new Date())
+  const [initialDate, setInitialDate] = useState(new Date().toISOString().split('T')[0])
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
   const [data, setData] = useState({})
+  const { trdr } = useContext(UserContext)
 
+  const [state, setState] = useState({
+    startDate: '',
+    endDate: '',
+    stelexos: 0,
+    showList: false
+  })
 
+  console.log(state)
 
-  const handleFetch = () => {
+  const handleFetch = async () => {
     //..fetchrequest
 
     // Object.keys(item).forEach(key => {
@@ -31,6 +47,17 @@ const AgendaCalendar = () => {
     //   })
     // });
     // setData(item)
+
+    let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
+      query: 'wpFetchRDVForCalendar',
+      startDate: state.startDate,
+      endDate: state.endDate,
+      trdr: trdr,
+      stelexos: state.stelexos
+
+    })
+    console.log(res)
+
     const items = events.reduce((acc, event) => {
       const key = event.startDate;
       if (!acc[key]) {
@@ -42,43 +69,85 @@ const AgendaCalendar = () => {
     // console.log(items)
     setData(items)
   }
-  renderEmptyDate = () => {
-    return (
-      <View style={styles.emptyDate}>
-        <Text>This is empty date!</Text>
-      </View>
-    );
-  }
+
 
   useEffect(() => {
-    handleFetch();
+    let date = new Date().toISOString().split('T')[0]
+    // setSelectedDate(date)
+    loadItemsForMonth(date)
+
   }, [])
+  useEffect(() => {
+    handleFetch();
+  }, [state.startDate, state.endDate])
+
+  const loadItemsForMonth = (month) => {
+
+    const today = new Date(month);
+    const firstDateOfMonth = format(today, 'yyyy-MM-01')
+    const lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
+    setState((prev) => {
+      return {
+        ...prev, startDate: firstDateOfMonth, endDate: lastDateOfMonth
+      }
+    })
+
+  }
+
   return (
+
     <View style={styles.container}>
-      <Agenda
-        initialDate={'2023-02-09'}
-        // items={data}
-        selected={'2023-02-11'}
-        pastScrollRange={2}
-        futureScrollRange={2}
-        items={data}
-        showClosingKnob={false}
+      <View style={styles.bottomView}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log('showlist knob')
+            setState((prev) => {
+              return {
+                ...prev, showList: !prev.showList
+              }
+            })
+          }}
+          style={styles.knobStyles}>
+        </TouchableOpacity>
 
-        // items={{
-        //   '2023-02-09': [{ startDate: '2023-02-09', endDate: '2023-02-09', title: '1: this is an original title' }, { startDate: '2023-02-09', endDate: '2023-02-09', title: '2: this is an original title' }],
-        //   '2023-02-08': [{ startDate: '2023-02-08', endDate: '2023-02-08', title: '3: this is an original title' }, { startDate: '2023-02-08', endDate: '2023-02-08', title: '4: this is an original title' }],
-        // }}
-        renderItem={(item, firstItemInDay) => {
-          return (
-            <RenderItem firstItemInDay={firstItemInDay} item={item} />
-          )
-        }}
-        renderEmptyDate={() => <RenderEmptyDate />}
-        loadItemsForMonth={month => {
-          console.log('trigger items loading');
-        }}
+      </View>
 
-      />
+
+      {!state.showList && (
+        <Agenda
+          initialDate={'2023-02-01'}
+          firstDay={1}
+          // items={data}
+          selected={selectedDate}
+          pastScrollRange={2}
+          futureScrollRange={2}
+          // items={data}
+          // showClosingKnob={false}
+          // minDate={'2012-05-10'}
+          // maxDate={'2012-05-30'}
+          hideKnob={true}
+
+
+          items={{
+            '2023-02-09': [{ startDate: '2023-02-09', endDate: '2023-02-09', title: '1: this is an original title' }, { startDate: '2023-02-09', endDate: '2023-02-09', title: '2: this is an original title' }],
+            '2023-02-08': [{ startDate: '2023-02-08', endDate: '2023-02-08', title: '3: this is an original title' }, { startDate: '2023-02-08', endDate: '2023-02-08', title: '4: this is an original title' }],
+          }}
+          // renderItem={(item, firstItemInDay) => {
+          //   return (
+          //     <RenderItem firstItemInDay={firstItemInDay} item={item} />
+          //   )
+          // }}
+          renderEmptyDate={RenderEmptyDate}
+          loadItemsForMonth={month => {
+            loadItemsForMonth(month)
+
+          }}
+          onCalendarToggled={calendarOpened => {
+            console.log(calendarOpened);
+          }}
+        />
+      )}
+      {state.showList && <CalendarMonthList state={state} setState={setState} />}
     </View>
   )
 }
@@ -103,6 +172,11 @@ const RenderEmptyDate = () => {
   )
 }
 
+
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -118,6 +192,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 17
   },
+  bottomView: {
+    height: 20,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
   firstItemInDay: {
     marginTop: 30
   },
@@ -125,6 +206,11 @@ const styles = StyleSheet.create({
     height: 15,
     flex: 1,
     paddingTop: 30
+  },
+  knobStyles: {
+    width: 40,
+    height: 5,
+    backgroundColor: 'black',
   }
 })
 

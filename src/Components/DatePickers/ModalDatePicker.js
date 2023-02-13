@@ -4,11 +4,14 @@ import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { splitDate } from '../../utils/dateFunctions/splitDate';
 
 export const ModalDatePickerComp = ({ day, style, onChange }) => {
-
-
+  console.log(day)
+  const [date, setDate] = useState()
+  if (day === day.toLocaleDateString()) {
+    console.log('day format is 2023/02/20')
+    setDate(day)
+  }
   const [show, setShow] = useState(false);
   const showTimepicker = () => {
     setShow(true)
@@ -78,6 +81,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 17,
+    color: 'black'
   },
   icon: {
     fontSize: 19,

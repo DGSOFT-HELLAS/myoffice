@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { StyleSheet, ScrollView, TouchableOpacity, View, Modal, Pressable } from "react-native"
 import Text from "../../Atoms/Text";
 import Button from "../../SharedComp/Buttons/Button";
@@ -27,6 +27,8 @@ const EditRantevou = () => {
   const route = useRoute();
   const navigation = useNavigation();
   let routeData = route.params.data;
+  console.log('------------------- ROUTE DATA---------------------')
+  console.log(routeData)
   const [day, month, year] = routeData["Ημ/νία"]?.split('/');
   let newDate = parseInt(day) + 1
   const date = new Date(year, month - 1, newDate);
@@ -133,6 +135,9 @@ const EditRantevou = () => {
         </View>
         {/* <DropDownList data={raw.status} setData={setRaw} /> */}
         <ModalCheck subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text>Ακύρωση</Text>
+        </TouchableOpacity>
       </AddView>
     </ScrollView >
   )

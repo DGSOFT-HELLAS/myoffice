@@ -43,9 +43,12 @@ const VerticalWeekView = ({ week, data, days, loading, state, setState }) => {
     })
 
     const Item = memo(({ data, day }) => {
+
+        // console.log(new Date(data["Ημ/νία"]), day.toLocaleDateString())
+        // console.log(day.toLocaleDateString())
         return (
             <View>
-                {data["Ημ/νία"] === day.toLocaleDateString() && (
+                {new Date(data["Ημ/νία"]).toLocaleDateString() === day.toLocaleDateString() && (
                     <View
                         style={[
                             styles.itemWrapper,

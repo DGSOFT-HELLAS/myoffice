@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   burgerContainer: {
-    borderWidth: 0.2,
+    borderWidth: 0.4,
     borderRadius: 2,
     borderColor: COLORS.secondaryColorShade002,
     width: 35,

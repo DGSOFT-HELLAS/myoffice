@@ -5,7 +5,7 @@ import { UserContext } from '../../../useContext/useContect';
 import { format, lastDayOfMonth } from 'date-fns'
 import { DayContext } from '../../../useContext/daysContext';
 import { useNavigation } from '@react-navigation/native';
-import Locales from '../Locales';
+// import Locales from '../Locales';
 
 const CalendarMonth = () => {
   const { trdr } = useContext(UserContext)
@@ -62,7 +62,7 @@ const CalendarMonth = () => {
     <Calendar
       markedDates={events}
       onMonthChange={month => {
-        var today = new Date(month.dateString);
+        let today = new Date(month.dateString);
         const firstDateOfMonth = format(today, 'yyyy-MM-01')
         const lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
         setState((prev) => {

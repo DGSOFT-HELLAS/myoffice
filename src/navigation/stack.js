@@ -35,11 +35,30 @@ export const IncomingStack = () => {
 
     <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Login"
           component={Login}
           options={{
             headerShown: false,
+          }}
+        /> */}
+        <Stack.Screen
+          name="DayViewCalendarMain"
+          component={DayViewCalendarMain}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα 3'} showDayModal={true} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="AgendaCalendar"
+          component={AgendaCalendar}
+          options={{
+
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Eβδομάδα'} />
+            ),
           }}
         />
         <Stack.Screen
@@ -70,15 +89,7 @@ export const IncomingStack = () => {
           }}
         />
 
-        <Stack.Screen
-          name="DayViewCalendarMain"
-          component={DayViewCalendarMain}
-          options={{
-            header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα 3'} showDayModal={true} />
-            ),
-          }}
-        />
+
         <Stack.Screen
           name="AddRantevou"
           component={AddRantevou}
@@ -109,16 +120,7 @@ export const IncomingStack = () => {
             ),
           }}
         />
-        <Stack.Screen
-          name="AgendaCalendar"
-          component={AgendaCalendar}
-          options={{
 
-            header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Eβδομάδα'} />
-            ),
-          }}
-        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen

@@ -97,6 +97,7 @@ const WeekViewCalendar = () => {
 
 
   const handleNextWeek = () => {
+    console.log('pressed NEXT week')
 
     let mon = new Date(state.monday)
     let sun = new Date(state.monday)
@@ -108,6 +109,7 @@ const WeekViewCalendar = () => {
 
 
   const handlePreviousWeek = () => {
+    console.log('pressed previous week')
     let mon = new Date(state.monday)
     let prevMonday = new Date(mon.getTime() - (7 * 24 * 60 * 60 * 1000));
     let prevSunday = new Date(mon.getTime() - (1 * 24 * 60 * 60 * 1000));
