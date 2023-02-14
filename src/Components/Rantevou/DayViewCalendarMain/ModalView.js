@@ -18,15 +18,23 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
     navigation.navigate('Διόρθωση ραντεβού', { data: data })
   }
   const [raw, setRaw] = useState({
-    soaction: event.soaction,
+    soaction: event["soaction"],
   })
 
-  console.log(raw)
+
 
   // const [state, setState] = useState({
   //   eoppy: event.eoppy 
   // })
 
+  useEffect(() => {
+    setRaw(prev => {
+      return {
+        ...prev, soaction: event["soaction"]
+      }
+    })
+    console.log(raw)
+  }, [event["soaction"]])
   return (
     <Modal
       animationType="fade"
@@ -53,7 +61,7 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.bodyView}>
-          <ListBody data={event} onEditBtn={onEditBtn} setState={setState} raw={raw} />
+          <ListBody data={event} onEditBtn={onEditBtn} setState={setState} raw={raw} setIsVisible={setIsVisible} />
         </ScrollView>
       </View>
     </Modal>
@@ -61,18 +69,21 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
 }
 
 
-const ListBody = ({ data, onEditBtn, setState, raw }) => {
+const ListBody = ({ data, onEditBtn, setState, raw, setIsVisible }) => {
   const [enabled, setEnabled] = useState(false);
   const navigation = useNavigation()
 
   const subscriberReschedule = () => {
+    console.log('press cancel subscriber')
     handlePost('subscriber');
-    navigation.navigate('DayViewCalendarMain')
-
+    // navigation.navigate('DayViewCalendarMain')
+    setIsVisible(false)
   }
   const customerReschedule = () => {
+    console.log('press cancel customer')
     handlePost('customer');
-    navigation.navigate('DayViewCalendarMain')
+    setIsVisible(false)
+    // navigation.navigate('DayViewCalendarMain')
   }
 
 
@@ -127,7 +138,7 @@ const ModalCheck = ({ subscriberReschedule, customerReschedule }) => {
         <View style={styles.modalContainer} >
           <View style={styles.modalView} >
             <View style={styles.topView}>
-              <Text>Επαναπρογραμματισμός Ραντεβού από:</Text>
+              <Text>Aκύρωση από:</Text>
             </View>
             <Button style={styles.modalBtn} text={"Πελάτη"} onPress={() => {
               setModalVisible(false);

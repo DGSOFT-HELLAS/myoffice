@@ -46,11 +46,11 @@ const AddRantevou = () => {
   useEffect(() => {
     //On day view if we press on a specific time, we get the input of that time formatted as a date, and we convert it to plain time ex. 12: 40
     if (route.params) {
-      let fromTime = new Date(route.params.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      let toTime = new Date(route.params.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      // let fromTime = new Date(route.params.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      // let toTime = new Date(route.params.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       setState(prev => {
         return {
-          ...prev, date: new Date(route.params.date), fromTime: fromTime, toTime: toTime
+          ...prev, date: new Date(route.params.date), fromTime: route.params.start, toTime: route.params.end
         }
       })
     }
@@ -92,7 +92,7 @@ const AddRantevou = () => {
           if (response.error) {
             Alert.alert(`${response.errorMessage}`)
           } else {
-            navigation.navigate('DayView')
+            navigation.navigate('DayViewCalendarMain', { date: state.date.toString() })
           }
         }
       } catch (error) {

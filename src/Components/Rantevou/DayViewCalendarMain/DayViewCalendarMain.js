@@ -4,7 +4,7 @@ import { DayContext } from "../../../useContext/daysContext";
 import { fetchAPI } from "../../../utils/fetchAPI";
 import { UserContext } from "../../../useContext/useContect";
 import ModalFullEvent from "./ModalView";
-import { EventItem, HighlightDates, OnChangeProps, PackedEvent, RangeTime, TimelineCalendar, TimelineCalendarHandle, UnavailableItemProps, } from '@howljs/calendar-kit'
+import { TimelineCalendar } from '@howljs/calendar-kit'
 import { COLORS } from "../../../shared/COLORS";
 import BoldText from "../../Atoms/Text/BoldText";
 import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
@@ -14,7 +14,8 @@ import { useRoute } from "@react-navigation/native";
 const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
   const route = useRoute()
-
+  console.log('---------------------------- DAY VIEW ROUTE ---------------------------------')
+  console.log(route)
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
@@ -23,10 +24,10 @@ const DayViewCalendarMain = () => {
   const [state, setState] = useState({
     delete: false,
     loading: false,
-    day: new Date().toISOString().split('T')[0]
+
   })
 
-  console.log(day)
+
   const handleFetch = async () => {
     setState(prev => {
       return {
@@ -61,25 +62,26 @@ const DayViewCalendarMain = () => {
 
   const onDragCreateEnd = (event) => {
     let date = event.start.split('T')[0]
-    navigation.navigate('AddRantevou', { start: event.start, end: event.end, date: date })
+    let start = event.start.split('T')[0] + 'T' + new Date(event.start).toLocaleTimeString()
+    let end = event.end.split('T')[0] + 'T' + new Date(event.end).toLocaleTimeString()
+    navigation.navigate('AddRantevou', { start: start, end: end, date: date })
 
   };
   return (
     <View style={styles.container}>
       <TimelineCalendar
         viewMode="day"
-        initialDate={route.params.date}
+        initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
         events={events}
         isLoading={state.loading}
         onDateChanged={(date) => {
           console.log('date changed')
           console.log(date)
         }}
-        // locale="gr"
-
+        locale="gr"
         timeInterval={60}
         start={6}
-        locale="gr"
+        // locale="gr"
         initialTimeIntervalHeight={120}
         overlapEventsSpacing={2}
         containerStyle={styles.customItem}
@@ -99,7 +101,7 @@ const DayViewCalendarMain = () => {
           setIsVisible(true)
         }}
         onChange={(day) => {
-          console.log('on change happended')
+          // console.log('on change happended')
           setDay(day.date)
         }}
         onPressDayNum={(e) => console.log(e)}

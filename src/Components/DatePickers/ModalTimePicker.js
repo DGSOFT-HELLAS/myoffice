@@ -8,15 +8,9 @@ import { COLORS } from '../../shared/COLORS';
 
 export const ModalTimePickerComp = ({ handleState, style, time }) => {
   const [date, setDate] = useState(new Date());
-  const [displayDate, setDisplayDate] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
   const [show, setShow] = useState(false);
   console.log('-----------------------------------------------------------')
   console.log('time: ' + time)
-  console.log(displayDate)
-
-  console.log('-----------------------------------------------------------')
-
-
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -29,8 +23,7 @@ export const ModalTimePickerComp = ({ handleState, style, time }) => {
 
   useEffect(() => {
     if (time) {
-      setDisplayDate(time.toString())
-      setDate(new Date(time))
+      setDate(time)
     }
 
   }, [time])
@@ -43,11 +36,10 @@ export const ModalTimePickerComp = ({ handleState, style, time }) => {
 
   return (
     <View>
-      {/* <ShowTime onPress={showTimepicker} date={date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} style={style} /> */}
-      <ShowTime onPress={showTimepicker} date={displayDate} style={style} />
+      <ShowTime onPress={showTimepicker} date={new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} style={style} />
       {show && (
         <DateTimePicker
-          value={date}
+          value={new Date(date)}
           mode={'time'}
           is24Hour={true}
           onChange={onChange}
