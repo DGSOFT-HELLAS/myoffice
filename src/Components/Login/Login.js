@@ -51,7 +51,7 @@ const Login = () => {
       setTrdr(response[0]['trdr']);
       setLoading(false)
       // navigation.navigate('Ραντεβού: Εβδομάδα')
-      navigation.navigate('DayViewCalendarMain')
+      navigation.navigate('Calendar')
 
     }
     if (response.length == 0) {

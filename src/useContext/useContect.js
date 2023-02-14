@@ -13,7 +13,7 @@ export const Layout = ({ children }) => {
   const [password, setPassword] = useState('Test123!!');
   const [username, setUsername] = useState('test');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [trdr, setTrdr] = useState(47);
+  const [trdr, setTrdr] = useState();
 
 
   return (

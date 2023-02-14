@@ -36,7 +36,7 @@ const CustomDrawer = (props) => {
             <DrawerSubItem title="Μέρα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
             <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} />
-            <DrawerSubItem title="Mέρα 3" screen="DayViewCalendarMain" setId={setId} />
+            <DrawerSubItem title="Mέρα 3" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} />
           </DrawerSubItemView>
         )}
       </View>
@@ -122,12 +122,13 @@ const DrawerSubItemView = ({ children }) => {
 }
 
 
-const DrawerSubItem = ({ screen, title, setId }) => {
+const DrawerSubItem = ({ screen, title, setId, date }) => {
   const navigation = useNavigation()
 
   const onPress = () => {
     setId({})
-    navigation.navigate(screen)
+    navigation.navigate(screen, { date: date })
+
   }
   return (
     <TouchableOpacity style={styles.subItem} onPress={onPress} >

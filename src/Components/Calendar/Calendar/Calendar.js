@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const CalendarMonth = () => {
   const { trdr } = useContext(UserContext)
-  const { setDay } = useContext(DayContext)
+  const { setDay, day } = useContext(DayContext)
   const navigation = useNavigation()
   const [events, setEvents] = useState()
   const [state, setState] = useState({
@@ -17,6 +17,8 @@ const CalendarMonth = () => {
     endDate: '',
     stelexos: 0,
   })
+
+  console.log('day in calendar view ' + day)
 
   const handleFetch = async () => {
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
@@ -27,6 +29,7 @@ const CalendarMonth = () => {
       stelexos: state.stelexos
 
     })
+    console.log(res)
     const items = {};
     for (let event of res) {
       if (!items[key]) {
@@ -35,7 +38,7 @@ const CalendarMonth = () => {
       const key = new Date(event.start).toISOString().split('T')[0]
       items[key] = { marked: true, dotColor: 'green', activeOpacity: 0 }
     }
-    console.log(items)
+    // console.log(items)
     setEvents(items)
   }
 
@@ -51,6 +54,8 @@ const CalendarMonth = () => {
       }
     })
   }, [])
+
+
   useEffect(() => {
     handleFetch();
   }, [state.startDate, state.endDate])
@@ -73,8 +78,10 @@ const CalendarMonth = () => {
       }}
       onDayPress={(day) => {
         let date = day.dateString
-        setDay(date)
-        navigation.navigate('DayViewCalendarMain')
+        console.log(date)
+        let date2 = `${day.year}-${day.month}-${day.day}`
+        console.log(day)
+        navigation.navigate('DayViewCalendarMain', { date: date })
       }}
     />
 

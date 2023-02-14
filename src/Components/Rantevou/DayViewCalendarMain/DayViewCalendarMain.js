@@ -9,10 +9,12 @@ import { COLORS } from "../../../shared/COLORS";
 import BoldText from "../../Atoms/Text/BoldText";
 import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 import { useNavigation } from "@react-navigation/native";
-
+import { useRoute } from "@react-navigation/native";
 
 const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
+  const route = useRoute()
+
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
@@ -20,11 +22,11 @@ const DayViewCalendarMain = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [state, setState] = useState({
     delete: false,
-    loading: false
+    loading: false,
+    day: new Date().toISOString().split('T')[0]
   })
 
-
-
+  console.log(day)
   const handleFetch = async () => {
     setState(prev => {
       return {
@@ -54,8 +56,10 @@ const DayViewCalendarMain = () => {
     handleFetch()
   }, [day, state.delete])
 
-  const onDragCreateEnd = (event) => {
 
+
+
+  const onDragCreateEnd = (event) => {
     let date = event.start.split('T')[0]
     navigation.navigate('AddRantevou', { start: event.start, end: event.end, date: date })
 
@@ -64,10 +68,15 @@ const DayViewCalendarMain = () => {
     <View style={styles.container}>
       <TimelineCalendar
         viewMode="day"
+        initialDate={route.params.date}
         events={events}
         isLoading={state.loading}
+        onDateChanged={(date) => {
+          console.log('date changed')
+          console.log(date)
+        }}
         // locale="gr"
-        initialDate={day}
+
         timeInterval={60}
         start={6}
         locale="gr"
@@ -86,20 +95,13 @@ const DayViewCalendarMain = () => {
               });
             }, {});
 
-          console.log('-filtered-')
-          console.log(obj)
-
           setEvent(obj)
           setIsVisible(true)
         }}
         onChange={(day) => {
-          console.log(day)
+          console.log('on change happended')
           setDay(day.date)
         }}
-        onPressBackground={(time) => {
-          console.log(new Date(time))
-        }}
-        renderSelectedEventContent
         onPressDayNum={(e) => console.log(e)}
         allowDragToCreate
         dragCreateInterval={30}

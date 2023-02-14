@@ -20,10 +20,7 @@ const splitDate = (date) => {
 
 export const DaysContext = ({ children }) => {
 
-  const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
-  const [endDay, setEndDay] = useState(new Date().toISOString().split('T')[0]);
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(true);
+  const [day, setDay] = useState();
 
 
   const handleDateSingleDayFetch = (day) => {
