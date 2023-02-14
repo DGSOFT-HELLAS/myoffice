@@ -11,7 +11,7 @@ import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 
 
 const DayViewCalendarMain = () => {
-  const { day } = useContext(DayContext)
+  const { day, setDay } = useContext(DayContext)
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
@@ -78,6 +78,10 @@ const DayViewCalendarMain = () => {
 
           setEvent(obj)
           setIsVisible(true)
+        }}
+        onChange={(day) => {
+          console.log(day)
+          setDay(day.date)
         }}
         onPressBackground={(time) => {
           console.log(new Date(time))

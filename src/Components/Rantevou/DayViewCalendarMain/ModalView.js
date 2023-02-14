@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, Alert, Modal, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, StyleSheet, Alert, Modal, TouchableOpacity, Pressable, ScrollView } from "react-native";
 import { COLORS } from "../../../shared/COLORS";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
@@ -7,9 +7,9 @@ import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
 import Button from "../../SharedComp/Buttons/Button";
 import EditButton from "../../SharedComp/Buttons/EditButton";
 import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
-
+import CheckboxPaper from "../../SharedComp/Buttons/CheckBox";
 import { useNavigation } from "@react-navigation/native";
-
+import BoldText from "../../Atoms/Text/BoldText";
 
 
 const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
@@ -18,6 +18,10 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
   const onEditBtn = (data) => {
     navigation.navigate('Διόρθωση ραντεβού', { data: data })
   }
+
+  // const [state, setState] = useState({
+  //   eoppy: event.eoppy 
+  // })
 
   return (
     <Modal
@@ -30,7 +34,11 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
     >
       <View style={styles.container}>
         <View style={styles.topView}>
-          <Text>{event.title}</Text>
+          <View style={styles.topViewLeftInfo}>
+            <BoldText style={styles.topViewText}>{event["'Ωρα"]}</BoldText>
+            <Text style={{ fontSize: 17 }}>{event["Πελάτης"] ? event["Πελάτης"] : "No Name"}</Text>
+          </View>
+
           <TouchableOpacity
             style={styles.icon}
             onPress={() => {
@@ -40,10 +48,9 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
             <AntDesign name="closecircle" size={20} color={'#ea2a15'} />
           </TouchableOpacity>
         </View>
-        <View style={styles.bodyView}>
+        <ScrollView style={styles.bodyView}>
           <ListBody data={event} onEditBtn={onEditBtn} />
-
-        </View>
+        </ScrollView>
       </View>
     </Modal>
   );
@@ -65,8 +72,14 @@ const ListBody = ({ data, onEditBtn }) => {
       <ListBodyDataSet title={'Ύπηρεσία/Τύπος'} value={data["Ύπηρεσία/Τύπος"]} enabled={enabled} />
       <ListBodyDataSet title={'Σημείο'} value={data["Σημείο"]} enabled={enabled} />
       <ListBodyDataSet title={'Κατάσταση'} value={data["Κατάσταση"]} enabled={enabled} />
+
+      <ListBodyDataSet title={"Κατάσταση"} value={data["Κατάσταση"]} enabled={enabled} />
+      <ListBodyDataSet title={"'Ωρα"} value={data["'Ωρα"]} enabled={enabled} />
+      <ListBodyDataSet title={"Ημ/νία"} value={data["Ημ/νία"]} enabled={enabled} />
+      <CheckboxPaper title={"EΟΠΠΥ"} state={data.cccRDVEOPYY} disabled={true} />
+      <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} state={data.personal} disabled={true} />
       <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={enabled} />
-      <ModalDatePickerComp day={data.start} onChange={onDateChange} />
+      {/* <ModalDatePickerComp day={data.start} onChange={onDateChange} /> */}
       <View style={styles.buttonView}>
         {/* <EditButton onPress={() => onEditBtn(data)} /> */}
         <EditButton onPress={() => onEditBtn(data)} />
@@ -138,22 +151,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   topView: {
-    height: 60,
+    minHeight: 60,
     padding: 15,
     width: "100%",
     flexDirection: 'row',
-    backgroundColor: "#e7e7e7",
+    // backgroundColor: "#f9f9f9",
     alignItems: "center",
     justifyContent: "space-between",
     paddingRight: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d7d6d6'
+  },
+  topViewLeftInfo: {
+    // flexDirection: 'row'
+
+  },
+  topViewText: {
+    fontSize: 14,
+    color: 'black'
   },
   bodyView: {
     flex: 1,
     padding: 10,
     width: "100%",
     backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
   },
   closeIcon: {
     borderWidth: 2,
