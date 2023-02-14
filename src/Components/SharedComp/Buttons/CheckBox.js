@@ -45,7 +45,7 @@ const CheckboxPaper = ({ setState, title, state, disabled, vip }) => {
       }
     }
     //
-    if (title === 'ΠΡΟΣΩΠΙΚΟ') {
+    if (title === 'ΠΡΟΣΩΠΙΚΟ' || title === 'Προσωπικό') {
       if (state.personal == 1) {
         setState((prevState) => {
           return {

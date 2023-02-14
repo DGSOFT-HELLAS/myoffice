@@ -6,18 +6,22 @@ import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
 import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
 import Button from "../../SharedComp/Buttons/Button";
 import EditButton from "../../SharedComp/Buttons/EditButton";
-import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 import CheckboxPaper from "../../SharedComp/Buttons/CheckBox";
 import { useNavigation } from "@react-navigation/native";
 import BoldText from "../../Atoms/Text/BoldText";
+import { fetchAPI } from "../../../utils/fetchAPI";
 
-
-const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
+const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
   const navigation = useNavigation()
 
   const onEditBtn = (data) => {
     navigation.navigate('Διόρθωση ραντεβού', { data: data })
   }
+  const [raw, setRaw] = useState({
+    soaction: event.soaction,
+  })
+
+  console.log(raw)
 
   // const [state, setState] = useState({
   //   eoppy: event.eoppy 
@@ -49,22 +53,38 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event }) => {
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.bodyView}>
-          <ListBody data={event} onEditBtn={onEditBtn} />
+          <ListBody data={event} onEditBtn={onEditBtn} setState={setState} raw={raw} />
         </ScrollView>
       </View>
     </Modal>
   );
 }
 
-const onDateChange = (selected) => {
 
-}
-
-const ListBody = ({ data, onEditBtn }) => {
+const ListBody = ({ data, onEditBtn, setState, raw }) => {
   const [enabled, setEnabled] = useState(false);
+  const navigation = useNavigation()
 
-  const handleEdit = () => {
-    setEnabled((prev) => !prev)
+  const subscriberReschedule = () => {
+    handlePost('subscriber');
+    navigation.navigate('DayViewCalendarMain')
+
+  }
+  const customerReschedule = () => {
+    handlePost('customer');
+    navigation.navigate('DayViewCalendarMain')
+  }
+
+
+  const handlePost = async (reason) => {
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "CancelRDV", reason: reason, ...raw })
+    if (setState) {
+      setState(prev => {
+        return {
+          ...prev, delete: !prev.delete
+        }
+      })
+    }
   }
   return (
     <ListBodyView>
@@ -83,9 +103,7 @@ const ListBody = ({ data, onEditBtn }) => {
       <View style={styles.buttonView}>
         {/* <EditButton onPress={() => onEditBtn(data)} /> */}
         <EditButton onPress={() => onEditBtn(data)} />
-        <ModalCheck title={"Aκύρωση από:"} Element={DeleteButton} elementStyle={{ marginLeft: 10 }} />
-
-        {/* subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} */}
+        <ModalCheck title={"Aκύρωση από:"} Element={DeleteButton} elementStyle={{ marginLeft: 10 }} subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} />
       </View>
 
 
@@ -120,6 +138,7 @@ const ModalCheck = ({ subscriberReschedule, customerReschedule }) => {
             <Button style={styles.modalBtn} text={"Συνδρομητή"} onPress={() => {
               setModalVisible(false)
               subscriberReschedule();
+
             }} />
             <View style={styles.closeView}>
               <CloseIcon setModal={() => setModalVisible(false)} />
@@ -158,9 +177,9 @@ const styles = StyleSheet.create({
     // backgroundColor: "#f9f9f9",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingRight: 10,
+    paddingRight: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#d7d6d6'
+    borderBottomColor: '#d7d6d6',
   },
   topViewLeftInfo: {
     // flexDirection: 'row'

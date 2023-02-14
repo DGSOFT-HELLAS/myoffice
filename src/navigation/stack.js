@@ -35,13 +35,13 @@ export const IncomingStack = () => {
 
     <Stack.Navigator>
       <Stack.Group>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{
             headerShown: false,
           }}
-        /> */}
+        />
         <Stack.Screen
           name="DayViewCalendarMain"
           component={DayViewCalendarMain}

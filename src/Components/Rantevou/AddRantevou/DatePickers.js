@@ -3,7 +3,9 @@ import { ModalTimePickerComp } from "../../DatePickers/ModalTimePicker"
 import InputLabel from "../../SharedComp/Views/InputLabel"
 
 const DatePickers = ({ setState, startTime, endTime }) => {
-  console.log('startTIme ' + startTime)
+  console.log('----- START TIME END TIME')
+  console.log(startTime)
+  console.log(endTime)
   const handleStartTime = (startTime) => {
     setState((prevState) => {
       return {

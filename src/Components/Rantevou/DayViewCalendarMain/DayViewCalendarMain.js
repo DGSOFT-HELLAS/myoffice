@@ -8,20 +8,30 @@ import { EventItem, HighlightDates, OnChangeProps, PackedEvent, RangeTime, Timel
 import { COLORS } from "../../../shared/COLORS";
 import BoldText from "../../Atoms/Text/BoldText";
 import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
+import { useNavigation } from "@react-navigation/native";
 
 
 const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
+  const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
-  // console.log(new Date('2023-02-09 10:30'))
-  // console.log('------------- EVENT --------------')
-  // console.log(event)
+  const [state, setState] = useState({
+    delete: false,
+    loading: false
+  })
+
 
 
   const handleFetch = async () => {
+    setState(prev => {
+      return {
+        ...prev, loading: true,
+      }
+    })
+
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
       query: 'wpFetchRDVForCalendar',
       startDate: day,
@@ -32,27 +42,30 @@ const DayViewCalendarMain = () => {
     // console.log(res)
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     setEvents(updatedData)
+
+    setState(prev => {
+      return {
+        ...prev, loading: false,
+      }
+    })
   }
 
   useEffect(() => {
     handleFetch()
-  }, [day])
+  }, [day, state.delete])
 
   const onDragCreateEnd = (event) => {
-    const randomId = Math.random().toString(36).slice(2, 10);
-    const newEvent = {
-      id: randomId,
-      title: randomId,
-      start: event.start,
-      end: event.end,
-      color: '#A3C7D6',
-    };
+
+    let date = event.start.split('T')[0]
+    navigation.navigate('AddRantevou', { start: event.start, end: event.end, date: date })
+
   };
   return (
     <View style={styles.container}>
       <TimelineCalendar
         viewMode="day"
         events={events}
+        isLoading={state.loading}
         // locale="gr"
         initialDate={day}
         timeInterval={60}
@@ -90,10 +103,10 @@ const DayViewCalendarMain = () => {
         onPressDayNum={(e) => console.log(e)}
         allowDragToCreate
         dragCreateInterval={30}
-        onDragCreateEnd={(e) => console.log(e)}
+        onDragCreateEnd={(e) => onDragCreateEnd(e)}
       />
 
-      <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} />
+      <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} />
     </View>
   )
 

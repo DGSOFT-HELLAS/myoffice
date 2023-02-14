@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { StyleSheet, ScrollView, Alert } from 'react-native'
 import React from 'react'
 import { Provider } from 'react-native-paper';
@@ -17,10 +17,13 @@ import CheckboxPaper from '../../SharedComp/Buttons/CheckBox';
 import HeaderWithDivider from '../../SharedComp/Views/HeaderWithDivider';
 import { UserContext } from '../../../useContext/useContect';
 import { DayContext } from '../../../useContext/daysContext';
-
-import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const AddRantevou = () => {
+  const route = useRoute();
+  console.log('------ ROute PArams')
+  console.log(route)
   const { trdr } = useContext(UserContext);
   const { setDay } = useContext(DayContext);
   const navigation = useNavigation()
@@ -37,11 +40,24 @@ const AddRantevou = () => {
     toTime: new Date(),
     status: 1
   })
-  console.log("---------------------------------- add rantevou state ----------------------------------")
+
   console.log(state)
+
+  useEffect(() => {
+    //On day view if we press on a specific time, we get the input of that time formatted as a date, and we convert it to plain time ex. 12: 40
+    if (route.params) {
+      let fromTime = new Date(route.params.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      let toTime = new Date(route.params.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      setState(prev => {
+        return {
+          ...prev, date: new Date(route.params.date), fromTime: fromTime, toTime: toTime
+        }
+      })
+    }
+  }, [])
+
   let date = state.date;
-  console.log(date)
-  console.log("---------------------------------- -----------------------e ----------------------------------")
+
 
   const handleDate = (selectredDate) => {
     setState((prevState) => {
@@ -66,7 +82,7 @@ const AddRantevou = () => {
   const onPress = async () => {
     handleEmptyState();
     let date = state.date;
-    console.log(date)
+
     setDay(date)
     if (state.service !== '' && state.person !== '' && state.customer !== '' && state.place !== '' && state.fromTime !== '' && state.toTime !== '') {
       const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'insertEvent', trdr: trdr, ...state })
@@ -74,7 +90,7 @@ const AddRantevou = () => {
         if (response) {
           console.log(response)
           if (response.error) {
-            Alert.alert("Τo Ραντεβού Δεν Είναι Πλέον Διαθέσιμο!")
+            Alert.alert(`${response.errorMessage}`)
           } else {
             navigation.navigate('DayView')
           }
@@ -102,7 +118,7 @@ const AddRantevou = () => {
           <InputLabel title="* Ημερομηνία:">
             < ModalDatePickerComp style={styles.datePicker} day={state.date} onChange={handleDate} />
           </InputLabel>
-          <DatePickers setState={setState} />
+          <DatePickers setState={setState} startTime={state.fromTime} endTime={state.toTime} />
           <CheckboxPaper title={"EΟΠΠΥ"} setState={setState} state={state} />
           <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} setState={setState} state={state} />
           <CommentInput setState={setState} />

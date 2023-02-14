@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -6,9 +6,17 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getTime } from '../../utils/getTime';
 import { COLORS } from '../../shared/COLORS';
 
-export const ModalTimePickerComp = ({ handleState, style }) => {
+export const ModalTimePickerComp = ({ handleState, style, time }) => {
   const [date, setDate] = useState(new Date());
+  const [displayDate, setDisplayDate] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
   const [show, setShow] = useState(false);
+  console.log('-----------------------------------------------------------')
+  console.log('time: ' + time)
+  console.log(displayDate)
+
+  console.log('-----------------------------------------------------------')
+
+
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -19,6 +27,14 @@ export const ModalTimePickerComp = ({ handleState, style }) => {
 
   };
 
+  useEffect(() => {
+    if (time) {
+      setDisplayDate(time.toString())
+      setDate(new Date(time))
+    }
+
+  }, [time])
+
 
   const showTimepicker = () => {
     setShow(true)
@@ -27,7 +43,8 @@ export const ModalTimePickerComp = ({ handleState, style }) => {
 
   return (
     <View>
-      <ShowTime onPress={showTimepicker} date={date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} style={style} />
+      {/* <ShowTime onPress={showTimepicker} date={date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} style={style} /> */}
+      <ShowTime onPress={showTimepicker} date={displayDate} style={style} />
       {show && (
         <DateTimePicker
           value={date}

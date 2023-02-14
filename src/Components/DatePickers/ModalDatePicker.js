@@ -6,10 +6,8 @@ import { COLORS } from '../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 export const ModalDatePickerComp = ({ day, style, onChange }) => {
-  console.log(day)
   const [date, setDate] = useState()
   if (day === day.toLocaleDateString()) {
-    console.log('day format is 2023/02/20')
     setDate(day)
   }
   const [show, setShow] = useState(false);
