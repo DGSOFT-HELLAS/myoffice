@@ -49,7 +49,7 @@ const HorizontalWeekView = ({ handleNextWeek, handlePreviousWeek, today, week, d
                         </View>
                         <View style={styles.daysContainer}>
                             {week && week.map((day, index) => {
-
+                                // console.log(week)
                                 return (
                                     <TouchableOpacity
                                         onPress={() => onDayPress(day, index)}

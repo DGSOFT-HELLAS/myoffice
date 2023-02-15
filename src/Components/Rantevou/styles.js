@@ -83,5 +83,10 @@ export const styles = StyleSheet.create({
   },
   orange: {
     borderTopColor: 'orange',
+  },
+  ///new flatlist item
+  flatItem: {
+    backgroundColor: 'white'
   }
+
 });

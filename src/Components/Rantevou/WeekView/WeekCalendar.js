@@ -43,8 +43,9 @@ const WeekViewCalendar = () => {
     displayMonth: '',
   })
 
-  // console.log('--------------------------- STATEEEE _________________')
-  // console.log(state)
+  console.log('--------------------------- STATEEEE _________________')
+  console.log(state.monday)
+  // console.log(state.monday)
 
 
   const [raw, setRaw] = useState({
@@ -55,13 +56,13 @@ const WeekViewCalendar = () => {
 
   const commonWeekView = (monday, sunday) => {
 
-    setState(prev => {
-      return { ...prev, monday: monday, sunday: sunday }
-    })
-
     let m = createStringMonth(monday, sunday);
     setState(prev => {
       return { ...prev, displayMonth: m }
+    })
+
+    setState(prev => {
+      return { ...prev, monday: monday, sunday: sunday }
     })
 
 
@@ -73,20 +74,12 @@ const WeekViewCalendar = () => {
 
 
   const handleStartEndWeek = () => {
-
-    // Calculate the next Sunday by adding the number of days until the next Sunday to the current date
     let nextSunday = new Date(currentDate.getTime() + (daysUntilNextSunday * 24 * 60 * 60 * 1000));
     let lastMonday = new Date(currentDate.getTime() - (daysUntilLastMonday * 24 * 60 * 60 * 1000));
     let m = createStringMonth(lastMonday, nextSunday);
     setState(prev => {
       return { ...prev, monday: lastMonday, sunday: nextSunday, today: currentDate, displayMonth: m }
     })
-
-
-
-
-
-
     lastMonday = splitDate(lastMonday)
     nextSunday = splitDate(nextSunday)
     handleCalendar(lastMonday);

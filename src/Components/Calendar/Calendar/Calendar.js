@@ -5,7 +5,7 @@ import { UserContext } from '../../../useContext/useContect';
 import { format, lastDayOfMonth } from 'date-fns'
 import { DayContext } from '../../../useContext/daysContext';
 import { useNavigation } from '@react-navigation/native';
-// import Locales from '../Locales';
+import Locales from '../Locales';
 
 const CalendarMonth = () => {
   const { trdr } = useContext(UserContext)

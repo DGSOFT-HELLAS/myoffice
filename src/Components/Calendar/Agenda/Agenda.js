@@ -2,10 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Calendar, CalendarList, Agenda, AgendaEntry } from 'react-native-calendars';
 import { fetchAPI } from "../../../utils/fetchAPI";
-import addDays from "date-fns/addDays";
-import CalendarMonthList from "../CalendarList/CalendarList";
+// import CalendarMonthList from "../CalendarList/CalendarList";
 import { UserContext } from "../../../useContext/useContect";
-import { format, lastDayOfMonth } from 'date-fns'
+import format from "date-fns/format";
+import lastDayOfMonth from "date-fns/lastDayOfMonth";
+
 
 
 const events = [
@@ -26,7 +27,7 @@ const AgendaCalendar = () => {
   const { trdr } = useContext(UserContext)
 
   const [state, setState] = useState({
-    startDate: '',
+    startDate: new Date(),
     endDate: '',
     stelexos: 0,
     showList: false
@@ -72,8 +73,7 @@ const AgendaCalendar = () => {
 
 
   useEffect(() => {
-    let date = new Date().toISOString().split('T')[0]
-    // setSelectedDate(date)
+    let date = new Date()
     loadItemsForMonth(date)
 
   }, [])
@@ -82,25 +82,21 @@ const AgendaCalendar = () => {
   }, [state.startDate, state.endDate])
 
   const loadItemsForMonth = (month) => {
-
-    const today = new Date(month);
-    const firstDateOfMonth = format(today, 'yyyy-MM-01')
-    const lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
+    let date = new Date(month)
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 2);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 1)
     setState((prev) => {
       return {
-        ...prev, startDate: firstDateOfMonth, endDate: lastDateOfMonth
+        ...prev, startDate: firstDay, endDate: lastDay
       }
     })
-
   }
 
   return (
-
     <View style={styles.container}>
       <View style={styles.bottomView}>
         <TouchableOpacity
           onPress={() => {
-            console.log('showlist knob')
             setState((prev) => {
               return {
                 ...prev, showList: !prev.showList
@@ -112,10 +108,9 @@ const AgendaCalendar = () => {
 
       </View>
 
-
       {!state.showList && (
         <Agenda
-          initialDate={'2023-02-01'}
+          initialDate={'2023-02-09'}
           firstDay={1}
           // items={data}
           selected={selectedDate}
@@ -126,18 +121,17 @@ const AgendaCalendar = () => {
           // minDate={'2012-05-10'}
           // maxDate={'2012-05-30'}
           hideKnob={true}
-
-
           items={{
             '2023-02-09': [{ startDate: '2023-02-09', endDate: '2023-02-09', title: '1: this is an original title' }, { startDate: '2023-02-09', endDate: '2023-02-09', title: '2: this is an original title' }],
             '2023-02-08': [{ startDate: '2023-02-08', endDate: '2023-02-08', title: '3: this is an original title' }, { startDate: '2023-02-08', endDate: '2023-02-08', title: '4: this is an original title' }],
+            '2023-02-15': [{ startDate: '2023-02-15', endDate: '2023-02-15', title: '3: this is an original title' }, { startDate: '2023-02-15', endDate: '2023-02-15', title: '434234: this is an original title' }],
+            '2023-02-16': [{ startDate: '2023-02-16', endDate: '2023-02-16', title: '3: this is an original title' }, { startDate: '2023-02-16', endDate: '2023-02-16', title: '42321q4: this is an original title' }],
           }}
-          // renderItem={(item, firstItemInDay) => {
-          //   return (
-          //     <RenderItem firstItemInDay={firstItemInDay} item={item} />
-          //   )
-          // }}
-          renderEmptyDate={RenderEmptyDate}
+          renderItem={(item, firstItemInDay) => {
+            return (
+              <RenderItem firstItemInDay={firstItemInDay} item={item} />
+            )
+          }}
           loadItemsForMonth={month => {
             loadItemsForMonth(month)
 
@@ -147,7 +141,7 @@ const AgendaCalendar = () => {
           }}
         />
       )}
-      {state.showList && <CalendarMonthList state={state} setState={setState} />}
+      {/* {state.showList && <CalendarMonthList state={state} setState={setState} />} */}
     </View>
   )
 }
