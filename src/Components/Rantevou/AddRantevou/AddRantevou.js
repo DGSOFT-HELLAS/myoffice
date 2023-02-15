@@ -50,7 +50,7 @@ const AddRantevou = () => {
       // let toTime = new Date(route.params.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       setState(prev => {
         return {
-          ...prev, date: new Date(route.params.date), fromTime: route.params.start, toTime: route.params.end
+          ...prev, date: new Date(route.params.date), fromTime: new Date(route.params.start), toTime: new Date(route.params.end)
         }
       })
     }
@@ -92,7 +92,7 @@ const AddRantevou = () => {
           if (response.error) {
             Alert.alert(`${response.errorMessage}`)
           } else {
-            navigation.navigate('DayViewCalendarMain', { date: state.date.toString() })
+            navigation.navigate('DayViewCalendarMain', { date: date.toString() })
           }
         }
       } catch (error) {

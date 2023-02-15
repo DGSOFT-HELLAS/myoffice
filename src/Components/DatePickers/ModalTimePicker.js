@@ -5,20 +5,31 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getTime } from '../../utils/getTime';
 import { COLORS } from '../../shared/COLORS';
-
+import { constructDate } from '../../utils/dateFunctions/constructDate';
 export const ModalTimePickerComp = ({ handleState, style, time }) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  console.log('-----------------------------------------------------------')
-  console.log('time: ' + time)
 
+
+
+
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate;
+  //   const d = getTime(selectedDate);
+
+  //   handleState(selectedDate)
+  //   setDate(currentDate);
+  //   setShow(false);
+  // };
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     const d = getTime(selectedDate);
-    handleState(d)
-    setShow(false);
+    //this is what we save to the state to send the request. we want the full date here.
+    let date = constructDate(selectedDate)
+    console.log(date)
+    handleState(date)
     setDate(currentDate);
-
+    setShow(false)
   };
 
   useEffect(() => {
@@ -37,14 +48,14 @@ export const ModalTimePickerComp = ({ handleState, style, time }) => {
   return (
     <View>
       <ShowTime onPress={showTimepicker} date={new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} style={style} />
-      {show && (
+      {show ? (
         <DateTimePicker
           value={new Date(date)}
           mode={'time'}
           is24Hour={true}
           onChange={onChange}
         />
-      )}
+      ) : null}
 
     </View>
   );

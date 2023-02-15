@@ -15,7 +15,7 @@ const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
   const route = useRoute()
   console.log('---------------------------- DAY VIEW ROUTE ---------------------------------')
-  console.log(route)
+  console.log(route.params)
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
