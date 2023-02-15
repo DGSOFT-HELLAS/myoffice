@@ -42,20 +42,19 @@ const DayViewCalendarHeader = ({ date, setState, state }) => {
 
 const styles = StyleSheet.create({
   container: {
-
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.secondaryColorShade001,
+    borderBottomColor: '#eaeaea',
     backgroundColor: 'white',
     elevation: 2,
   },
 
   view: {
-    padding: 20,
+    padding: 10,
     height: 60,
-
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+
   },
   calendarView: {
     width: '100%',
