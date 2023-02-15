@@ -18,7 +18,6 @@ const CalendarMonth = () => {
     stelexos: 0,
   })
 
-  console.log('day in calendar view ' + day)
 
   const handleFetch = async () => {
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
@@ -79,9 +78,7 @@ const CalendarMonth = () => {
       onDayPress={(day) => {
         let date = day.dateString
         setDay(date)
-        console.log(date)
-        let date2 = `${day.year}-${day.month}-${day.day}`
-        console.log(day)
+
         navigation.navigate('DayViewCalendarMain', { date: date })
       }}
     />

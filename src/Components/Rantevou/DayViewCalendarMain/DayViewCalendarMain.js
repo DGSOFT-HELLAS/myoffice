@@ -12,6 +12,10 @@ import { useRoute } from "@react-navigation/native";
 import DayViewCalendarHeader from "./DayViewCalendarHeader";
 import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
+import { useIsFocused } from '@react-navigation/native';
+
+
+
 const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
 
@@ -20,6 +24,8 @@ const DayViewCalendarMain = () => {
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
+  const isFocused = useIsFocused();
+
   const [state, setState] = useState({
     delete: false,
     loading: true,
@@ -57,7 +63,7 @@ const DayViewCalendarMain = () => {
   useEffect(() => {
     handleFetch()
 
-  }, [day, state.delete, state.refresh, state.stelexos])
+  }, [day, state.delete, state.refresh, state.stelexos, isFocused])
 
 
 
