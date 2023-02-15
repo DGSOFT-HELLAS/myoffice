@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { StyleSheet, ScrollView, Alert } from 'react-native'
+import { StyleSheet, ScrollView, Alert, View } from 'react-native'
 import React from 'react'
 import { Provider } from 'react-native-paper';
 import { COLORS } from '../../../shared/COLORS';
@@ -103,7 +103,9 @@ const AddRantevou = () => {
 
     }
   }
-
+  const cancelAdd = () => {
+    navigation.goBack()
+  }
   return (
     <Provider>
       <ScrollView style={styles.scrollView} >
@@ -122,7 +124,10 @@ const AddRantevou = () => {
           <CheckboxPaper title={"EΟΠΠΥ"} setState={setState} state={state} />
           <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} setState={setState} state={state} />
           <CommentInput setState={setState} />
-          <Button style={styles.btn} text={"Αποθήκευση"} onPress={onPress} />
+          <View style={styles.btnView}>
+            <Button style={styles.btn} text={"Αποθήκευση"} onPress={onPress} />
+            <Button style={styles.cancelBtn} text={"Aκύρωση"} onPress={cancelAdd} />
+          </View>
         </AddView>
       </ScrollView >
     </Provider>
@@ -164,9 +169,19 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     width: 150,
     backgroundColor: COLORS.secondaryColor,
-    marginBottom: 20,
+    marginRight: 5,
+    width: '45%',
+  },
+  cancelBtn: {
+    width: '45%',
+    backgroundColor: COLORS.deleteBtn,
+    marginLeft: 5,
+  },
+  btnView: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   }
-
 
 
   // datePicker: {

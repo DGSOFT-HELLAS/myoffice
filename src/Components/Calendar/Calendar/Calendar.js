@@ -78,6 +78,7 @@ const CalendarMonth = () => {
       }}
       onDayPress={(day) => {
         let date = day.dateString
+        setDay(date)
         console.log(date)
         let date2 = `${day.year}-${day.month}-${day.day}`
         console.log(day)

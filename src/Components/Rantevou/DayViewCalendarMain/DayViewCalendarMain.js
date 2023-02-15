@@ -7,25 +7,27 @@ import ModalFullEvent from "./ModalView";
 import { TimelineCalendar } from '@howljs/calendar-kit'
 import { COLORS } from "../../../shared/COLORS";
 import BoldText from "../../Atoms/Text/BoldText";
-import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import DayViewCalendarHeader from "./DayViewCalendarHeader";
+import ColorLoader from "./ColorLoader";
 
 const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
+
   const route = useRoute()
-  console.log('---------------------------- DAY VIEW ROUTE ---------------------------------')
-  console.log(route.params)
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
+  // const [headerDate, setHeaderDate] = useState(route.params.date)
   const [state, setState] = useState({
     delete: false,
-    loading: false,
-
+    loading: true,
+    refresh: false,
   })
+
 
 
   const handleFetch = async () => {
@@ -42,7 +44,7 @@ const DayViewCalendarMain = () => {
       trdr: trdr,
       stelexos: 0
     })
-    // console.log(res)
+    console.log(res)
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     setEvents(updatedData)
 
@@ -55,7 +57,8 @@ const DayViewCalendarMain = () => {
 
   useEffect(() => {
     handleFetch()
-  }, [day, state.delete])
+
+  }, [day, state.delete, state.refresh])
 
 
 
@@ -67,16 +70,21 @@ const DayViewCalendarMain = () => {
     navigation.navigate('AddRantevou', { start: start, end: end, date: date })
 
   };
+
+
   return (
     <View style={styles.container}>
+      <DayViewCalendarHeader date={day} setState={setState} state={state} />
+      {/* <ColorLoader loading={state.loading} /> */}
       <TimelineCalendar
         viewMode="day"
-        initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
+        isShowHeader={false}
+        // initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
+        initialDate={day}
         events={events}
         isLoading={state.loading}
         onDateChanged={(date) => {
-          console.log('date changed')
-          console.log(date)
+          setDay(date)
         }}
         locale="gr"
         timeInterval={60}
@@ -100,14 +108,10 @@ const DayViewCalendarMain = () => {
           setEvent(obj)
           setIsVisible(true)
         }}
-        onChange={(day) => {
-          // console.log('on change happended')
-          setDay(day.date)
-        }}
-        onPressDayNum={(e) => console.log(e)}
         allowDragToCreate
         dragCreateInterval={30}
         onDragCreateEnd={(e) => onDragCreateEnd(e)}
+
       />
 
       <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} />
