@@ -10,22 +10,21 @@ import BoldText from "../../Atoms/Text/BoldText";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import DayViewCalendarHeader from "./DayViewCalendarHeader";
-import ColorLoader from "./ColorLoader";
-
+import ModalPersons from "../Modal";
+import { Provider } from "react-native-paper";
 const DayViewCalendarMain = () => {
   const { day, setDay } = useContext(DayContext)
 
-  const route = useRoute()
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
-  // const [headerDate, setHeaderDate] = useState(route.params.date)
   const [state, setState] = useState({
     delete: false,
     loading: true,
     refresh: false,
+    stelexos: 0
   })
 
 
@@ -42,7 +41,7 @@ const DayViewCalendarMain = () => {
       startDate: day,
       endDate: '',
       trdr: trdr,
-      stelexos: 0
+      stelexos: state.stelexos
     })
     console.log(res)
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
@@ -58,7 +57,7 @@ const DayViewCalendarMain = () => {
   useEffect(() => {
     handleFetch()
 
-  }, [day, state.delete, state.refresh])
+  }, [day, state.delete, state.refresh, state.stelexos])
 
 
 
@@ -73,49 +72,52 @@ const DayViewCalendarMain = () => {
 
 
   return (
-    <View style={styles.container}>
-      <DayViewCalendarHeader date={day} setState={setState} state={state} />
-      {/* <ColorLoader loading={state.loading} /> */}
-      <TimelineCalendar
-        viewMode="day"
-        isShowHeader={false}
-        // initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
-        initialDate={day}
-        events={events}
-        isLoading={state.loading}
-        onDateChanged={(date) => {
-          setDay(date)
-        }}
-        locale="gr"
-        timeInterval={60}
-        start={6}
-        // locale="gr"
-        initialTimeIntervalHeight={120}
-        overlapEventsSpacing={2}
-        containerStyle={styles.customItem}
-        renderEventContent={(event) => eventItem(event)}
-        onPressEvent={(evt) => {
-          const obj = Object.keys(evt)
-            .filter((key) => {
-              return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour'
-            })
-            .reduce((obj, key) => {
-              return Object.assign(obj, {
-                [key]: evt[key]
-              });
-            }, {});
+    <Provider>
+      <View style={styles.container}>
+        <ModalPersons title={"Στέλεχος"} query="GetPersons" setState={setState} updateValue={"stelexos"} hideLabel={true} />
+        <DayViewCalendarHeader date={day} setState={setState} state={state} />
+        {/* <ColorLoader loading={state.loading} /> */}
+        <TimelineCalendar
+          viewMode="day"
+          isShowHeader={false}
+          // initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
+          initialDate={day}
+          events={events}
+          isLoading={state.loading}
+          onDateChanged={(date) => {
+            setDay(date)
+          }}
+          locale="gr"
+          timeInterval={60}
+          start={6}
+          // locale="gr"
+          initialTimeIntervalHeight={120}
+          overlapEventsSpacing={2}
+          containerStyle={styles.customItem}
+          renderEventContent={(event) => eventItem(event)}
+          onPressEvent={(evt) => {
+            const obj = Object.keys(evt)
+              .filter((key) => {
+                return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour'
+              })
+              .reduce((obj, key) => {
+                return Object.assign(obj, {
+                  [key]: evt[key]
+                });
+              }, {});
 
-          setEvent(obj)
-          setIsVisible(true)
-        }}
-        allowDragToCreate
-        dragCreateInterval={30}
-        onDragCreateEnd={(e) => onDragCreateEnd(e)}
+            setEvent(obj)
+            setIsVisible(true)
+          }}
+          allowDragToCreate
+          dragCreateInterval={30}
+          onDragCreateEnd={(e) => onDragCreateEnd(e)}
 
-      />
+        />
 
-      <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} />
-    </View>
+        <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} />
+      </View>
+    </Provider>
   )
 
 
@@ -125,7 +127,7 @@ const eventItem = (event) => {
   return (
     <View style={[styles.customItem]}>
       <BoldText style={styles.eventText}>{`${event["'Ωρα"]}`}</BoldText>
-      <Text style={styles.eventText}>{` - ${event.title}`}</Text>
+      <Text style={styles.eventText2}>{` - ${event.title}`}</Text>
     </View>
   )
 
@@ -143,10 +145,11 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     borderLeftWidth: 4,
     borderLeftColor: 'green',
-    backgroundColor: COLORS.secondaryColorShade003,
+    backgroundColor: '#fbfbfb',
     flexDirection: 'row',
     // alignItems: 'center',
     marginVertical: 1,
+    flexWrap: 'wrap'
   },
   limeGreen: {
     backgroundColor: '#1fb90e',
@@ -155,6 +158,10 @@ const styles = StyleSheet.create({
 
   eventText: {
     fontSize: 11,
+    color: 'black'
+  },
+  eventText2: {
+    fontSize: 9,
     color: 'black'
   },
   lightSteelBlue: {

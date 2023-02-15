@@ -116,8 +116,7 @@ const ListItem = ({ item }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    padding: 5,
-    marginBottom: 5,
+    padding: 10,
     // borderBottomWidth: 1,
     // borderBottomColor: COLORS.secondaryColorShade002,
     elevation: 2,
