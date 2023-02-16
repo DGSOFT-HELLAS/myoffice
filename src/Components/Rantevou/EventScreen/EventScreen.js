@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, Alert, Modal, TouchableOpacity, Pressable, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { COLORS } from "../../../shared/COLORS";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
-import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
-import Button from "../../SharedComp/Buttons/Button";
+// import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
+// import Button from "../../SharedComp/Buttons/Button";
 import EditButton from "../../SharedComp/Buttons/EditButton";
 import CheckboxPaper from "../../SharedComp/Buttons/CheckBox";
 import { useNavigation } from "@react-navigation/native";
 import BoldText from "../../Atoms/Text/BoldText";
 import { fetchAPI } from "../../../utils/fetchAPI";
 import { DayContext } from "../../../useContext/daysContext";
-import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
-import InputLabel from "../AddRantevou/InputLabel";
 import { DatePickerComp } from "./DatePicker";
+import { TimePicker } from "./timePicker";
+import InputLabel from "../AddRantevou/InputLabel";
+
+
 const EventScreen = ({ setIsVisible, setState }) => {
   const navigation = useNavigation()
   const { day, singleEvent, setDay } = useContext(DayContext)
@@ -41,9 +43,7 @@ const EventScreen = ({ setIsVisible, setState }) => {
     reason: 'customer'
   })
 
-
-
-
+  console.log(raw)
 
   useEffect(() => {
     setRaw(prev => {
@@ -65,7 +65,6 @@ const EventScreen = ({ setIsVisible, setState }) => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            // navigation.goBack();
             setIsVisible(false)
           }}
         >
@@ -73,7 +72,7 @@ const EventScreen = ({ setIsVisible, setState }) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.bodyView}>
-        <ListBody data={singleEvent} onEditBtn={onEditBtn} raw={raw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} setRaw />
+        <ListBody data={singleEvent} onEditBtn={onEditBtn} raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} />
       </ScrollView>
     </View>
   );
@@ -83,9 +82,8 @@ const EventScreen = ({ setIsVisible, setState }) => {
 const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, setRaw }) => {
   const navigation = useNavigation()
   const [hide, setHide] = useState()
-
   const handleDate = (selectredDate) => {
-    console.log(selectredDate)
+    console.log('selected date: ' + selectredDate)
     setRaw((prevState) => {
       return {
         ...prevState, date: selectredDate
@@ -116,22 +114,15 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
     }
   }
 
-  const [raw2, setRaw2] = useState({
-    eoppy: 0,
-    date: '2023-03-04',
-    fromTime: '2023-03-04T07:00:00',
-    toTime: '2023-03-04T08:00:00',
-    soaction: '1142133',
-    reason: 'customer'
-  })
 
-  const handlePost2 = async () => {
-    setDay('2023-03-04')
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw2 })
-    setIsVisible(false);
-    navigation.navigate('DayViewCalendarMain');
 
-  }
+  // const handlePost2 = async () => {
+  //   setDay('2023-03-04')
+  //   const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw2 })
+  //   setIsVisible(false);
+  //   navigation.navigate('DayViewCalendarMain');
+
+  // }
 
   return (
     <ListBodyView>
@@ -147,23 +138,52 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
       {hide ? (
         <>
           <BoldText style={styles.editTileText}>Κατάσταση:</BoldText>
-          <Text style={styles.smallText}>Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το ρανεβού:</Text>
-          <DatePickerComp day={new Date(raw.date)} onChange={handleDate} />
+          <Text style={styles.smallText}>Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το ραντεβού:</Text>
+          <InputLabel title="* Ημερομηνία:">
+            <DatePickerComp day={new Date(raw.date)} onChange={handleDate} style={{ width: '70%' }} />
+          </InputLabel>
+
+          <ShowEditComponents raw={raw} setRaw={setRaw} />
         </>
       ) : (null)}
       <View style={styles.buttonView}>
-        {/* <EditButton onPress={() => onEditBtn(data)} /> */}
         <EditButton onPress={() => setHide((prev) => !prev)} />
-        {/* <TouchableOpacity onPress={() => handlePost2()}>
-          <Text>Reschedule</Text>
-        </TouchableOpacity> */}
-        {/* <InputLabel title="Ημερομηνία:">
-          < ModalDatePicker style={styles.datePicker} day={new Date(day)} onChange={handleDate} />
-        </InputLabel> */}
+
       </View>
 
 
     </ListBodyView>
+  )
+}
+
+const ShowEditComponents = ({ raw, setRaw }) => {
+  const handleStartTime = (time) => {
+    setRaw((prevState) => {
+      return {
+        ...prevState, fromTime: time
+      }
+    })
+  }
+  const handleEndTime = (time) => {
+    setRaw((prevState) => {
+      return {
+        ...prevState, toTime: time
+      }
+    })
+  }
+
+
+  return (
+    <>
+      <InputLabel title="* Έναρξη:">
+        <TimePicker style={{ width: '70%' }} propsTime={raw.fromTime} handleState={handleStartTime} />
+        {/* propsTime={raw.fromTime} handleState={handleStartTime} */}
+      </InputLabel>
+      <InputLabel title="* Λήξη:">
+        <TimePicker style={{ width: '70%' }} propsTime={raw.toTime} handleState={handleEndTime} />
+        {/* propsTime={raw.fromTime} handleState={handleStartTime} */}
+      </InputLabel>
+    </>
   )
 }
 
