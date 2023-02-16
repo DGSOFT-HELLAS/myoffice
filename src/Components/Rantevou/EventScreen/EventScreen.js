@@ -20,9 +20,6 @@ const EventScreen = ({ setIsVisible, setState }) => {
   const navigation = useNavigation()
   const { day, singleEvent, setDay } = useContext(DayContext)
 
-  // const [day1, month, year] = routeData["Ημ/νία"]?.split('/');
-  // let newDate = parseInt(day1) + 1
-  // const date = new Date(year, month - 1, newDate);
 
   let startTime = singleEvent["'Ωρα"].split(' : ')[0];
   let endTime = singleEvent["'Ωρα"].split(' : ')[1];
@@ -35,16 +32,14 @@ const EventScreen = ({ setIsVisible, setState }) => {
 
   const [raw, setRaw] = useState({
     eoppy: singleEvent["cccRDVEOPYY"],
-    // date: date,
     date: day,
     fromTime: startTime,
     toTime: endTime,
     soaction: singleEvent["soaction"],
-    reason: 'customer'
+    reason: ''
   })
 
   console.log(raw)
-
   useEffect(() => {
     setRaw(prev => {
       return {
@@ -82,25 +77,9 @@ const EventScreen = ({ setIsVisible, setState }) => {
 const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, setRaw }) => {
   const navigation = useNavigation()
   const [hide, setHide] = useState()
-  const handleDate = (selectredDate) => {
-    console.log('selected date: ' + selectredDate)
-    setRaw((prevState) => {
-      return {
-        ...prevState, date: selectredDate
-      }
-    })
-  }
 
-  const subscriberReschedule = () => {
-    handlePost('subscriber');
-    setIsVisible(false)
-  }
-  const customerReschedule = () => {
-    handlePost('customer');
-    setIsVisible(false)
-  }
-  useEffect(() => {
-  }, [])
+  //Handle DatePicker 
+
 
 
   const handlePost = async (reason) => {
@@ -116,13 +95,6 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
 
 
 
-  // const handlePost2 = async () => {
-  //   setDay('2023-03-04')
-  //   const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw2 })
-  //   setIsVisible(false);
-  //   navigation.navigate('DayViewCalendarMain');
-
-  // }
 
   return (
     <ListBodyView>
@@ -139,16 +111,13 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
         <>
           <BoldText style={styles.editTileText}>Κατάσταση:</BoldText>
           <Text style={styles.smallText}>Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το ραντεβού:</Text>
-          <InputLabel title="* Ημερομηνία:">
-            <DatePickerComp day={new Date(raw.date)} onChange={handleDate} style={{ width: '70%' }} />
-          </InputLabel>
 
-          <ShowEditComponents raw={raw} setRaw={setRaw} />
+
+          <ShowEditComponents raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} />
         </>
       ) : (null)}
       <View style={styles.buttonView}>
         <EditButton onPress={() => setHide((prev) => !prev)} />
-
       </View>
 
 
@@ -156,7 +125,21 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
   )
 }
 
-const ShowEditComponents = ({ raw, setRaw }) => {
+const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible }) => {
+  const navigation = useNavigation()
+
+
+  const handleDate = (selectredDate) => {
+    let day = selectredDate.toISOString().split('T')[0]
+    setDay(day)
+    setRaw((prevState) => {
+      return {
+        ...prevState, date: selectredDate
+      }
+    })
+  }
+
+  //handle State for TimePickers
   const handleStartTime = (time) => {
     setRaw((prevState) => {
       return {
@@ -164,6 +147,7 @@ const ShowEditComponents = ({ raw, setRaw }) => {
       }
     })
   }
+  //handle State for TimePickers
   const handleEndTime = (time) => {
     setRaw((prevState) => {
       return {
@@ -172,17 +156,54 @@ const ShowEditComponents = ({ raw, setRaw }) => {
     })
   }
 
+  //Reschedule Event:
+  const customerReschedule = () => {
+    setRaw((prevState) => {
+      return {
+        ...prevState, reason: 'customer'
+      }
+    })
+    handlePost();
+  }
+
+  //Reschedule Event:
+  const subscriberReschedule = () => {
+    setRaw((prevState) => {
+      return {
+        ...prevState, reason: 'subscriber'
+      }
+    })
+    handlePost();
+  }
+
+
+  const handlePost = async () => {
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
+    console.log(response)
+    setIsVisible(false)
+
+  }
 
   return (
     <>
+      <InputLabel title="* Ημερομηνία:">
+        <DatePickerComp day={new Date(raw.date)} onChange={handleDate} style={{ width: '70%' }} />
+      </InputLabel>
       <InputLabel title="* Έναρξη:">
         <TimePicker style={{ width: '70%' }} propsTime={raw.fromTime} handleState={handleStartTime} />
-        {/* propsTime={raw.fromTime} handleState={handleStartTime} */}
       </InputLabel>
       <InputLabel title="* Λήξη:">
         <TimePicker style={{ width: '70%' }} propsTime={raw.toTime} handleState={handleEndTime} />
-        {/* propsTime={raw.fromTime} handleState={handleStartTime} */}
       </InputLabel>
+      <BoldText style={styles.editTileText}>Επαναπρογραμματισμός:</BoldText>
+      <View style={styles.row}>
+        <TouchableOpacity onPress={customerReschedule} style={styles.reprogram} >
+          <Text style={styles.reprogramText} >Πελάτης</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={subscriberReschedule} style={styles.reprogram}>
+          <Text style={styles.reprogramText}>Συνδρομητής</Text>
+        </TouchableOpacity>
+      </View>
     </>
   )
 }
@@ -201,6 +222,7 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 11
   },
+
   topView: {
     minHeight: 60,
     padding: 15,
@@ -296,7 +318,20 @@ const styles = StyleSheet.create({
   smallText: {
     fontSize: 13,
     marginBottom: 20,
-  }
+  },
+  reprogram: {
+    padding: 10,
+    backgroundColor: COLORS.primaryColorDarker001,
+    marginVertical: 5,
+    width: '60%',
+    minHeight: 50,
+    justifyContent: 'center',
+    borderRadius: 4,
+  },
+  reprogramText: {
+    color: 'black',
+    fontSize: 15
+  },
 
 
 });
