@@ -23,9 +23,6 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
 
 
 
-  // const [state, setState] = useState({
-  //   eoppy: event.eoppy 
-  // })
 
   useEffect(() => {
     setRaw(prev => {
@@ -33,7 +30,6 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
         ...prev, soaction: event["soaction"]
       }
     })
-    console.log(raw)
   }, [event["soaction"]])
   return (
     <Modal

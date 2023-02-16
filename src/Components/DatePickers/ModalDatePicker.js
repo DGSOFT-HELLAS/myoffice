@@ -5,6 +5,53 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+// export const ModalDatePickerComp = ({ day, style, onChange }) => {
+//   const [date, setDate] = useState()
+//   if (day === day.toLocaleDateString()) {
+//     setDate(day)
+//   }
+//   const [show, setShow] = useState(false);
+//   const showTimepicker = () => {
+//     setShow(true)
+//   };
+
+
+
+//   return (
+//     <View>
+//       <ShowTime onPress={showTimepicker} day={day} style={style} />
+//       {show && (
+//         <DateTimePicker
+//           value={new Date(day)}
+//           mode={'date'}
+//           is24Hour={true}
+//           onChange={(event, selectedDate) => {
+//             setShow(false)
+//             onChange(selectedDate)
+//           }}
+//         />
+//       )}
+//     </View>
+//   );
+// };
+
+
+// export const ShowTime = ({ onPress, day, style, leftSide, rightSide }) => {
+//   console.log('---------------------------------')
+//   console.log(day)
+//   let date = new Date(day).toLocaleDateString()
+//   return (
+//     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>
+//       <View style={styles.leftSide}>
+//         {/* <Text style={[styles.timeText, leftSide]}>{`${date}`}</Text> */}
+//         <Text style={[styles.timeText, leftSide]}>{date}</Text>
+//       </View>
+//       <View style={[styles.rightSide, rightSide]}>
+//         <Entypo style={styles.icon} name="calendar" />
+//       </View>
+//     </TouchableOpacity >
+//   )
+// }
 export const ModalDatePickerComp = ({ day, style, onChange }) => {
   const [date, setDate] = useState()
   if (day === day.toLocaleDateString()) {
@@ -37,7 +84,8 @@ export const ModalDatePickerComp = ({ day, style, onChange }) => {
 
 
 export const ShowTime = ({ onPress, day, style, leftSide, rightSide }) => {
-
+  console.log('---------------------------------')
+  console.log(day)
   let date = new Date(day).toLocaleDateString()
   return (
     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>

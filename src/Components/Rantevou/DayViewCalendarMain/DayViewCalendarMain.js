@@ -13,12 +13,12 @@ import DayViewCalendarHeader from "./DayViewCalendarHeader";
 import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
 import { useIsFocused } from '@react-navigation/native';
-
+import EventScreen from "../EventScreen/EventScreen";
 
 
 const DayViewCalendarMain = () => {
-  const { day, setDay } = useContext(DayContext)
-
+  const { day, setDay, setSingleEvent } = useContext(DayContext)
+  console.log(day)
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
@@ -61,9 +61,15 @@ const DayViewCalendarMain = () => {
   }
 
   useEffect(() => {
+    setIsVisible(false)
     handleFetch()
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleFetch()
+    });
 
-  }, [day, state.delete, state.refresh, state.stelexos, isFocused])
+    return unsubscribe;
+
+  }, [day, state.delete, state.stelexos, isFocused, navigation])
 
 
 
@@ -76,53 +82,64 @@ const DayViewCalendarMain = () => {
 
   };
 
+  const onPressEvent = (evt) => {
+    const obj = Object.keys(evt)
+      .filter((key) => {
+        return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour'
+      })
+      .reduce((obj, key) => {
+        return Object.assign(obj, {
+          [key]: evt[key]
+        });
+      }, {});
 
+    setEvent(obj)
+    setSingleEvent(obj)
+    ///delete later
+    setIsVisible(true)
+
+  }
+
+
+  const goTo = () => {
+    navigation.navigate('EventScreen')
+  }
   return (
     <Provider>
-      <View style={styles.container}>
-        <ModalPersons title={"Στέλεχος"} query="GetPersons" setState={setState} updateValue={"stelexos"} hideLabel={true} />
-        <DayViewCalendarHeader date={day} setState={setState} state={state} />
-        {/* <ColorLoader loading={state.loading} /> */}
-        <TimelineCalendar
-          viewMode="day"
-          isShowHeader={false}
-          // initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
-          initialDate={day}
-          events={events}
-          isLoading={state.loading}
-          onDateChanged={(date) => {
-            setDay(date)
-          }}
-          locale="gr"
-          timeInterval={60}
-          start={6}
-          // locale="gr"
-          initialTimeIntervalHeight={120}
-          overlapEventsSpacing={2}
-          containerStyle={styles.customItem}
-          renderEventContent={(event) => eventItem(event)}
-          onPressEvent={(evt) => {
-            const obj = Object.keys(evt)
-              .filter((key) => {
-                return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour'
-              })
-              .reduce((obj, key) => {
-                return Object.assign(obj, {
-                  [key]: evt[key]
-                });
-              }, {});
+      {!isVisible ? (
+        <View style={styles.container}>
+          <ModalPersons title={"Στέλεχος"} query="GetPersons" setState={setState} updateValue={"stelexos"} hideLabel={true} />
+          <DayViewCalendarHeader date={day} setState={setState} state={state} />
+          {/* <ColorLoader loading={state.loading} /> */}
+          <TimelineCalendar
+            viewMode="day"
+            isShowHeader={false}
+            // initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
+            initialDate={day}
+            events={events}
+            onDateChanged={(date) => {
+              setDay(date)
+            }}
+            locale="gr"
+            timeInterval={60}
+            start={6}
+            // locale="gr"
+            initialTimeIntervalHeight={120}
+            overlapEventsSpacing={2}
+            containerStyle={styles.customItem}
+            renderEventContent={(event) => eventItem(event)}
+            onPressEvent={(evt) => {
+              onPressEvent(evt)
+            }}
+            allowDragToCreate
+            dragCreateInterval={30}
+            onDragCreateEnd={(e) => onDragCreateEnd(e)}
 
-            setEvent(obj)
-            setIsVisible(true)
-          }}
-          allowDragToCreate
-          dragCreateInterval={30}
-          onDragCreateEnd={(e) => onDragCreateEnd(e)}
+          />
 
-        />
-
-        <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} />
-      </View>
+          {/* <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} /> */}
+        </View>
+      ) : <EventScreen setIsVisible={setIsVisible} setState={setState} />}
     </Provider>
   )
 

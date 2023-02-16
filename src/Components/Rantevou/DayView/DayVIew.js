@@ -16,7 +16,7 @@ import { Provider } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const DayView = () => {
-
+  const { trdr } = useContext(UserContext)
   const { day } = useContext(DayContext);
   const navigation = useNavigation();
   const [state, setState] = useState({
@@ -24,11 +24,6 @@ const DayView = () => {
     loading: false,
     delete: false,
   })
-
-
-
-
-  const { trdr } = useContext(UserContext)
 
   const [raw, setRaw] = useState({
     startDate: new Date(),
@@ -98,7 +93,6 @@ const DayView = () => {
 
 
   }
-
 
   useEffect(() => {
     handleFetch()

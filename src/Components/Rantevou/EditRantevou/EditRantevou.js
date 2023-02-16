@@ -27,8 +27,8 @@ const EditRantevou = () => {
   const route = useRoute();
   const navigation = useNavigation();
   let routeData = route.params.data;
-  console.log('------------------- ROUTE DATA---------------------')
-  console.log(routeData)
+  // console.log('------------------- ROUTE DATA---------------------')
+  // console.log(routeData)
   const [day, month, year] = routeData["Ημ/νία"]?.split('/');
   let newDate = parseInt(day) + 1
   const date = new Date(year, month - 1, newDate);
@@ -46,6 +46,7 @@ const EditRantevou = () => {
 
   const [raw, setRaw] = useState({
     eoppy: routeData["cccRDVEOPYY"],
+    // date: date,
     date: date,
     fromTime: startTime,
     toTime: endTime,
@@ -60,7 +61,8 @@ const EditRantevou = () => {
         ...prevState, date: selectredDate
       }
     })
-    setDay(selectredDate)
+    let date = selectredDate.toISOString().split('T')[0]
+    setDay(date)
   }
   const handleStartTime = (time) => {
     setRaw((prevState) => {
@@ -102,8 +104,9 @@ const EditRantevou = () => {
         ...prev, loading: true
       }
     })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
-    navigation.navigate('DayView');
+    // const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", eoppy: raw.eoppy, fromTime: raw.fromTime, toTime: raw.toTime, soaction: raw.soaction, date: '2023-03-03' })
+    navigation.navigate('DayViewCalendarMain');
 
   }
 
@@ -134,9 +137,12 @@ const EditRantevou = () => {
           </InputLabel>
         </View>
         {/* <DropDownList data={raw.status} setData={setRaw} /> */}
-        <ModalCheck subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} />
+        {/* <ModalCheck subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} /> */}
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text>Ακύρωση</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={subscriberReschedule}>
+          <Text>Rescedule</Text>
         </TouchableOpacity>
       </AddView>
     </ScrollView >
@@ -145,45 +151,6 @@ const EditRantevou = () => {
 
 
 
-
-// const DropDownList = ({ data, setData, key }) => {
-//   const [show, setShow] = useState();
-
-
-//   const DropItem = ({ title }) => {
-//     const onPress = () => {
-//       setData((prev) => {
-//         return {
-//           ...prev, ['status']: title
-//         }
-//       })
-//       setShow(false)
-//     }
-//     return (
-//       <TouchableOpacity style={styles.dropItem} onPress={onPress}>
-//         <Text>{title}</Text>
-//       </TouchableOpacity>
-//     )
-//   }
-
-//   return (
-//     <>
-//       <TouchableOpacity style={[styles.katastasiView, show && styles.dropEnabled]} onPress={() => setShow((prev) => !prev)}>
-//         <Text style={styles.dropEnabledText}>{data}</Text>
-//         <AntDesign name="down" size={18} />
-//       </TouchableOpacity>
-//       {show && (
-//         <View>
-//           <DropItem title={'Nέο'} />
-//           <DropItem title={'Aκυρώθηκε από Πελάτη'} />
-//           <DropItem title={'Επαναπρογραμματίστηκε από Πελάτη'} />
-//           <DropItem title={'Aκυρώθηκε από Συνδρομητή'} />
-//           <DropItem title={'Επαναπρογραμματίστηκε από Συνδρομ.'} />
-//         </View>
-//       )}
-//     </>
-//   )
-// }
 
 
 const ModalCheck = ({ subscriberReschedule, customerReschedule }) => {

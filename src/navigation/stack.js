@@ -25,9 +25,8 @@ import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
 import CalendarMonth from '../Components/Calendar/Calendar/Calendar';
 import AgendaCalendar from '../Components/Calendar/Agenda/Agenda';
 const Stack = createNativeStackNavigator();
-
-
-
+import TestScreen from '../Components/Rantevou/TestScreen';
+import EventScreen from '../Components/Rantevou/EventScreen/EventScreen';
 
 
 export const IncomingStack = () => {
@@ -52,6 +51,13 @@ export const IncomingStack = () => {
           }}
         />
         <Stack.Screen
+          name="EventScreen"
+          component={EventScreen}
+          options={{
+            headerShown: false
+          }}
+        />
+        {/* <Stack.Screen
           name="AgendaCalendar"
           component={AgendaCalendar}
           options={{
@@ -60,8 +66,8 @@ export const IncomingStack = () => {
               <NavStyle navigation={navigation} showback={true} title={'Eβδομάδα'} />
             ),
           }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="Ραντεβού: Εβδομάδα"
           component={WeekViewCalendar}
           options={{
@@ -69,7 +75,7 @@ export const IncomingStack = () => {
               <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Εβδομάδα'} showDayModal={true} />
             ),
           }}
-        />
+        /> */}
         <Stack.Screen
           name="DayView"
           component={DayView}
@@ -80,6 +86,11 @@ export const IncomingStack = () => {
           }}
         />
         <Stack.Screen
+          name="TestScreen"
+          component={TestScreen}
+
+        />
+        <Stack.Screen
           name="AppointmentsHistory"
           component={AppointmentsHistory}
           options={{
@@ -88,8 +99,6 @@ export const IncomingStack = () => {
             ),
           }}
         />
-
-
         <Stack.Screen
           name="AddRantevou"
           component={AddRantevou}
@@ -110,6 +119,7 @@ export const IncomingStack = () => {
             ),
           }}
         />
+
         <Stack.Screen
           name="Calendar"
           component={CalendarMonth}

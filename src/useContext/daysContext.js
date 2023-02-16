@@ -21,34 +21,15 @@ const splitDate = (date) => {
 export const DaysContext = ({ children }) => {
 
   const [day, setDay] = useState();
+  const [singleEvent, setSingleEvent] = useState();
 
+  // const handleDateSingleDayFetch = (day) => {
+  //   // day = new Date(day)
+  //   day = splitDate(day);
+  //   // day.setHours(0,1,1)
+  //   setDay(day)
 
-  const handleDateSingleDayFetch = (day) => {
-    // day = new Date(day)
-    day = splitDate(day);
-    // day.setHours(0,1,1)
-
-
-    setDay(day)
-
-  }
-
-
-
-  const handleFetch = async (start, end) => {
-    let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/router.php', {
-      startDate: start,
-      endDate: end,
-    })
-    setLoading(false)
-    setData(res)
-
-  }
-
-
-
-
-
+  // }
 
   return (
     <DayContext.Provider
@@ -56,7 +37,7 @@ export const DaysContext = ({ children }) => {
       value={{
         day, setDay,
         days, month,
-        handleDateSingleDayFetch,
+        singleEvent, setSingleEvent
       }}>
       {children}
     </DayContext.Provider>

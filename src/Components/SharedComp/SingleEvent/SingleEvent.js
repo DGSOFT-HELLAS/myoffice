@@ -26,10 +26,9 @@ export const FlatlistItem = memo(({ data }) => {
   )
 })
 
-export const SingleEvent = ({ data }) => {
+export const SingleEvent = memo(({ data }) => {
   const [isVisible, setIsVisible] = useState(false)
   const onPress = () => {
-    console.log(data)
     setIsVisible(prev => !prev)
   }
   return (
@@ -44,7 +43,6 @@ export const SingleEvent = ({ data }) => {
           data.color === "lightred" && styles.lightred,
           data.personal == 1 && styles.pink
         ]}>
-
         <View style={styles.topView}>
           <Enty name="calendar" size={17} color={COLORS.secondaryColor} />
           <BoldText style={styles.hourText} >{`${data["Ημ/νία"]} - ${data["'Ωρα"]}`}</BoldText>
@@ -54,14 +52,9 @@ export const SingleEvent = ({ data }) => {
         </View>
         <ModalFullEvent event={data} isVisible={isVisible} setIsVisible={setIsVisible} />
       </TouchableOpacity>
-
-
-
-
     </>
-
   )
-}
+})
 
 
 
