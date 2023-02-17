@@ -6,7 +6,7 @@ import Enty from 'react-native-vector-icons/Entypo'
 import BoldText from "../../Atoms/Text/BoldText";
 
 import { ListTitle, DescriptionTitle } from "../../SharedComp/List/List";
-import { ListBodyRantevou } from "../DayView/ListBody";
+import { ListBodyRantevou } from "../ListBody";
 import { styles } from "../styles";
 import { FlatList } from "react-native-gesture-handler";
 

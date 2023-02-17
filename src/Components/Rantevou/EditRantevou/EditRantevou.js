@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { StyleSheet, ScrollView, TouchableOpacity, View, Modal, Pressable } from "react-native"
 import Text from "../../Atoms/Text";
 import Button from "../../SharedComp/Buttons/Button";
@@ -15,7 +15,7 @@ import { ModalTimePicker } from "./timePicker";
 import { ModalDatePicker } from "./DatePicker";
 import { useNavigation } from "@react-navigation/native";
 import { DayContext } from "../../../useContext/daysContext";
-
+import BoldText from "../../Atoms/Text/BoldText";
 
 
 
@@ -27,8 +27,6 @@ const EditRantevou = () => {
   const route = useRoute();
   const navigation = useNavigation();
   let routeData = route.params.data;
-  // console.log('------------------- ROUTE DATA---------------------')
-  // console.log(routeData)
   const [day, month, year] = routeData["Ημ/νία"]?.split('/');
   let newDate = parseInt(day) + 1
   const date = new Date(year, month - 1, newDate);
@@ -46,7 +44,6 @@ const EditRantevou = () => {
 
   const [raw, setRaw] = useState({
     eoppy: routeData["cccRDVEOPYY"],
-    // date: date,
     date: date,
     fromTime: startTime,
     toTime: endTime,
@@ -61,8 +58,7 @@ const EditRantevou = () => {
         ...prevState, date: selectredDate
       }
     })
-    let date = selectredDate.toISOString().split('T')[0]
-    setDay(date)
+    setDay(selectredDate)
   }
   const handleStartTime = (time) => {
     setRaw((prevState) => {
@@ -104,9 +100,8 @@ const EditRantevou = () => {
         ...prev, loading: true
       }
     })
-    // const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", eoppy: raw.eoppy, fromTime: raw.fromTime, toTime: raw.toTime, soaction: raw.soaction, date: '2023-03-03' })
-    navigation.navigate('DayViewCalendarMain');
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
+    navigation.navigate('DayView');
 
   }
 
@@ -114,94 +109,85 @@ const EditRantevou = () => {
 
 
   return (
-    <ScrollView style={styles.scrollView} >
-      <AddView>
-        <HeaderWithDivider text={`Στοιχεία Ραντεβού: ${routeData["Πελάτης"]}`} />
-        <AddInput title="Πελάτης:" value={routeData["Πελάτης"]} enabled={false} />
-        <AddInput title="Στέλεχος:" value={routeData["Στέλεχος"]} enabled={false} />
-        <AddInput title="Υπηρεσία/Τύπος:" value={routeData["Ύπηρεσία/Τύπος"]} enabled={false} />
-        <AddInput title="Σημείο:" value={routeData["Σημείο"]} enabled={false} />
-        <CheckboxPaper title={"EΟΠΠΥ"} setState={setRaw} state={raw} disabled={true} />
-        <HeaderWithDivider text={"Κατάσταση"} />
-        <AddInput title="Κατάσταση:" value={routeData["Κατάσταση"]} enabled={false} />
-        <InputLabel title="Ημερομηνία:">
-          < ModalDatePicker style={styles.datePicker} day={raw.date} onChange={handleDate} />
-        </InputLabel>
-        {/* <DatePickers setState={setRaw} startTime={raw.fromTime} endTime={raw.toTime} /> */}
-        <View style={styles.datePickerView}>
-          <InputLabel title="* Έναρξη:">
-            < ModalTimePicker propsTime={raw.fromTime} handleState={handleStartTime} />
-          </InputLabel>
-          <InputLabel style={styles.rightView} title="* Λήξη:">
-            < ModalTimePicker propsTime={raw.toTime} handleState={handleEndTime} minTime={raw.fromTime} />
-          </InputLabel>
+    <View style={styles.container}>
+      <View style={styles.topView}>
+        <View style={styles.topViewLeftInfo}>
+          <BoldText style={styles.topViewText}>{routeData["'Ωρα"]}</BoldText>
+          <Text style={{ fontSize: 17 }}>{routeData["Πελάτης"] ? routeData["Πελάτης"] : "No Name"}</Text>
         </View>
-        {/* <DropDownList data={raw.status} setData={setRaw} /> */}
-        {/* <ModalCheck subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} /> */}
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text>Ακύρωση</Text>
+
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => {
+            navigation.goBack()
+          }}
+        >
+          <AntDesign name="closecircle" size={20} color={'#ea2a15'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={subscriberReschedule}>
-          <Text>Rescedule</Text>
-        </TouchableOpacity>
-      </AddView>
-    </ScrollView >
-  )
-}
+      </View>
+      <ScrollView style={styles.scrollView} >
+        <AddView>
+          <AddInput title="Πελάτης:" value={routeData["Πελάτης"]} enabled={false} />
+          <AddInput title="Στέλεχος:" value={routeData["Στέλεχος"]} enabled={false} />
+          <AddInput title="Υπηρεσία/Τύπος:" value={routeData["Ύπηρεσία/Τύπος"]} enabled={false} />
+          <AddInput title="Σημείο:" value={routeData["Σημείο"]} enabled={false} />
+          <CheckboxPaper title={"EΟΠΠΥ"} setState={setRaw} state={raw} disabled={true} />
+          <AddInput title="Κατάσταση:" value={routeData["Κατάσταση"]} enabled={false} />
+          <HeaderWithDivider text={"Κατάσταση"} />
 
-
-
-
-
-const ModalCheck = ({ subscriberReschedule, customerReschedule }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-
-
-
-  return (
-    <>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}>
-        <View style={styles.modalContainer} >
-          <View style={styles.modalView} >
-            <Text style={styles.modalHeaderText}>Επαναπρογραμματισμός Ραντεβού από:
-            </Text>
-            <Button style={styles.modalBtn} text={"Πελάτη"} onPress={() => {
-              setModalVisible(false);
-              subscriberReschedule();
-            }} />
-            <Button style={styles.modalBtn} text={"Συνδρομητή"} onPress={() => {
-              setModalVisible(false)
-              customerReschedule();
-            }} />
-            <CloseIcon setModal={() => setModalVisible(false)} />
+          <InputLabel title="Ημερομηνία:">
+            < ModalDatePicker style={styles.datePicker} day={raw.date} onChange={handleDate} />
+          </InputLabel>
+          {/* <DatePickers setState={setRaw} startTime={raw.fromTime} endTime={raw.toTime} /> */}
+          <View style={styles.datePickerView}>
+            <InputLabel title="* Έναρξη:">
+              < ModalTimePicker propsTime={raw.fromTime} handleState={handleStartTime} />
+            </InputLabel>
+            <InputLabel style={styles.rightView} title="* Λήξη:">
+              < ModalTimePicker propsTime={raw.toTime} handleState={handleEndTime} minTime={raw.fromTime} />
+            </InputLabel>
           </View>
-        </View>
-      </Modal>
-      <Button style={styles.btn} text={"Eπαναπρογραμματισμός Ραντεβού"} onPress={() => setModalVisible(true)} />
+          {/* <DropDownList data={raw.status} setData={setRaw} /> */}
+          <HeaderWithDivider text={"Eπαναπρογραμματισμός Ραντεβού"} />
+          <View style={styles.row}>
+            <TouchableOpacity onPress={customerReschedule} style={styles.reprogram} >
+              {state.loading ? <ActivityIndicator color="white" /> : <Text style={styles.reprogramText} >Πελάτης</Text>}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={subscriberReschedule} style={styles.reprogram}>
+              {state.loading ? <ActivityIndicator color="white" /> : <Text style={styles.reprogramText} >Συνδρομητής</Text>}
+            </TouchableOpacity>
+          </View>
+        </AddView>
+      </ScrollView >
+    </View>
 
-    </>
   )
 }
 
-const CloseIcon = ({ setModal }) => {
-  return (
-    <Pressable
-      onPress={() => setModal(false)}>
-      <AntDesign style={styles.closeIcon} name="closecircle" />
-    </Pressable>
-  )
-}
+
 
 
 const styles = StyleSheet.create({
   scrollView: {
-    padding: 8,
+    marginBottom: 70
+  },
+  topView: {
+    minHeight: 60,
+    padding: 15,
+    width: "100%",
+    flexDirection: 'row',
+    // backgroundColor: "#f9f9f9",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d7d6d6',
+    backgroundColor: 'white'
+  },
+
+  topViewText: {
+    fontSize: 14,
+    color: 'black'
   },
   btn: {
     borderRadius: 2,
@@ -269,21 +255,30 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  modalHeaderText: {
-    width: '80%',
-    color: 'black',
-  },
   modalBtn: {
     width: '80%',
     backgroundColor: COLORS.secondaryColor,
     border: 'none',
-    marginVertical: 6,
   },
   closeIcon: {
     marginTop: 10,
     color: '#E1341E',
     fontSize: 30,
-  }
+  },
+  reprogram: {
+    padding: 10,
+    backgroundColor: COLORS.secondaryColor,
+    marginVertical: 5,
+    minHeight: 50,
+    justifyContent: 'center',
+    borderRadius: 4,
+    elevation: 5,
+  },
+  reprogramText: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center'
+  },
 
 
 

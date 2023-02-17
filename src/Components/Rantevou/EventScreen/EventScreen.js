@@ -15,6 +15,7 @@ import { DatePickerComp } from "./DatePicker";
 import { TimePicker } from "./timePicker";
 import InputLabel from "../AddRantevou/InputLabel";
 import ModalCheck from "../../SharedComp/ModalCheck/ModalCheck";
+import HeaderWithDivider from "../../SharedComp/Views/HeaderWithDivider";
 
 const EventScreen = ({ setIsVisible, setState }) => {
   const navigation = useNavigation()
@@ -111,7 +112,7 @@ const ListBody = ({ data, raw, setIsVisible, setDay, setState, day, setRaw }) =>
       <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
       {hide ? (
         <>
-          <BoldText style={styles.editTileText}>Κατάσταση:</BoldText>
+          < HeaderWithDivider text={"Κατάσταση"} />
           <Text style={styles.smallText}>Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το ραντεβού:</Text>
 
 
@@ -209,7 +210,7 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => 
       <InputLabel title="* Λήξη:">
         <TimePicker style={{ width: '70%' }} propsTime={raw.toTime} handleState={handleEndTime} />
       </InputLabel>
-      <BoldText style={styles.editTileText}>Επαναπρογραμματισμός:</BoldText>
+      <HeaderWithDivider text={"Επαναπρογραμματισμός"} />
       <View style={styles.row}>
         <TouchableOpacity onPress={customerReschedule} style={styles.reprogram} >
           {loading ? <ActivityIndicator color="white" /> : <Text style={styles.reprogramText} >Πελάτης</Text>}
@@ -335,16 +336,17 @@ const styles = StyleSheet.create({
   },
   reprogram: {
     padding: 10,
-    backgroundColor: COLORS.primaryColorDarker001,
+    backgroundColor: COLORS.secondaryColor,
     marginVertical: 5,
-    width: '60%',
     minHeight: 50,
     justifyContent: 'center',
     borderRadius: 4,
+    elevation: 5,
   },
   reprogramText: {
-    color: 'black',
-    fontSize: 15
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center'
   },
 
 

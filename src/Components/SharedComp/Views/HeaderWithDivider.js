@@ -15,7 +15,8 @@ const HeaderWithDivider = ({ text }) => {
 const styles = StyleSheet.create({
   headerView: {
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
+    marginTop: 35,
   },
   header: {
     color: COLORS.secondaryColor,

@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from "react"
 import RantevouListBody from "./RantevouHistoryBody"
-import { DayContext } from "../../../useContext/daysContext"
-import { splitDate } from "../../../utils/dateFunctions/splitDate"
 import ChooseDates from "../../SharedComp/ChooseDates/ChoseDates"
 import Spinner from '../../Atoms/ActivityIndicator'
 import { UserContext } from "../../../useContext/useContect"
@@ -24,24 +22,19 @@ const AppointmentsHistory = () => {
     delete: false,
   })
 
-  console.log('----------------------------- STATE --------------------------------')
-  console.log(state.stelexos, state.startDate, state.endDate)
-  console.log('--------------------------------------------------------------------')
 
   const onChangeStartDay = (selectedDate) => {
-    let split = splitDate(selectedDate)
     setState(prev => {
       return {
-        ...prev, startDate: split
+        ...prev, startDate: selectedDate
       }
     })
   };
 
   const onChangeEndDay = (selectedDate) => {
-    let split = splitDate(selectedDate)
     setState(prev => {
       return {
-        ...prev, endDate: split
+        ...prev, endDate: selectedDate
       }
     })
   };

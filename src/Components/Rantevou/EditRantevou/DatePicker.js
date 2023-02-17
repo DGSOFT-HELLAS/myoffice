@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { splitDate } from '../../../utils/dateFunctions/splitDate';
 
 export const ModalDatePicker = ({ day, style, onChange }) => {
-  console.log('---------------------------------------------------')
+
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date())
   const showTimepicker = () => {

@@ -4,27 +4,8 @@ import { useState, memo } from 'react';
 import Enty from 'react-native-vector-icons/Entypo'
 import BoldText from '../Text/BoldText';
 import { COLORS } from '../../../shared/COLORS';
-import ModalFullEvent from '../../Rantevou/DayViewCalendarMain/ModalView';
 
 
-
-export const FlatlistItem = memo(({ data }) => {
-  return (
-    <View
-      style={[
-        styles.itemWrapper,
-        data.color === "LightSteelBlue" && styles.lightSteelBlue,
-        data.color === "LimeGreen" && styles.limeGreen,
-        data.color === "Silver" && styles.silver,
-        data.color === "lightred" && styles.lightred,
-        data.personal == 1 && styles.pink
-      ]}>
-      <ModalFullEvent data={data} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} />
-
-    </View>
-
-  )
-})
 
 export const SingleEvent = memo(({ data }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -50,7 +31,7 @@ export const SingleEvent = memo(({ data }) => {
         <View>
           <Text>{data['Πελάτης'] ? data['Πελάτης'] : "Δεν υπάρχει όνομα"}</Text>
         </View>
-        <ModalFullEvent event={data} isVisible={isVisible} setIsVisible={setIsVisible} />
+        {/* <ModalFullEvent event={data} isVisible={isVisible} setIsVisible={setIsVisible} /> */}
       </TouchableOpacity>
     </>
   )
@@ -68,6 +49,9 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginVertical: 5,
     borderTopWidth: 3,
+    padding: 10,
+    minHeight: 70,
+    justifyContent: 'center'
   },
   lightSteelBlue: {
     borderTopColor: '#718FCE',

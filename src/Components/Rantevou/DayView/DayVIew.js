@@ -10,19 +10,22 @@ import AppointmentsView from "../../Atoms/View/AppointmentsView";
 import ArrowButton from "../../Atoms/ArrowButton";
 import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 import { incrementDecrementDate } from "../../../utils/incrementDecrementDate";
-import { splitDate } from "../../../utils/dateFunctions/splitDate";
 import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+
+
 
 const DayView = () => {
   const { trdr } = useContext(UserContext)
   const { day } = useContext(DayContext);
   const navigation = useNavigation();
+
   const [state, setState] = useState({
     data: [],
     loading: false,
     delete: false,
+    refresh: false,
   })
 
   const [raw, setRaw] = useState({
@@ -32,17 +35,10 @@ const DayView = () => {
   })
 
 
-  console.log('---------------------------------------- RAW ----------------------------------')
-  console.log(raw)
-  console.log('---------------------------------------------------------------------------------------------')
-
   const onChange = (selectedDate) => {
-    let newDate = new Date(selectedDate);
-    let split = splitDate(newDate)
-
     setRaw(prev => {
       return {
-        ...prev, startDate: split
+        ...prev, startDate: selectedDate
       }
     })
 
@@ -84,7 +80,6 @@ const DayView = () => {
 
     })
 
-
     setState((prev) => {
       return {
         ...prev, loading: false, data: res
@@ -112,7 +107,7 @@ const DayView = () => {
         < ModalDatePickerComp day={raw.startDate} onChange={onChange} />
         <ArrowButton onPress={nextButton} iconType="nextIcon" />
       </AppointmentsView >
-      {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <DayViewBody data={state.data} day={raw.startDate} handleFetch={handleFetch} setState={setState} />}
+      {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <DayViewBody data={state.data} setState={setState} />}
 
 
     </Provider>

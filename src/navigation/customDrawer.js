@@ -32,11 +32,10 @@ const CustomDrawer = (props) => {
         <DrawerItem title="Ραντεβού" Icon={Entypo} iconName="calendar" index={1} id={id} setId={setId} />
         {id == 1 && (
           <DrawerSubItemView >
-            <DrawerSubItem title="Εβδομάδα" parent="Ραντεβού" screen="Ραντεβού: Εβδομάδα" setId={setId} />
+            {/* <DrawerSubItem title="Εβδομάδα" parent="Ραντεβού" screen="Ραντεβού: Εβδομάδα" setId={setId} /> */}
             <DrawerSubItem title="Μέρα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
             <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} />
-            <DrawerSubItem title="TestScreen" screen="TestScreen" setId={setId} />
             <DrawerSubItem title="Mέρα 3" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} />
           </DrawerSubItemView>
         )}

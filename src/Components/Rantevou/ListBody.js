@@ -1,13 +1,13 @@
 import { useState } from "react"
-import Text from "../../Atoms/Text"
+import Text from "../Atoms/Text"
 import { StyleSheet, View, Modal, Pressable } from "react-native"
-import { ListBodyView, ListBodyDataSet } from "../../SharedComp/List/List"
-import { COLORS } from "../../../shared/COLORS"
+import { ListBodyView, ListBodyDataSet } from "../SharedComp/List/List"
+import { COLORS } from "../../shared/COLORS"
 import { useNavigation } from "@react-navigation/native"
-import DeleteButton from "../../SharedComp/Buttons/DeleteButton"
-import EditButton from "../../SharedComp/Buttons/EditButton"
-import Button from "../../SharedComp/Buttons/Button"
-import { fetchAPI } from "../../../utils/fetchAPI"
+import DeleteButton from "../SharedComp/Buttons/DeleteButton"
+import EditButton from "../SharedComp/Buttons/EditButton"
+import Button from "../SharedComp/Buttons/Button"
+import { fetchAPI } from "../../utils/fetchAPI"
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 export const ListBodyRantevou = ({ data, setState }) => {

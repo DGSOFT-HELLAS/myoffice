@@ -101,9 +101,7 @@ const DayViewCalendarMain = () => {
   }
 
 
-  const goTo = () => {
-    navigation.navigate('EventScreen')
-  }
+
   return (
     <Provider>
       {!isVisible ? (
@@ -139,6 +137,7 @@ const DayViewCalendarMain = () => {
 
           {/* <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} /> */}
         </View>
+        // {setState: updates loading, refresh, delete, stelexos}
       ) : <EventScreen setIsVisible={setIsVisible} setState={setState} />}
     </Provider>
   )

@@ -25,7 +25,6 @@ import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
 import CalendarMonth from '../Components/Calendar/Calendar/Calendar';
 import AgendaCalendar from '../Components/Calendar/Agenda/Agenda';
 const Stack = createNativeStackNavigator();
-import TestScreen from '../Components/Rantevou/TestScreen';
 import EventScreen from '../Components/Rantevou/EventScreen/EventScreen';
 
 
@@ -85,11 +84,7 @@ export const IncomingStack = () => {
             ),
           }}
         />
-        <Stack.Screen
-          name="TestScreen"
-          component={TestScreen}
 
-        />
         <Stack.Screen
           name="AppointmentsHistory"
           component={AppointmentsHistory}
