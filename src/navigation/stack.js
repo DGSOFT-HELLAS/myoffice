@@ -27,7 +27,6 @@ import AgendaCalendar from '../Components/Calendar/Agenda/Agenda';
 const Stack = createNativeStackNavigator();
 import EventScreen from '../Components/Rantevou/EventScreen/EventScreen';
 
-
 export const IncomingStack = () => {
   return (
 

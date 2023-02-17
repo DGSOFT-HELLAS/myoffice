@@ -6,6 +6,11 @@ import { format, lastDayOfMonth } from 'date-fns'
 import { DayContext } from '../../../useContext/daysContext';
 import { useNavigation } from '@react-navigation/native';
 import Locales from '../Locales';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import ListView from './List';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { COLORS } from '../../../shared/COLORS';
 
 const CalendarMonth = () => {
   const { trdr } = useContext(UserContext)
@@ -18,6 +23,10 @@ const CalendarMonth = () => {
     stelexos: 0,
   })
 
+  const route = useRoute();
+  console.log(route)
+
+
 
   const handleFetch = async () => {
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
@@ -28,14 +37,7 @@ const CalendarMonth = () => {
       stelexos: state.stelexos
 
     })
-    // let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
-    //   query: 'wpFetchRDVMonth',
-    //   startDate: '2023-02-01',
-    //   endDate: '2023-02-28',
-    //   trdr: 47,
-    //   stelexos: 0
 
-    // })
     console.log(res)
     const items = {};
     for (let event of res) {
@@ -64,7 +66,9 @@ const CalendarMonth = () => {
 
 
   useEffect(() => {
+
     handleFetch();
+
   }, [state.startDate, state.endDate])
 
 
@@ -73,7 +77,7 @@ const CalendarMonth = () => {
   return (
     <>
       <Calendar
-        markedDates={events}
+        markedDates={route.params.show ? events : null}
         onMonthChange={month => {
           let today = new Date(month.dateString);
           const firstDateOfMonth = format(today, 'yyyy-MM-01')
@@ -87,13 +91,55 @@ const CalendarMonth = () => {
         onDayPress={(day) => {
           let date = day.dateString
           setDay(date)
-
           navigation.navigate('DayViewCalendarMain', { date: date })
         }}
       />
+      {/* {route.params.show && (
+        <FlatList
+          data={null}
+          keyExtractor={(item, index) => index}
+          renderItem={(item) => {
+            return (
+              <>
+                <View style={styles.dayViewContainer}>
+                  <View style={styles.titleRantevouToday}>
+                    <AntDesign name="clockcircleo" color={COLORS.secondaryColor} />
+                    <Text>Ραντεβού Σήμερα:</Text>
+                  </View>
+                  <ListView setState={setState} />
+                </View>
+              </>
+            )
+          }}
+        />
+      )} */}
+
     </>
 
   )
 }
 
+
+
+
+
+const styles = StyleSheet.create({
+  titleRantevouToday: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    width: 150,
+    padding: 6,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 30,
+    marginLeft: 10,
+    marginBottom: 10,
+    borderWidth: 0.6,
+    borderColor: COLORS.secondaryColorShade001,
+    borderRadius: 4,
+  },
+  dayViewContainer: {
+
+  }
+})
 export default CalendarMonth;

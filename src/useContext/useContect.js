@@ -10,8 +10,8 @@ export const UserContext = createContext()
 
 
 export const Layout = ({ children }) => {
-  const [password, setPassword] = useState('Test123!!');
-  const [username, setUsername] = useState('test');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [trdr, setTrdr] = useState();
 

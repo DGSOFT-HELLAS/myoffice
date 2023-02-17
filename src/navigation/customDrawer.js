@@ -33,19 +33,11 @@ const CustomDrawer = (props) => {
         {id == 1 && (
           <DrawerSubItemView >
             {/* <DrawerSubItem title="Εβδομάδα" parent="Ραντεβού" screen="Ραντεβού: Εβδομάδα" setId={setId} /> */}
-            <DrawerSubItem title="Μέρα" parent="Ραντεβού" screen="DayView" setId={setId} />
+            <DrawerSubItem title="Μήνας" screen="Calendar" setId={setId} show={true} />
+            <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} />
+            <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
             <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} />
-            <DrawerSubItem title="Mέρα 3" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} />
-          </DrawerSubItemView>
-        )}
-      </View>
-      <View style={styles.container}>
-        <DrawerItem title="Calendar" Icon={Entypo} iconName="calendar" index={4} id={id} setId={setId} />
-        {id == 4 && (
-          <DrawerSubItemView >
-            <DrawerSubItem title="Calendar" screen="Calendar" setId={setId} />
-            <DrawerSubItem title="Εβδομάδα" screen="AgendaCalendar" setId={setId} />
           </DrawerSubItemView>
         )}
       </View>
@@ -122,12 +114,12 @@ const DrawerSubItemView = ({ children }) => {
 }
 
 
-const DrawerSubItem = ({ screen, title, setId, date }) => {
+const DrawerSubItem = ({ screen, title, setId, date, show }) => {
   const navigation = useNavigation()
 
   const onPress = () => {
     setId({})
-    navigation.navigate(screen, { date: date })
+    navigation.navigate(screen, { date: date, show: show })
 
   }
   return (

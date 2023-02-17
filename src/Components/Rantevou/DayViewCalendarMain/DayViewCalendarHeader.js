@@ -13,7 +13,7 @@ const DayViewCalendarHeader = ({ date, setState, state }) => {
   const navigation = useNavigation()
 
   const onPress = () => {
-    navigation.navigate('Calendar')
+    navigation.navigate('Calendar', { show: false })
   }
 
 
