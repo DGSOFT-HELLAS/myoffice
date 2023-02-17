@@ -24,7 +24,7 @@ const DayViewCalendarMain = () => {
   const [events, setEvents] = useState([])
   const [event, setEvent] = useState([])
   const [isVisible, setIsVisible] = useState(false)
-  const isFocused = useIsFocused();
+
 
   const [state, setState] = useState({
     delete: false,
@@ -49,6 +49,7 @@ const DayViewCalendarMain = () => {
       trdr: trdr,
       stelexos: state.stelexos
     })
+    console.log('--------------------- RES DayViewMain ---------------------------')
     console.log(res)
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     setEvents(updatedData)
@@ -61,7 +62,6 @@ const DayViewCalendarMain = () => {
   }
 
   useEffect(() => {
-    // setIsVisible(false)
     handleFetch()
     const unsubscribe = navigation.addListener('focus', () => {
       handleFetch()
@@ -69,7 +69,7 @@ const DayViewCalendarMain = () => {
 
     return unsubscribe;
 
-  }, [day, state.delete, state.stelexos, isFocused, navigation])
+  }, [day, state.delete, state.stelexos, navigation, state.refresh])
 
 
 

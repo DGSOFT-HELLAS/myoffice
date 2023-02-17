@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { COLORS } from "../../../shared/COLORS";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
@@ -75,11 +75,7 @@ const EventScreen = ({ setIsVisible, setState }) => {
 
 
 const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, setRaw }) => {
-  const navigation = useNavigation()
   const [hide, setHide] = useState()
-
-  //Handle DatePicker 
-
 
 
   const handlePost = async (reason) => {
@@ -113,7 +109,7 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
           <Text style={styles.smallText}>Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το ραντεβού:</Text>
 
 
-          <ShowEditComponents raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} />
+          <ShowEditComponents raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} />
         </>
       ) : (null)}
       <View style={styles.buttonView}>
@@ -125,16 +121,15 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
   )
 }
 
-const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible }) => {
-  const navigation = useNavigation()
-
+const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => {
+  const [loading, setLoading] = useState(false);
 
   const handleDate = (selectredDate) => {
     let day = selectredDate.toISOString().split('T')[0]
     setDay(day)
     setRaw((prevState) => {
       return {
-        ...prevState, date: selectredDate
+        ...prevState, date: selectredDate.toISOString()
       }
     })
   }
@@ -163,7 +158,6 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible }) => {
         ...prevState, reason: 'customer'
       }
     })
-    handlePost();
   }
 
   //Reschedule Event:
@@ -173,16 +167,29 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible }) => {
         ...prevState, reason: 'subscriber'
       }
     })
-    handlePost();
   }
 
 
   const handlePost = async () => {
+    setLoading(true)
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
-    console.log(response)
     setIsVisible(false)
 
+    setState(prev => {
+      return {
+        ...prev, refresh: !prev.refresh
+      }
+    })
+    setLoading(false)
   }
+
+  useEffect(() => {
+    if (raw.reason !== '') {
+      console.log('handlePost')
+      handlePost();
+    }
+
+  }, [raw.reason])
 
   return (
     <>
@@ -198,7 +205,7 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible }) => {
       <BoldText style={styles.editTileText}>Επαναπρογραμματισμός:</BoldText>
       <View style={styles.row}>
         <TouchableOpacity onPress={customerReschedule} style={styles.reprogram} >
-          <Text style={styles.reprogramText} >Πελάτης</Text>
+          {loading ? <ActivityIndicator color="white" /> : <Text style={styles.reprogramText} >Πελάτης</Text>}
         </TouchableOpacity>
         <TouchableOpacity onPress={subscriberReschedule} style={styles.reprogram}>
           <Text style={styles.reprogramText}>Συνδρομητής</Text>
