@@ -2,11 +2,14 @@ import React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Feather from 'react-native-vector-icons/Feather'
 import { COLORS } from "../../../shared/COLORS";
+import Text from "../../Atoms/Text";
+import Ion from 'react-native-vector-icons/Ionicons'
 
-const EditButton = ({ onPress, style }) => {
+
+const EditButton = ({ onPress, style, bool }) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.container, style]}>
-      <Feather name="edit" size={18} color="white" />
+      {!bool ? <Feather name="edit" size={18} color="white" /> : <Ion name="return-down-back" size={18} color="white" />}
     </TouchableOpacity>
   )
 }

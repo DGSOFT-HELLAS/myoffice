@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator
 import { COLORS } from "../../../shared/COLORS";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
-// import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
+import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
 // import Button from "../../SharedComp/Buttons/Button";
 import EditButton from "../../SharedComp/Buttons/EditButton";
 import CheckboxPaper from "../../SharedComp/Buttons/CheckBox";
@@ -14,7 +14,7 @@ import { DayContext } from "../../../useContext/daysContext";
 import { DatePickerComp } from "./DatePicker";
 import { TimePicker } from "./timePicker";
 import InputLabel from "../AddRantevou/InputLabel";
-
+import ModalCheck from "../../SharedComp/ModalCheck/ModalCheck";
 
 const EventScreen = ({ setIsVisible, setState }) => {
   const navigation = useNavigation()
@@ -23,11 +23,6 @@ const EventScreen = ({ setIsVisible, setState }) => {
 
   let startTime = singleEvent["'Ωρα"].split(' : ')[0];
   let endTime = singleEvent["'Ωρα"].split(' : ')[1];
-
-  const onEditBtn = (data) => {
-    navigation.navigate('Διόρθωση ραντεβού', { data: data })
-  }
-
 
 
   const [raw, setRaw] = useState({
@@ -67,19 +62,29 @@ const EventScreen = ({ setIsVisible, setState }) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.bodyView}>
-        <ListBody data={singleEvent} onEditBtn={onEditBtn} raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} />
+        <ListBody data={singleEvent} raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} />
       </ScrollView>
     </View>
   );
 }
 
 
-const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, setRaw }) => {
+const ListBody = ({ data, raw, setIsVisible, setDay, setState, day, setRaw }) => {
   const [hide, setHide] = useState()
 
 
+  const subscriberReschedule = () => {
+    handlePost('subscriber');
+
+  }
+  const customerReschedule = () => {
+    handlePost('customer');
+  }
+
+
   const handlePost = async (reason) => {
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "CancelRDV", reason: reason, ...raw })
+
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "CancelRDV", reason: reason, soaction: raw.soaction })
     if (setState) {
       setState(prev => {
         return {
@@ -87,6 +92,7 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
         }
       })
     }
+    setIsVisible(false)
   }
 
 
@@ -113,7 +119,8 @@ const ListBody = ({ data, onEditBtn, raw, setIsVisible, setDay, setState, day, s
         </>
       ) : (null)}
       <View style={styles.buttonView}>
-        <EditButton onPress={() => setHide((prev) => !prev)} />
+        <EditButton onPress={() => setHide((prev) => !prev)} bool={hide} />
+        {!hide && <ModalCheck title={"Aκύρωση από:"} Element={DeleteButton} elementStyle={{ marginLeft: 10 }} subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} />}
       </View>
 
 

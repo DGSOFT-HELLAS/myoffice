@@ -65,22 +65,23 @@ export const ShowTime = ({ date, onPress, style }) => {
 
 const styles = StyleSheet.create({
   timeContainer: {
-    flexDirection: 'row',
-    width: 130,
+    width: 160,
     height: 45,
     padding: 3,
     backgroundColor: '#f5f5f5',
     borderRadius: 2,
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   leftSide: {
-    width: '65%',
+    width: '70%',
     height: '100%',
-
     alignItems: 'center',
     justifyContent: 'center'
   },
   rightSide: {
-    width: '35%',
+    width: '30%',
+    maxWidth: 60,
     height: '100%',
     backgroundColor: COLORS.primaryColor,
     alignItems: 'center',
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 17,
+    color: 'black'
   },
   icon: {
     fontSize: 18,
