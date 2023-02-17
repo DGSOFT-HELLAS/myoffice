@@ -21,6 +21,7 @@ const DayView = () => {
   const { day } = useContext(DayContext);
   const navigation = useNavigation();
 
+  console.log("day " + day)
   const [state, setState] = useState({
     data: [],
     loading: false,
@@ -29,7 +30,7 @@ const DayView = () => {
   })
 
   const [raw, setRaw] = useState({
-    startDate: new Date(),
+    startDate: day ? day : new Date(),
     endDate: "",
     stelexos: 0,
   })
