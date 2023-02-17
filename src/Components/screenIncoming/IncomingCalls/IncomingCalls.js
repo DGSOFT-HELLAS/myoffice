@@ -18,23 +18,17 @@ const IncomingCalls = () => {
 
 
   const onChangeStartDay = (selectedDate) => {
-    console.log(selectedDate)
-    let split = splitDate(selectedDate)
-    console.log("split " + split)
-    // setDay(split)
     setState((prevState) => {
       return {
-        ...prevState, startDate: split
+        ...prevState, startDate: selectedDate
       }
     })
   };
 
   const onChangeEndDay = (selectedDate) => {
-    let split = splitDate(selectedDate)
-    // setEndDay(split)
     setState((prevState) => {
       return {
-        ...prevState, endDate: split
+        ...prevState, endDate: selectedDate
       }
     })
   };
