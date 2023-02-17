@@ -13,11 +13,7 @@ const NavStyle = ({ navigation, showback, title, showDayModal, dontShowAdd }) =>
 
 
   const route = useRoute();
-  const onPress = () => {
 
-    navigation.goBack()
-
-  }
 
   const ToggleMenu = () => {
     navigation.openDrawer()
@@ -26,13 +22,10 @@ const NavStyle = ({ navigation, showback, title, showDayModal, dontShowAdd }) =>
   return (
     <View style={styles.navView}>
       <View style={styles.leftView}>
-        {/* {showback && <TouchableOpacity style={styles.touchableIcon} onPress={onPress}>
-          <Material style={styles.backIcon} name="keyboard-backspace" />
-        </TouchableOpacity>} */}
+
         {route.name === 'Πελάτες' ? <AddRantevouBtn screen='Προσθήκη πελάτη' /> : null}
         {showDayModal && (
           <>
-            <NavButton />
             {!dontShowAdd && <AddRantevouBtn screen='AddRantevou' />}
           </>
         )}
