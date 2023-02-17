@@ -20,22 +20,22 @@ const CalendarMonth = () => {
 
 
   const handleFetch = async () => {
-    // let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
-    //   query: 'wpFetchRDVMonth',
-    //   startDate: state.startDate,
-    //   endDate: state.endDate,
-    //   trdr: trdr,
-    //   stelexos: state.stelexos
-
-    // })
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
       query: 'wpFetchRDVMonth',
-      startDate: '2023-02-01',
-      endDate: '2023-02-28',
-      trdr: 47,
-      stelexos: 0
+      startDate: state.startDate,
+      endDate: state.endDate,
+      trdr: trdr,
+      stelexos: state.stelexos
 
     })
+    // let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
+    //   query: 'wpFetchRDVMonth',
+    //   startDate: '2023-02-01',
+    //   endDate: '2023-02-28',
+    //   trdr: 47,
+    //   stelexos: 0
+
+    // })
     console.log(res)
     const items = {};
     for (let event of res) {

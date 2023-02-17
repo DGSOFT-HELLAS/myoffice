@@ -15,7 +15,7 @@ const DayViewBody = ({ data, setState }) => {
     setEnabled((prev) => !prev)
   }
 
-  const Item = ({ data }) => {
+  const Item = ({ data, setState }) => {
     return (
       <View
         style={[
@@ -32,7 +32,7 @@ const DayViewBody = ({ data, setState }) => {
           title={<ListTitle value={`${data["Ημ/νία"]} - ${data["'Ωρα"]}`} Icon={Enty} iconName="calendar" />}
           style={{ backgroundColor: 'white' }}
         >
-          <ListBodyRantevou data={data} enabled={enabled} onPress={onPress} />
+          <ListBodyRantevou data={data} enabled={enabled} onPress={onPress} setState={setState} />
         </List.Accordion>
       </View>
     )
