@@ -54,9 +54,9 @@ import Entypo from 'react-native-vector-icons/Entypo';
 // }
 export const ModalDatePickerComp = ({ day, style, onChange }) => {
   const [date, setDate] = useState()
-  if (day === day.toLocaleDateString()) {
-    setDate(day)
-  }
+  // if (day === day.toLocaleDateString()) {
+  //   setDate(day)
+  // }
   const [show, setShow] = useState(false);
   const showTimepicker = () => {
     setShow(true)

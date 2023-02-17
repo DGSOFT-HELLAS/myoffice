@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { constructGreekDate } from "../../../utils/dateFunctions/constructGreekDay"
 import { Calendar } from 'react-native-calendars';
@@ -15,16 +15,19 @@ const DayViewCalendarHeader = ({ date, setState, state }) => {
   const onPress = () => {
     navigation.navigate('Calendar', { show: false })
   }
+  console.log(date)
 
 
   let greekDate = constructGreekDate(date)
+  let newDateGreeekDate = constructGreekDate(new Date())
+
   return (
     <>
       <View style={styles.container}>
         <View style={styles.view}>
           <View >
             {/* //route.params.date */}
-            <Text style={styles.date}>{greekDate}</Text>
+            <Text style={styles.date}>{date ? greekDate : newDateGreeekDate}</Text>
           </View>
           <TouchableOpacity style={styles.calendarButton} onPress={onPress}>
             <Entypo name="calendar" size={18} color={'white'} />

@@ -18,10 +18,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const DayView = () => {
   const { trdr } = useContext(UserContext)
-  const { day } = useContext(DayContext);
+  const { day, setDay } = useContext(DayContext);
   const navigation = useNavigation();
 
-  console.log("day " + day)
   const [state, setState] = useState({
     data: [],
     loading: false,
@@ -35,6 +34,7 @@ const DayView = () => {
     stelexos: 0,
   })
 
+  console.log(raw)
 
   const onChange = (selectedDate) => {
     setRaw(prev => {
