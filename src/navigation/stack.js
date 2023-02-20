@@ -1,31 +1,41 @@
 //import default React and navigation:
 import React from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, Text } from 'react-native';
-import WeekViewCalendar from '../Components/Rantevou/WeekView/WeekCalendar';
+
+
+import NavStyle from './navStyle';
+
+//Login Screen:
+import Login from '../Components/Login/Login';
+//Rantevou Screen:
 import DayView from '../Components/Rantevou/DayView/DayVIew';
 import AppointmentsHistory from '../Components/Rantevou/AppointmentsHistory/AppointmentsHistoryHeader';
 import AddRantevou from '../Components/Rantevou/AddRantevou/AddRantevou';
-import Login from '../Components/Login/Login';
-import NavStyle from './navStyle';
 import DayViewCalendarMain from '../Components/Rantevou/DayViewCalendarMain/DayViewCalendarMain';
+import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
+import CalendarMonth from '../Components/Calendar/Calendar/Calendar';
+import EventScreen from '../Components/Rantevou/EventScreen/EventScreen';
 //------------------Import Screens:
 //Sreen Incoming:
 import IncomingCalls from '../Components/screenIncoming/IncomingCalls/IncomingCalls';
 import IncomingEmails from '../Components/screenIncoming/IncomingEmails/Emails';
 import IncomingElta from '../Components/screenIncoming/IncomingElta/Elta';
 import IncomingTasks from '../Components/screenIncoming/IncomingTasks/IncomingTasks';
+import IncomingCallsForm from '../Components/screenIncoming/IncomingCalls/Form';
 //Screen Customers:
 import Customers from '../Components/Customers/customers';
 import CustomerSearchForm from '../Components/Customers/SearchForm';
 import AddCustomer from '../Components/Customers/AddCustomer';
 import EditCustomer from '../Components/Customers/EditCustomer';
-import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
+
 //Screen Calendar: 
-import CalendarMonth from '../Components/Calendar/Calendar/Calendar';
-import AgendaCalendar from '../Components/Calendar/Agenda/Agenda';
+
 const Stack = createNativeStackNavigator();
-import EventScreen from '../Components/Rantevou/EventScreen/EventScreen';
+
+
+
+
+
 
 export const IncomingStack = () => {
   return (
@@ -55,25 +65,6 @@ export const IncomingStack = () => {
             headerShown: false
           }}
         />
-        {/* <Stack.Screen
-          name="AgendaCalendar"
-          component={AgendaCalendar}
-          options={{
-
-            header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Eβδομάδα'} />
-            ),
-          }}
-        /> */}
-        {/* <Stack.Screen
-          name="Ραντεβού: Εβδομάδα"
-          component={WeekViewCalendar}
-          options={{
-            header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Εβδομάδα'} showDayModal={true} />
-            ),
-          }}
-        /> */}
         <Stack.Screen
           name="DayView"
           component={DayView}
@@ -130,6 +121,15 @@ export const IncomingStack = () => {
         <Stack.Screen
           name="IncomingCalls"
           component={IncomingCalls}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Κλήσεις'} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="IncomingCallsForm"
+          component={IncomingCallsForm}
           options={{
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Κλήσεις'} />

@@ -7,7 +7,6 @@ import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 import { COLORS } from "../../../shared/COLORS";
 
 const ChooseDates = ({ day, endDay, onChangeStartDay, onChangeEndDay }) => {
-  console.log('CHOOSE DATES COMPONENT: ' + day)
   return (
     <AppointmentsView style={styles.view}>
       <View>
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
-    margin: 10,
+    margin: 0,
     borderWidth: 0.7,
     borderColor: COLORS.secondaryColorShade002,
     borderRadius: 4,

@@ -6,9 +6,13 @@ import { fetchAPI } from "../../../utils/fetchAPI"
 import { UserContext } from "../../../useContext/useContect"
 import NoDataView from "../../Atoms/View/NoDataView"
 import Spinner from "../../Atoms/ActivityIndicator"
+import { useRoute } from "@react-navigation/native"
+
 
 const IncomingCalls = () => {
   const { trdr } = useContext(UserContext);
+  const router = useRoute()
+  console.log(JSON.parse(router.params.state))
   const [state, setState] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -71,7 +75,7 @@ const IncomingCalls = () => {
 
   return (
     <>
-      <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} />
+      {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} /> */}
       {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <IncomingCallsBody data={state.data} />}
 
     </>
