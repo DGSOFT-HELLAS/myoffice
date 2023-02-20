@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { StyleSheet, ScrollView } from "react-native"
+import { StyleSheet, ScrollView, View } from "react-native"
 import Button from "../SharedComp/Buttons/Button";
 import AddView from "../SharedComp/Views/AddView";
 import { COLORS } from "../../shared/COLORS";
@@ -9,7 +9,7 @@ import CheckboxPaper from "../SharedComp/Buttons/CheckBox";
 import { UserContext } from "../../useContext/useContect";
 import { fetchAPI } from "../../utils/fetchAPI";
 import { useNavigation } from "@react-navigation/native";
-import { add } from "date-fns";
+
 
 const AddCustomer = () => {
 
@@ -43,11 +43,13 @@ const AddCustomer = () => {
     })
   }
 
+
+
   const handleBtn = async () => {
+
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'SaveCustomer', action: 'insert', trdr: trdr, ...state })
     try {
       if (response) {
-
         navigation.goBack()
 
       }
@@ -77,8 +79,11 @@ const AddCustomer = () => {
         <AddInput title="Email2:" value={state.Email2} onChangeText={(text) => { handleChange(text, 'Email2') }} />
         <AddInput title="WebPage:" value={state.Webpage} onChangeText={(text) => { handleChange(text, 'Webpage') }} />
         <AddInput title="Παρατηρήσεις:" value={state.Comments} onChangeText={(text) => { handleChange(text, 'Comments') }} multiline={true} />
-        <Button style={styles.btn} text={"Αποθήκευση"} onPress={handleBtn} />
 
+        <View style={styles.btnView}>
+          <Button style={styles.btn} text={"Αποθήκευση"} onPress={handleBtn} />
+          <Button style={styles.cancelBtn} text={"Aκύρωση"} onPress={() => navigation.goBack()} />
+        </View>
       </AddView>
     </ScrollView >
   )
@@ -95,6 +100,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondaryColor,
     marginBottom: 20,
   },
+  cancelBtn: {
+    width: '45%',
+    backgroundColor: COLORS.deleteBtn,
+    marginLeft: 5,
+  },
+  btnView: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  }
 
 
 });

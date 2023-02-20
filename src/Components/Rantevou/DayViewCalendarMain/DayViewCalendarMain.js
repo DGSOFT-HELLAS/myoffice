@@ -62,6 +62,7 @@ const DayViewCalendarMain = () => {
 
   useEffect(() => {
     handleFetch()
+    console.log('handle fetch -> inside')
     const unsubscribe = navigation.addListener('focus', () => {
       handleFetch()
     });

@@ -77,7 +77,7 @@ const CalendarMonth = () => {
   return (
     <>
       <Calendar
-        markedDates={route.params.show ? events : null}
+        markedDates={events}
         onMonthChange={month => {
           let today = new Date(month.dateString);
           const firstDateOfMonth = format(today, 'yyyy-MM-01')

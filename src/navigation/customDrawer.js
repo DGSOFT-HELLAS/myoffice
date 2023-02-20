@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
 import { COLORS } from "../shared/COLORS";
 import BoldText from "../Components/Atoms/Text/BoldText";
@@ -10,7 +10,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Material from 'react-native-vector-icons/MaterialIcons'
 import Ion from 'react-native-vector-icons/Ionicons'
 //Import Context:
-
+import { DayContext } from "../useContext/daysContext";
 
 
 
@@ -34,7 +34,7 @@ const CustomDrawer = (props) => {
           <DrawerSubItemView >
             {/* <DrawerSubItem title="Εβδομάδα" parent="Ραντεβού" screen="Ραντεβού: Εβδομάδα" setId={setId} /> */}
             <DrawerSubItem title="Μήνας" screen="Calendar" setId={setId} show={true} />
-            <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} />
+            <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} dateBool={true} />
             <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
             <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} />
@@ -114,10 +114,13 @@ const DrawerSubItemView = ({ children }) => {
 }
 
 
-const DrawerSubItem = ({ screen, title, setId, date, show }) => {
+const DrawerSubItem = ({ screen, title, setId, date, show, dateBool }) => {
   const navigation = useNavigation()
-
+  // const { setDay } = useContext(DayContext)
   const onPress = () => {
+    // if (dateBool) {
+    //   setDay(new Date())
+    // }
     setId({})
     navigation.navigate(screen, { date: date, show: show })
 

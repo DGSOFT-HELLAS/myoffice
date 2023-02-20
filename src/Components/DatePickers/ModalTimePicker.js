@@ -7,7 +7,7 @@ import { getTime } from '../../utils/getTime';
 import { COLORS } from '../../shared/COLORS';
 import { constructDate } from '../../utils/dateFunctions/constructDate';
 import { utcToZonedTime, format } from 'date-fns-tz';
-
+import { ListBodyDataSet } from '../SharedComp/List/List';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
