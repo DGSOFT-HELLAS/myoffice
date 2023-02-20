@@ -3,7 +3,6 @@ import BoldText from "../Text/BoldText"
 import Text from "../Text/RegularText"
 import { COLORS } from '../../../shared/COLORS'
 import Button from "../../Atoms/Button"
-import { isExpired } from "../../../utils/checkExpiredEvents"
 
 
 
@@ -44,7 +43,7 @@ export const ListBodyView = ({ children }) => {
 
 export const ActiveExpiredWrapper = ({ children, data }) => {
   return (
-    <View style={[styles.itemWrapper, isExpired(data) ? styles.itemActive : styles.itemExpired]} >
+    <View style={styles.itemWrapper} >
       {children}
     </View>
   )
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   title: {
-    fontSize: 14,
+    fontSize: 17,
     marginVertical: 5,
   },
   input: {
@@ -113,7 +112,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#dfe0e0',
     backgroundColor: '#f5f5f5',
-    color: '#b0acaf'
+    color: '#b0acaf',
+    fontSize: 16
   },
   inputEnabled: {
     color: 'black'
@@ -126,14 +126,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
 
-  itemActive: {
-    borderTopWidth: 2,
-    borderTopColor: 'green',
-  },
-  itemExpired: {
-    borderTopWidth: 2,
-    borderTopColor: 'red',
-  },
+
   listBodyDataSetView: {
     marginBottom: 10,
   }

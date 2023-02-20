@@ -19,6 +19,7 @@ import { UserContext } from '../../../useContext/useContect';
 import { DayContext } from '../../../useContext/daysContext';
 import { useRoute } from '@react-navigation/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { ListBodyDataSet } from '../../SharedComp/List/List';
 
 const AddRantevou = () => {
   const route = useRoute();
@@ -56,7 +57,6 @@ const AddRantevou = () => {
     }
   }, [])
 
-  let date = state.date;
 
 
   const handleDate = (selectredDate) => {
@@ -82,7 +82,6 @@ const AddRantevou = () => {
   const onPress = async () => {
     handleEmptyState();
     let date = state.date;
-
     setDay(date)
     if (state.service !== '' && state.person !== '' && state.customer !== '' && state.place !== '' && state.fromTime !== '' && state.toTime !== '') {
       const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'insertEvent', trdr: trdr, ...state })
@@ -117,9 +116,10 @@ const AddRantevou = () => {
           <ModalView title={"* Στέλεχος:"} query="GetPersons" setState={setState} updateValue={"person"} />
           <ModalView title={"* Σημείο:"} query="GetPlaces" setState={setState} updateValue={"place"} />
           <HeaderWithDivider text={"Κατάσταση"} />
-          <InputLabel title="* Ημερομηνία:">
+          <ListBodyDataSet title={'* Ημερομηνία:'} value={state.date.toLocaleDateString()} enabled={false} />
+          {/* <InputLabel title="* Ημερομηνία:">
             < ModalDatePickerComp style={styles.datePicker} day={state.date} onChange={handleDate} />
-          </InputLabel>
+          </InputLabel> */}
           <DatePickers setState={setState} startTime={state.fromTime} endTime={state.toTime} />
           <CheckboxPaper title={"EΟΠΠΥ"} setState={setState} state={state} />
           <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} setState={setState} state={state} />

@@ -18,7 +18,7 @@ import EventScreen from "../EventScreen/EventScreen";
 
 const DayViewCalendarMain = () => {
   const { day, setDay, setSingleEvent } = useContext(DayContext)
-  console.log(day)
+  // console.log(day)
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext)
   const [events, setEvents] = useState([])
@@ -49,8 +49,7 @@ const DayViewCalendarMain = () => {
       trdr: trdr,
       stelexos: state.stelexos
     })
-    console.log('--------------------- RES DayViewMain ---------------------------')
-    console.log(res)
+
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     setEvents(updatedData)
 

@@ -6,48 +6,63 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getTime } from '../../utils/getTime';
 import { COLORS } from '../../shared/COLORS';
 import { constructDate } from '../../utils/dateFunctions/constructDate';
+import { utcToZonedTime, format } from 'date-fns-tz';
+
+
+const timeZone = 'Europe/Athens';
+const timeZoneOffset = '+02:00';
+
+
 export const ModalTimePickerComp = ({ handleState, style, time }) => {
   const [date, setDate] = useState(new Date());
+  const [displayDate, setDisplayDate] = useState();
   const [show, setShow] = useState(false);
 
 
 
-
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate;
-  //   const d = getTime(selectedDate);
-
-  //   handleState(selectedDate)
-  //   setDate(currentDate);
-  //   setShow(false);
-  // };
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    const d = getTime(selectedDate);
-    //this is what we save to the state to send the request. we want the full date here.
-    let date = constructDate(selectedDate)
-    console.log(date)
-    handleState(date)
-    setDate(currentDate);
     setShow(false)
+
+    const zonedDate = utcToZonedTime(selectedDate, timeZone);
+    const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
+    setDisplayDate(formattedTime)
+    setDate(formattedDate)
+    handleState(formattedDate)
+
+
   };
 
+
+
+
   useEffect(() => {
+    let date;
     if (time) {
-      setDate(time)
+      date = new Date(time);
+    } else {
+      date = new Date()
     }
+    const zonedDate = utcToZonedTime(date, timeZone);
+    const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
+
+    setDisplayDate(formattedTime.toString())
+
+    setDate(formattedDate)
+    handleState(formattedDate)
+
 
   }, [time])
 
 
   const showTimepicker = () => {
     setShow(true)
-
   };
 
   return (
     <View>
-      <ShowTime onPress={showTimepicker} date={new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} style={style} />
+      <ShowTime onPress={showTimepicker} date={displayDate} style={style} />
       {show ? (
         <DateTimePicker
           value={new Date(date)}
