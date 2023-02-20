@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Text from "../Atoms/Text"
-import { View, ScrollView, StyleSheet, Modal, Pressable } from "react-native"
+import { View, StyleSheet, Modal, FlatList } from "react-native"
 import { List } from "react-native-paper"
 import { ListBodyDataSet, ListTitle, ListBodyView, ListBodyButton } from "../SharedComp/List/List"
 import IonIcons from 'react-native-vector-icons/Ionicons'
@@ -22,27 +22,32 @@ const CustomerItems = (props) => {
     navigation.navigate('Διόρθωση πελάτη', { data: data })
   }
 
-
-
+  const Item = ({ data, index }) => {
+    return (
+      <View key={index}>
+        <View style={[styles.itemWrapper]} >
+          <List.Accordion
+            title={<ListTitle value={data["Name"]} Icon={IonIcons} iconName="person" />}
+          >
+            <ListBody data={data} enabled={enabled} onEditBtn={onEditBtn} setState={props.setState} state={props.state} />
+          </List.Accordion>
+        </View>
+      </View>
+    )
+  }
 
 
   return (
-    <ScrollView style={styles.container}>
-      {props?.data && props?.data.map((data, index) => {
-        return (
-          <View key={index}>
-            <View style={[styles.itemWrapper]} >
-              <List.Accordion
-                title={<ListTitle value={data["Name"]} Icon={IonIcons} iconName="person" />}
-              >
-                <ListBody data={data} enabled={enabled} onEditBtn={onEditBtn} setState={props.setState} state={props.state} />
-              </List.Accordion>
-            </View>
-          </View>
-        )
+    <FlatList
+      data={props.data}
+      renderItem={({ item, index }) => <Item index={index} data={item} />}
+      keyExtractor={(item, index) => {
+        return index;
+      }}
+      initialNumToRender={12}
+      maxToRenderPerBatch={20}
+    />
 
-      })}
-    </ScrollView>
 
   )
 }
