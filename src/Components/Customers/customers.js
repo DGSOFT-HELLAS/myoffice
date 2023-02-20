@@ -6,8 +6,16 @@ import Spinner from "../Atoms/ActivityIndicator";
 import NoDataView from "../Atoms/View/NoDataView";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import SearchForm from "./SearchForm";
 
 const Customers = () => {
+  const router = useRoute()
+  let name;
+  if (router.params.name) {
+    name = router.params.name;
+  }
+
+
   const { trdr } = useContext(UserContext);
   const isFocused = useIsFocused();
 
@@ -26,11 +34,12 @@ const Customers = () => {
         ...prev, loading: true
       }
     })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/fetchClients.php', { trdr: trdr })
-
+    // const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/fetchClients.php', { trdr: trdr, postName: router.params.name })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCusomerData', trdr: trdr, postName: router.params.name.toString() })
+    console.log(response)
     try {
       if (response) {
-        console.log(response)
+        // console.log(response)
         setState((prev) => {
           return {
             ...prev, data: response
@@ -55,8 +64,8 @@ const Customers = () => {
 
   return (
     <>
+      {/* <SearchForm /> */}
       {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <CustomerItems data={state.data} setState={setState} state={state} />}
-
 
     </>
   )

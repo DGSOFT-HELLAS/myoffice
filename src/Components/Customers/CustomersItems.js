@@ -12,7 +12,6 @@ import { COLORS } from "../../shared/COLORS"
 import { fetchAPI } from "../../utils/fetchAPI"
 import CheckboxPaper from "../SharedComp/Buttons/CheckBox"
 
-
 const CustomerItems = (props) => {
   const navigation = useNavigation()
   const [enabled, setEnabled] = useState(false)
@@ -44,8 +43,11 @@ const CustomerItems = (props) => {
       keyExtractor={(item, index) => {
         return index;
       }}
-      initialNumToRender={12}
+      initialNumToRender={10}
       maxToRenderPerBatch={20}
+      getItemLayout={(data, index) => (
+        { length: 60, offset: 60 * index, index }
+      )}
     />
 
 
@@ -143,95 +145,37 @@ const ModalCheck = ({ title, onPressDelete }) => {
 
 
 const styles = StyleSheet.create({
+  input: {
+    margin: 10,
+    width: '100%'
+  },
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fafafa',
-    // backgroundColor: '#fafafa',
+    backgroundColor: '#f0f0f0',
   },
-  itemDescription: {
-    marginTop: 3,
-    fontFamily: 'Roboto-Regular'
+  dayView: {
+    flexDirection: 'row',
+    width: '100%',
+    padding: 2,
   },
   itemWrapper: {
     marginHorizontal: 10,
     backgroundColor: 'white',
     elevation: 3,
     marginVertical: 5,
-    minHeight: 60,
   },
-  itemActive: {
-    borderTopWidth: 2,
-    borderTopColor: 'green',
-  },
-  itemExpired: {
-    borderTopWidth: 2,
-    borderTopColor: 'red',
-  },
-  buttonView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
+  accordionItem: {
+    marginBottom: 10,
   },
 
-  modalContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.63)',
-    padding: 10,
-  },
-  modalView: {
-    width: '80%',
-    backgroundColor: 'white',
-    borderRadius: 3,
-    minHeight: 200,
-    // padding: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalBtn: {
-    border: 'none',
-    padding: 10,
-    minWidth: 80,
-  },
-  //Style the content of the modal:
-
-  finalDelete: {
-    backgroundColor: COLORS.deleteBtn,
-    marginRight: 5,
-  },
-  cancelDelete: {
-    backgroundColor: COLORS.secondaryColor,
-    marginLeft: 5,
+  itemDescription: {
+    marginTop: 3,
+    fontFamily: 'Roboto-Regular'
   },
 
-  topView: {
-    backgroundColor: COLORS.deleteBtn,
-    padding: 15,
-    alignItems: 'center',
-    borderTopRightRadius: 3,
-    borderTopLeftRadius: 3,
-  },
-  middleView: {
-    padding: 10,
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
 
-  bottomView: {
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+
 })
 
 

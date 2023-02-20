@@ -180,23 +180,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   }
 
-
-  // datePicker: {
-  //   width: '100%',
-  //   backgroundColor: 'white',
-  //   height: 50,
-  //   marginBottom: 10,
-  //   marginTop: 5,
-  // },
-  // leftSide: {
-  //   width: '85%',
-  // },
-  // righSide: {
-  //   width: '15%',
-  // },
-
-
-
 })
 
 

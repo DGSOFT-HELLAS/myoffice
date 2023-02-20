@@ -56,7 +56,7 @@ const CustomDrawer = (props) => {
         <DrawerItem title="Πελάτες" Icon={Ion} iconName="person" index={3} id={id} setId={setId} />
         {id == 3 && (
           <DrawerSubItemView>
-            <DrawerSubItem title="Πελάτες" screen="Πελάτες" setId={setId} />
+            <DrawerSubItem title="Πελάτες" screen="CustomerSearchForm" setId={setId} />
             <DrawerSubItem title="Προσθήκη Πελάτη" screen="Προσθήκη πελάτη" setId={setId} />
           </DrawerSubItemView>
         )}

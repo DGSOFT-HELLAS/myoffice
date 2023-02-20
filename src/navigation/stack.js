@@ -17,7 +17,7 @@ import IncomingElta from '../Components/screenIncoming/IncomingElta/Elta';
 import IncomingTasks from '../Components/screenIncoming/IncomingTasks/IncomingTasks';
 //Screen Customers:
 import Customers from '../Components/Customers/customers';
-
+import CustomerSearchForm from '../Components/Customers/SearchForm';
 import AddCustomer from '../Components/Customers/AddCustomer';
 import EditCustomer from '../Components/Customers/EditCustomer';
 import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
@@ -167,6 +167,15 @@ export const IncomingStack = () => {
         <Stack.Screen
           name="Πελάτες"
           component={Customers}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Πελάτες'} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="CustomerSearchForm"
+          component={CustomerSearchForm}
           options={{
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Πελάτες'} />
