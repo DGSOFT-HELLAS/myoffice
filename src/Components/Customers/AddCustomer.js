@@ -9,6 +9,7 @@ import CheckboxPaper from "../SharedComp/Buttons/CheckBox";
 import { UserContext } from "../../useContext/useContect";
 import { fetchAPI } from "../../utils/fetchAPI";
 import { useNavigation } from "@react-navigation/native";
+import { add } from "date-fns";
 
 const AddCustomer = () => {
 
@@ -46,7 +47,9 @@ const AddCustomer = () => {
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'SaveCustomer', action: 'insert', trdr: trdr, ...state })
     try {
       if (response) {
-        navigation.navigate('Πελάτες')
+
+        navigation.goBack()
+
       }
     } catch (error) {
       console.log(error)

@@ -108,7 +108,7 @@ const AddRantevou = () => {
         {/* <HeaderView Icon={FontAws} iconName={"calendar-plus-o"} title="Προσθήκη Ραντεβού" /> */}
         <AddView>
           <HeaderWithDivider text={"Στοιχεία Ραντεβού"} />
-          <ModalView title={"* Πελάτες:"} query="GetCustomers" setState={setState} updateValue={"customer"} />
+          <ModalView title={"* Πελάτες:"} query="GetCustomers" setState={setState} updateValue={"customer"} addClient={true} />
           <ModalView title={"* Τύπος/Υπηρεσίες:"} query="GetServices" setState={setState} updateValue={"service"} />
           <ModalView title={"* Στέλεχος:"} query="GetPersons" setState={setState} updateValue={"person"} />
           <ModalView title={"* Σημείο:"} query="GetPlaces" setState={setState} updateValue={"place"} />
