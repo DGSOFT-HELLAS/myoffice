@@ -8,7 +8,6 @@ import ModalView from './ModalView';
 import CommentInput from './CommentInput';
 import DatePickers from './DatePickers';
 import { ModalDatePickerComp } from '../../DatePickers/ModalDatePicker';
-import InputLabel from '../../SharedComp/Views/InputLabel';
 import Button from '../../SharedComp/Buttons/Button';
 import { fetchAPI } from '../../../utils/fetchAPI';
 //Imports from other Files:
@@ -23,8 +22,7 @@ import { ListBodyDataSet } from '../../SharedComp/List/List';
 
 const AddRantevou = () => {
   const route = useRoute();
-  console.log('------ ROute PArams')
-  console.log(route)
+
   const { trdr } = useContext(UserContext);
   const { setDay } = useContext(DayContext);
   const navigation = useNavigation()
@@ -42,7 +40,6 @@ const AddRantevou = () => {
     status: 1
   })
 
-  console.log(state)
 
   useEffect(() => {
     //On day view if we press on a specific time, we get the input of that time formatted as a date, and we convert it to plain time ex. 12: 40

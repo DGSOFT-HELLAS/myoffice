@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, FlatList, TextInput } from 'react-native'
 import Text from "../../Atoms/Text";
 import React from 'react'
 import { Modal, RadioButton, Portal, Provider } from 'react-native-paper';
@@ -11,11 +11,18 @@ import InputLabel from '../../SharedComp/Views/InputLabel';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const ModalView = ({ title, query, setState, updateValue, hideLabel }) => {
+
+
   const [data, setData] = useState([])
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+
   const [value, setValue] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const { trdr } = useContext(UserContext);
+  const [search, setSearch] = useState('');
 
+  console.log(data)
+  console.log(search)
   const showModal = () => {
     setVisible(true)
 
@@ -35,12 +42,42 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel }) => {
     hideModal()
   }
 
+
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      const newData = data.filter(function (item) {
+        let title = item[Object.keys(item)[1]]
+        console.log(title)
+        // Applying filter for the inserted text in search bar
+        const itemData = title
+          ? title.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(data);
+      setSearch(text);
+    }
+  };
+
+
+
+
+
+
   const handleFetch = async () => {
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { trdr: trdr, query: query })
     try {
       if (response) {
         // console.log(response)
         setData(response)
+        setFilteredDataSource(response);
       }
     } catch (error) {
       console.log(error)
@@ -55,6 +92,7 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel }) => {
   const RenderItem = ({ item, index }) => {
     return (
       <ListItem item={item} />)
+
   };
 
   const HandleTitle = () => {
@@ -67,17 +105,29 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel }) => {
   }
 
   return (
-    <InputLabel title={hideLabel ? null : title}>
-      <TouchableOpacity onPress={showModal} style={styles.addInput}>
-        {hideLabel && <AntDesign name="search1" size={20} />}
-        {<Text>{value[Object.keys(value)[1]]}</Text>}
-        <AntDesign name="down" size={18} />
-      </TouchableOpacity>
+    <>
+      <InputLabel title={hideLabel ? null : title}>
+        <TouchableOpacity onPress={showModal} style={styles.addInput}>
+          {/* {hideLabel && <AntDesign name="search1" size={20} />} */}
+          {<Text>{value[Object.keys(value)[1]]}</Text>}
+          <AntDesign name="down" size={18} />
+        </TouchableOpacity>
+
+      </InputLabel >
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle} style={styles.modalBackgroundStyle} >
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
+          <View style={styles.searchView}>
+            <TextInput
+              style={styles.textInputStyle}
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              underlineColorAndroid="transparent"
+              placeholder="Αναζήτηση"
+            />
+          </View>
           <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value.id}>
             <FlatList
-              data={data}
+              data={filteredDataSource}
               renderItem={RenderItem}
               keyExtractor={item => item.id}
               ItemSeparatorComponent={Seperator}
@@ -85,8 +135,8 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel }) => {
           </RadioButton.Group>
         </Modal>
       </Portal>
-    </InputLabel >
 
+    </>
 
   )
 }
@@ -113,15 +163,22 @@ const ListItem = ({ item }) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
+    flex: 1,
   },
 
-  modalBackgroundStyle: {
-    backgroundColor: 'rgba(52, 52, 52, 0.8)',
-  },
   containerStyle: {
     backgroundColor: 'white',
-    // padding: 20,
-    margin: 10,
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+  searchView: {
+    // backgroundColor: 'grey',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '',
+    margin: 8,
+    borderRadius: 4,
+    paddingLeft: 5,
   },
   addInput: {
     flexDirection: 'row',
@@ -147,6 +204,8 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     color: '#656666'
+  },
+  textInputStyle: {
   }
 
 })
