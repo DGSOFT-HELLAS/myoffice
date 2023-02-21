@@ -46,9 +46,9 @@ const CustomDrawer = (props) => {
         {id == 2 && (
           <DrawerSubItemView>
             <DrawerSubItem title="Κλήσεις" screen="IncomingCallsForm" setId={setId} />
-            <DrawerSubItem title="Email" screen="IncomingEmails" setId={setId} />
-            <DrawerSubItem title="Εlta" screen="IncomingElta" setId={setId} />
-            <DrawerSubItem title="Αναφορά Εργασίας" screen="IncomingTasks" setId={setId} />
+            <DrawerSubItem title="Email" screen="IncomingEmailForm" setId={setId} />
+            <DrawerSubItem title="Εlta" screen="IncomingEltaForm" setId={setId} />
+            <DrawerSubItem title="Αναφορά Εργασίας" screen="IncomingTaskForm" setId={setId} />
           </DrawerSubItemView>
         )}
       </View>

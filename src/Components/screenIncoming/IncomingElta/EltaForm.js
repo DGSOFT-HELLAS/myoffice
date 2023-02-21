@@ -1,24 +1,21 @@
-import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
-import { useState, useContext } from 'react'
+import { View, StyleSheet } from 'react-native'
+import { useState, } from 'react'
 import Text from '../../Atoms/Text'
 import Button from '../../SharedComp/Buttons/Button'
 import { COLORS } from '../../../shared/COLORS'
 import BoldText from '../../Atoms/Text/BoldText'
 import { useNavigation } from '@react-navigation/native'
-import SearchInput from '../../SharedComp/Inputs/searchInput'
 import { ModalDatePickerComp } from '../../DatePickers/ModalDatePicker'
 
-const IncomingCallsForm = () => {
+const IncomingEltaForm = () => {
   const navigation = useNavigation()
+
   const [state, setState] = useState({
-    postName: '',
-    postPhone: '',
     startDate: new Date(),
     endDate: new Date()
   })
 
-  const onChangeName = (text) => setState((prev) => { return { ...prev, postName: text } })
-  const onChangePhone = (text) => setState((prev) => { return { ...prev, postPhone: text } })
+
   const onChangeStartDay = (selectedDate) => {
     setState((prevState) => {
       return {
@@ -39,16 +36,16 @@ const IncomingCallsForm = () => {
 
 
   const onPress = () => {
-    navigation.navigate('IncomingCalls', { state: JSON.stringify(state) })
+    navigation.navigate('IncomingElta', { state: JSON.stringify(state) })
   }
+
 
 
   return (
     <>
-
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <BoldText>Αναζήτηση Κλήσεων</BoldText>
+          <BoldText>Αναζήτηση Elta</BoldText>
           <View style={styles.divider}></View>
         </View>
         <View style={styles.inputView}>
@@ -63,14 +60,12 @@ const IncomingCallsForm = () => {
               <ModalDatePickerComp style={styles.modalContainer} day={state.endDate} onChange={onChangeEndDay} />
             </View>
           </View>
-          {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} containerStyle={styles.containerStyle} /> */}
+
         </View>
-        <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.postName} />
-        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postPhone} />
-
-
         <Button style={styles.btn} text={"Aναζήτηση"} onPress={onPress} />
       </View>
+
+
 
     </>
   )
@@ -139,4 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IncomingCallsForm;
+export default IncomingEltaForm;

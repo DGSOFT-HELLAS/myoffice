@@ -1,45 +1,45 @@
-import { useState } from "react"
-import { View, ScrollView, StyleSheet } from "react-native"
+import { View, StyleSheet, FlatList } from "react-native"
 import { List } from "react-native-paper"
 import { ListBodyDataSet, ListTitle, ListBodyView } from "../../SharedComp/List/List"
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const IncomingTasksBody = (props) => {
 
-  const [enabled, setEnabled] = useState(false)
-  const onPress = () => {
-    setEnabled(prev => !prev)
-  }
-  return (
-    <ScrollView style={styles.container}>
-      {props?.data && props?.data.map((data, index) => {
-        return (
-          <View key={index}>
-            <View style={[styles.itemWrapper]} >
-              <List.Accordion
-                title={<ListTitle value={data["Ημ/νία"]} Icon={Icon} iconName="tasks" />}
-                style={{ backgroundColor: 'white' }}
-              // description={<DescriptionTitle value={data["Επωνυμία"] ? data["Επωνυμία"] : "'Δεν βρέθηκε Επωνυμία'"} />}
-              // descriptionStyle={styles.itemDescription}
-              >
-                <ListBody data={data} />
-              </List.Accordion>
-            </View>
-          </View>
-        )
+  const Item = ({ data, index }) => {
+    return (
+      <View key={index}>
+        <View style={[styles.itemWrapper]} >
+          <List.Accordion
+            title={<ListTitle value={data["Ημ/νία"]} Icon={Icon} iconName="tasks" />}
+            style={{ backgroundColor: 'white' }}
 
-      })}
-    </ScrollView>
+          >
+            <ListBody data={data} />
+          </List.Accordion>
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <FlatList
+      data={props.data}
+      renderItem={({ item, index }) => <Item index={index} data={item} />}
+      keyExtractor={(item, index) => {
+        return index;
+      }}
+      initialNumToRender={10}
+      maxToRenderPerBatch={20}
+
+    />
 
   )
 }
 
-const ListBody = ({ data, enabled, onPress }) => {
+const ListBody = ({ data }) => {
   return (
     <ListBodyView>
       <ListBodyDataSet enabled={false} title={'Λεπτομέριες:'} value={data["ΛΕΠΤΟΜΕΡΕΙΕΣ"]} />
-
-      {/* <ListBodyButton onPress={onPress} enabled={enabled} /> */}
     </ListBodyView>
   )
 }
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#fafafa',
-    // backgroundColor: '#fafafa',
   },
   itemDescription: {
     marginTop: 3,
@@ -61,14 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 3,
     marginVertical: 5,
-  },
-  itemActive: {
-    borderTopWidth: 2,
-    borderTopColor: 'green',
-  },
-  itemExpired: {
-    borderTopWidth: 2,
-    borderTopColor: 'red',
   },
 })
 

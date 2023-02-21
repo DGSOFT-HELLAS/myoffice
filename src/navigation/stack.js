@@ -22,6 +22,9 @@ import IncomingEmails from '../Components/screenIncoming/IncomingEmails/Emails';
 import IncomingElta from '../Components/screenIncoming/IncomingElta/Elta';
 import IncomingTasks from '../Components/screenIncoming/IncomingTasks/IncomingTasks';
 import IncomingCallsForm from '../Components/screenIncoming/IncomingCalls/Form';
+import IncomingEmailForm from '../Components/screenIncoming/IncomingEmails/EmailForm';
+import IncomingEltaForm from '../Components/screenIncoming/IncomingElta/EltaForm';
+import IncomingTaskForm from '../Components/screenIncoming/IncomingTasks/TaskForm';
 //Screen Customers:
 import Customers from '../Components/Customers/customers';
 import CustomerSearchForm from '../Components/Customers/SearchForm';
@@ -119,6 +122,15 @@ export const IncomingStack = () => {
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
+          name="IncomingCallsForm"
+          component={IncomingCallsForm}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={false} title={'Κλήσεις'} />
+            ),
+          }}
+        />
+        <Stack.Screen
           name="IncomingCalls"
           component={IncomingCalls}
           options={{
@@ -128,21 +140,29 @@ export const IncomingStack = () => {
           }}
         />
         <Stack.Screen
-          name="IncomingCallsForm"
-          component={IncomingCallsForm}
+          name="IncomingEmailForm"
+          component={IncomingEmailForm}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Κλήσεις'} />
+              <NavStyle navigation={navigation} showback={false} title={'Email'} />
             ),
           }}
         />
-
         <Stack.Screen
           name="IncomingEmails"
           component={IncomingEmails}
           options={{
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Email'} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="IncomingEltaForm"
+          component={IncomingEltaForm}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={false} title={'Ελτά'} />
             ),
           }}
         />
@@ -156,11 +176,30 @@ export const IncomingStack = () => {
           }}
         />
         <Stack.Screen
+          name="IncomingTaskForm"
+          component={IncomingTaskForm}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={false} title={'Αναφορά εργασίας'} />
+            ),
+          }}
+        />
+        <Stack.Screen
           name="IncomingTasks"
           component={IncomingTasks}
           options={{
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Αναφορά εργασίας'} />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="CustomerSearchForm"
+          component={CustomerSearchForm}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={false} title={'Πελάτες'} />
             ),
           }}
         />
@@ -173,15 +212,7 @@ export const IncomingStack = () => {
             ),
           }}
         />
-        <Stack.Screen
-          name="CustomerSearchForm"
-          component={CustomerSearchForm}
-          options={{
-            header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Πελάτες'} />
-            ),
-          }}
-        />
+
         <Stack.Screen
           name="Προσθήκη πελάτη"
           component={AddCustomer}

@@ -22,7 +22,11 @@ const NavStyle = ({ navigation, showback, title, showDayModal, dontShowAdd }) =>
   return (
     <View style={styles.navView}>
       <View style={styles.leftView}>
-
+        {showback && (
+          <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()} >
+            <Material name="keyboard-backspace" color="white" size={19} />
+          </TouchableOpacity>
+        )}
         {route.name === 'Πελάτες' ? <AddRantevouBtn screen='Προσθήκη πελάτη' /> : null}
         {showDayModal && (
           <>
@@ -97,6 +101,9 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 0.1
   },
+  goBack: {
+    marginRight: 10,
+  }
 });
 
 export default NavStyle;

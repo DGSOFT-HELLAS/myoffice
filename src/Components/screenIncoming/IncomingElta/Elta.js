@@ -2,36 +2,21 @@ import { useState, useContext, useEffect } from "react";
 import ChooseDates from "../../SharedComp/ChooseDates/ChoseDates";
 import { UserContext } from "../../../useContext/useContect";
 import { fetchAPI } from "../../../utils/fetchAPI";
-import { splitDate } from "../../../utils/dateFunctions/splitDate";
 import Spinner from "../../Atoms/ActivityIndicator";
 import NoDataView from "../../Atoms/View/NoDataView";
 import IncomingEltaBody from "./EltaBody";
+import { useRoute } from "@react-navigation/native";
+
+
 const IncomingElta = () => {
   const { trdr } = useContext(UserContext);
+  const router = useRoute()
+  let parsedRouter = JSON.parse(router.params.state)
   const [state, setState] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
     data: [],
     loading: true
   });
 
-
-  const onChangeStartDay = (selectedDate) => {
-    // setDay(split)
-    setState((prevState) => {
-      return {
-        ...prevState, startDate: selectedDate
-      }
-    })
-  };
-
-  const onChangeEndDay = (selectedDate) => {
-    setState((prevState) => {
-      return {
-        ...prevState, endDate: selectedDate
-      }
-    })
-  };
 
 
 
@@ -42,10 +27,9 @@ const IncomingElta = () => {
         ...prevState, loading: true
       }
     })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { startDate: state.startDate, endDate: state.endDate, trdr: trdr, query: "getCourier" })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { ...parsedRouter, trdr: trdr, query: "getCourier" })
     try {
       if (response) {
-        console.log(response)
         setState((prevState) => {
           return {
             ...prevState, data: response
@@ -65,16 +49,11 @@ const IncomingElta = () => {
 
   useEffect(() => {
     handleFetch();
-  }, [state.startDate, state.endDate])
-
-
-
+  }, [])
 
 
   return (
-
     <>
-      <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} />
       {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <IncomingEltaBody data={state.data} />}
     </>
 

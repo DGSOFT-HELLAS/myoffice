@@ -69,14 +69,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginVertical: 5,
   },
-  itemActive: {
-    borderTopWidth: 2,
-    borderTopColor: 'green',
-  },
-  itemExpired: {
-    borderTopWidth: 2,
-    borderTopColor: 'red',
-  },
+
 })
 
 
