@@ -19,23 +19,6 @@ const IncomingCalls = () => {
   });
 
 
-  // const onChangeStartDay = (selectedDate) => {
-  //   setState((prevState) => {
-  //     return {
-  //       ...prevState, startDate: selectedDate
-  //     }
-  //   })
-  // };
-
-  // const onChangeEndDay = (selectedDate) => {
-  //   setState((prevState) => {
-  //     return {
-  //       ...prevState, endDate: selectedDate
-  //     }
-  //   })
-  // };
-
-
 
 
   const handleFetch = async () => {

@@ -1,35 +1,44 @@
-import { useState } from "react"
-import { View, ScrollView, StyleSheet } from "react-native"
+import { View, ScrollView, StyleSheet, FlatList } from "react-native"
 import { List } from "react-native-paper"
-import { ListBodyDataSet, ListTitle, ListBodyView, ListBodyButton, DescriptionTitle } from "../../SharedComp/List/List"
+import { ListBodyDataSet, ListTitle, ListBodyView, DescriptionTitle } from "../../SharedComp/List/List"
 import Material from 'react-native-vector-icons/MaterialIcons'
 
 const IncomingCallsBody = (props) => {
 
-  const [enabled, setEnabled] = useState(false)
-  const onPress = () => {
-    setEnabled(prev => !prev)
-  }
-  return (
-    <ScrollView style={styles.container}>
-      {props?.data && props?.data.map((data, index) => {
-        return (
-          <View key={index}>
-            <View style={[styles.itemWrapper]} >
-              <List.Accordion
-                title={<ListTitle value={data["Ημ/νία Λήψης"]} Icon={Material} iconName="phone-callback" />}
-                description={<DescriptionTitle value={data["Επωνυμία"] ? data["Επωνυμία"] : "'Δεν βρέθηκε Επωνυμία'"} />}
-                descriptionStyle={styles.itemDescription}
-                style={{ backgroundColor: 'white' }}
-              >
-                <ListBody data={data} />
-              </List.Accordion>
-            </View>
-          </View>
-        )
 
-      })}
-    </ScrollView>
+  const Item = ({ data, index }) => {
+    return (
+      <View key={index}>
+        <View style={[styles.itemWrapper]} >
+          <List.Accordion
+            title={<ListTitle value={data["Ημ/νία Λήψης"]} Icon={Material} iconName="phone-callback" />}
+            description={<DescriptionTitle value={data["Επωνυμία"] ? data["Επωνυμία"] : "'Δεν βρέθηκε Επωνυμία'"} />}
+            descriptionStyle={styles.itemDescription}
+            style={{ backgroundColor: 'white' }}
+          >
+            <ListBody data={data} />
+          </List.Accordion>
+        </View>
+      </View>
+    )
+  }
+
+
+
+  return (
+
+    <FlatList
+      data={props.data}
+      renderItem={({ item, index }) => <Item index={index} data={item} />}
+      keyExtractor={(item, index) => {
+        return index;
+      }}
+      initialNumToRender={10}
+      maxToRenderPerBatch={20}
+      getItemLayout={(data, index) => (
+        { length: 73.8, offset: 73.8 * index, index }
+      )}
+    />
 
   )
 }
@@ -38,9 +47,6 @@ const ListBody = ({ data }) => {
   return (
     <ListBodyView>
       <ListBodyDataSet enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} />
-
-
-      {/* <ListBodyButton onPress={onPress} enabled={enabled} /> */}
     </ListBodyView>
   )
 }

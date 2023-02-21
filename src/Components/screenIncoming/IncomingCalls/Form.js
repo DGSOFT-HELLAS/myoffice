@@ -11,14 +11,14 @@ import { ModalDatePickerComp } from '../../DatePickers/ModalDatePicker'
 const IncomingCallsForm = () => {
   const navigation = useNavigation()
   const [state, setState] = useState({
-    name: '',
-    phone: '',
+    postName: '',
+    postPhone: '',
     startDate: new Date(),
     endDate: new Date()
   })
 
-  const onChangeName = (text) => setState((prev) => { return { ...prev, name: text } })
-  const onChangePhone = (text) => setState((prev) => { return { ...prev, phone: text } })
+  const onChangeName = (text) => setState((prev) => { return { ...prev, postName: text } })
+  const onChangePhone = (text) => setState((prev) => { return { ...prev, postPhone: text } })
   const onChangeStartDay = (selectedDate) => {
     setState((prevState) => {
       return {
@@ -95,8 +95,8 @@ const IncomingCallsForm = () => {
           </View>
           {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} containerStyle={styles.containerStyle} /> */}
         </View>
-        <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.name} />
-        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.phone} />
+        <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.postName} />
+        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postPhone} />
 
 
         <Button style={[styles.btn, styles.cancelDelete]} text={"Aναζήτηση"} onPress={onPress} />
@@ -111,7 +111,6 @@ const IncomingCallsForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
     padding: 10,
     backgroundColor: '#f6f5f6',
 
