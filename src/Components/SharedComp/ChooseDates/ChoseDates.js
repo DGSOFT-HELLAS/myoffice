@@ -6,9 +6,9 @@ import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
 
 import { COLORS } from "../../../shared/COLORS";
 
-const ChooseDates = ({ day, endDay, onChangeStartDay, onChangeEndDay }) => {
+const ChooseDates = ({ day, endDay, onChangeStartDay, onChangeEndDay, containerStyle }) => {
   return (
-    <AppointmentsView style={styles.view}>
+    <AppointmentsView style={[styles.view ? styles.view : containerStyle]}>
       <View>
         <Text>Από:</Text>
         <ModalDatePickerComp style={styles.modalContainer} day={day} onChange={onChangeStartDay} />

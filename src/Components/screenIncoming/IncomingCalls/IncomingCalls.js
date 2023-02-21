@@ -12,30 +12,28 @@ import { useRoute } from "@react-navigation/native"
 const IncomingCalls = () => {
   const { trdr } = useContext(UserContext);
   const router = useRoute()
-  console.log(JSON.parse(router.params.state))
+  let parsedRouter = JSON.parse(router.params.state)
   const [state, setState] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
     data: [],
     loading: true
   });
 
 
-  const onChangeStartDay = (selectedDate) => {
-    setState((prevState) => {
-      return {
-        ...prevState, startDate: selectedDate
-      }
-    })
-  };
+  // const onChangeStartDay = (selectedDate) => {
+  //   setState((prevState) => {
+  //     return {
+  //       ...prevState, startDate: selectedDate
+  //     }
+  //   })
+  // };
 
-  const onChangeEndDay = (selectedDate) => {
-    setState((prevState) => {
-      return {
-        ...prevState, endDate: selectedDate
-      }
-    })
-  };
+  // const onChangeEndDay = (selectedDate) => {
+  //   setState((prevState) => {
+  //     return {
+  //       ...prevState, endDate: selectedDate
+  //     }
+  //   })
+  // };
 
 
 
@@ -46,7 +44,8 @@ const IncomingCalls = () => {
         ...prevState, loading: true
       }
     })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { startDate: state.startDate, endDate: state.endDate, trdr: trdr, query: "getCalls" })
+    // const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { startDate: state.startDate, endDate: state.endDate, trdr: trdr, query: "getCalls" })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { ...parsedRouter, trdr: trdr, query: "getCalls" })
     try {
       if (response) {
         console.log(response)
@@ -69,7 +68,7 @@ const IncomingCalls = () => {
 
   useEffect(() => {
     handleFetch();
-  }, [state.startDate, state.endDate])
+  }, [])
 
 
 

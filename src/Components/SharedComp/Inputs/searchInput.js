@@ -21,15 +21,10 @@ const SearchInput = (props) => {
 const styles = StyleSheet.create({
   input: {
     height: 60,
-    borderWidth: 0.7,
+    borderWidth: 0.5,
     borderColor: COLORS.secondaryColorShade002,
-    borderRadius: 4,
     backgroundColor: 'white',
-    elevation: 2,
-    borderRadius: 5,
-    // borderTopWidth: 2,
-    // borderWidth: 1,
-    // borderTopColor: COLORS.secondaryColor,
+    elevation: 1,
     borderRadius: 3,
     paddingLeft: 10,
     marginBottom: 12,

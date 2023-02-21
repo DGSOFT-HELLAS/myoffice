@@ -17,36 +17,8 @@ const SearchForm = () => {
   const onChangeName = (text) => setState((prev) => { return { ...prev, name: text } })
   const onChangePhone = (text) => setState((prev) => { return { ...prev, phone: text } })
 
-  const handleFetch = async () => {
-    setState((prev) => {
-      return {
-        ...prev, loading: true
-      }
-    })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { trdr: trdr, query: 'fetchCusomerData', postName: state.name })
-
-    try {
-      if (response) {
-        console.log(response)
-        setState((prev) => {
-          return {
-            ...prev, data: response
-          }
-        })
-        setState((prev) => {
-          return {
-            ...prev, loading: false, refresh: false
-          }
-        })
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
 
   const onPress = () => {
-    // handleFetch();
     navigation.navigate('Πελάτες', { name: state.name })
 
   }
@@ -61,14 +33,7 @@ const SearchForm = () => {
             value={state.name}
           />
         </View>
-        {/* <View style={styles.inputView}>
-          <BoldText style={styles.label}>Tηλέφωνο:</BoldText>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangePhone}
-            value={state.phone}
-          />
-        </View> */}
+
         <Button style={[styles.btn, styles.cancelDelete]} text={"Aναζήτηση"} onPress={onPress} />
       </View>
 

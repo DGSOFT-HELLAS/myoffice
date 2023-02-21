@@ -34,8 +34,7 @@ const Customers = () => {
         ...prev, loading: true
       }
     })
-    // const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/fetchClients.php', { trdr: trdr, postName: router.params.name })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCusomerData', trdr: trdr, postName: name })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCustomerData', trdr: trdr, postName: name })
     console.log(response)
     try {
       if (response) {

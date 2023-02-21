@@ -5,11 +5,8 @@ import Button from '../../SharedComp/Buttons/Button'
 import { COLORS } from '../../../shared/COLORS'
 import BoldText from '../../Atoms/Text/BoldText'
 import { useNavigation } from '@react-navigation/native'
-import ChooseDates from '../../SharedComp/ChooseDates/ChoseDates'
-import AppointmentsView from '../../Atoms/View/AppointmentsView'
 import SearchInput from '../../SharedComp/Inputs/searchInput'
-
-
+import { ModalDatePickerComp } from '../../DatePickers/ModalDatePicker'
 
 const IncomingCallsForm = () => {
   const navigation = useNavigation()
@@ -80,12 +77,27 @@ const IncomingCallsForm = () => {
     <>
 
       <View style={styles.container}>
-        < SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.name} />
-        < SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.phone} />
+        <View style={styles.headerContainer}>
+          <BoldText style={styles.header}>Αναζήτηση Κλήσεων</BoldText>
+          <View style={styles.divider}></View>
+        </View>
         <View style={styles.inputView}>
           <BoldText style={styles.label}>Ημερομηνία:</BoldText>
-          <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} />
+          <View style={styles.containerStyle}>
+            <View style={{ width: '50%' }}>
+              <Text>Από:</Text>
+              <ModalDatePickerComp style={styles.modalContainer} day={state.startDate} onChange={onChangeStartDay} />
+            </View>
+            <View style={{ width: '50%' }}>
+              <Text>Έως:</Text>
+              <ModalDatePickerComp style={styles.modalContainer} day={state.endDate} onChange={onChangeEndDay} />
+            </View>
+          </View>
+          {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} containerStyle={styles.containerStyle} /> */}
         </View>
+        <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.name} />
+        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.phone} />
+
 
         <Button style={[styles.btn, styles.cancelDelete]} text={"Aναζήτηση"} onPress={onPress} />
       </View>
@@ -99,9 +111,36 @@ const IncomingCallsForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     padding: 10,
-    backgroundColor: '#f6f5f6'
+    backgroundColor: '#f6f5f6',
+
+  },
+  headerContainer: {
+
+    marginBottom: 30,
+  },
+  header: {
+
+  },
+  divider: {
+    width: 20,
+    height: 3,
+    backgroundColor: COLORS.secondaryColor,
+    marginTop: 5,
+    borderRadius: 20,
+  },
+
+  containerStyle: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    elevation: 1,
+    borderRadius: 3,
+    marginBottom: 10,
+    borderWidth: 0.5,
+    borderColor: COLORS.secondaryColorShade002
   },
   topView: {
     padding: 10,
@@ -127,7 +166,12 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 5,
-  }
+  },
+  modalContainer: {
+    borderWidth: 1,
+    borderColor: COLORS.secondaryColorShade002,
+    marginTop: 5,
+  },
 });
 
 export default IncomingCallsForm;
