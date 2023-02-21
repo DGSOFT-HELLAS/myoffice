@@ -22,7 +22,6 @@ import { ListBodyDataSet } from '../../SharedComp/List/List';
 
 const AddRantevou = () => {
   const route = useRoute();
-
   const { trdr } = useContext(UserContext);
   const { setDay } = useContext(DayContext);
   const navigation = useNavigation()
@@ -55,26 +54,12 @@ const AddRantevou = () => {
   }, [])
 
 
-
-  const handleDate = (selectredDate) => {
-    setState((prevState) => {
-      return {
-        ...prevState, date: selectredDate
-      }
-    })
-  }
-
-
-
-
-
   const handleEmptyState = () => {
     if (state.service == '' || state.person == '' || state.customer == '' || state.place == '' || state.fromTime == '' || state.toTime == '') {
       return Alert.alert("Συμπληρώστε τα απαραίτητα πεδία")
     }
 
   }
-
 
   const onPress = async () => {
     handleEmptyState();
@@ -105,7 +90,6 @@ const AddRantevou = () => {
   return (
     <Provider>
       <ScrollView style={styles.scrollView} >
-        {/* <HeaderView Icon={FontAws} iconName={"calendar-plus-o"} title="Προσθήκη Ραντεβού" /> */}
         <AddView>
           <HeaderWithDivider text={"Στοιχεία Ραντεβού"} />
           <ModalView title={"* Πελάτες:"} query="GetCustomers" setState={setState} updateValue={"customer"} addClient={true} />
@@ -114,9 +98,6 @@ const AddRantevou = () => {
           <ModalView title={"* Σημείο:"} query="GetPlaces" setState={setState} updateValue={"place"} />
           <HeaderWithDivider text={"Κατάσταση"} />
           <ListBodyDataSet title={'* Ημερομηνία:'} value={state.date.toLocaleDateString()} enabled={false} />
-          {/* <InputLabel title="* Ημερομηνία:">
-            < ModalDatePickerComp style={styles.datePicker} day={state.date} onChange={handleDate} />
-          </InputLabel> */}
           <DatePickers setState={setState} startTime={state.fromTime} endTime={state.toTime} />
           <CheckboxPaper title={"EΟΠΠΥ"} setState={setState} state={state} />
           <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} setState={setState} state={state} />

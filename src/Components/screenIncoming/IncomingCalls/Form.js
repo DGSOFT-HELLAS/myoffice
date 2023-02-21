@@ -78,7 +78,7 @@ const IncomingCallsForm = () => {
 
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <BoldText style={styles.header}>Αναζήτηση Κλήσεων</BoldText>
+          <BoldText>Αναζήτηση Κλήσεων</BoldText>
           <View style={styles.divider}></View>
         </View>
         <View style={styles.inputView}>
@@ -99,7 +99,7 @@ const IncomingCallsForm = () => {
         <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postPhone} />
 
 
-        <Button style={[styles.btn, styles.cancelDelete]} text={"Aναζήτηση"} onPress={onPress} />
+        <Button style={styles.btn} text={"Aναζήτηση"} onPress={onPress} />
       </View>
 
 
@@ -119,9 +119,7 @@ const styles = StyleSheet.create({
 
     marginBottom: 30,
   },
-  header: {
 
-  },
   divider: {
     width: 20,
     height: 3,

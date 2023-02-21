@@ -173,6 +173,66 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontFamily: 'Roboto-Regular'
   },
+  buttonView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.63)',
+    padding: 10,
+  },
+  modalView: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 3,
+    minHeight: 200,
+    // padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalBtn: {
+    border: 'none',
+    padding: 10,
+    minWidth: 80,
+  }, finalDelete: {
+    backgroundColor: COLORS.deleteBtn,
+    marginRight: 5,
+  },
+  cancelDelete: {
+    backgroundColor: COLORS.secondaryColor,
+    marginLeft: 5,
+  },
+
+  topView: {
+    backgroundColor: COLORS.deleteBtn,
+    padding: 15,
+    alignItems: 'center',
+    borderTopRightRadius: 3,
+    borderTopLeftRadius: 3,
+  },
+  middleView: {
+    padding: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  bottomView: {
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 
 
 

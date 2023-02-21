@@ -4,8 +4,7 @@ import Text from '../Atoms/Text'
 import Button from '../SharedComp/Buttons/Button'
 import { COLORS } from '../../shared/COLORS'
 import BoldText from '../Atoms/Text/BoldText'
-import { fetchAPI } from '../../utils/fetchAPI'
-import { UserContext } from '../../useContext/useContect'
+import SearchInput from '../SharedComp/Inputs/searchInput'
 import { useNavigation } from '@react-navigation/native'
 
 const SearchForm = () => {
@@ -25,19 +24,14 @@ const SearchForm = () => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.inputView}>
-          <BoldText style={styles.label}>Όνομα:</BoldText>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeName}
-            value={state.name}
-          />
+        <View style={styles.headerContainer}>
+          <BoldText style={styles.header}>Αναζήτηση Πελατών</BoldText>
+          <View style={styles.divider}></View>
         </View>
-
-        <Button style={[styles.btn, styles.cancelDelete]} text={"Aναζήτηση"} onPress={onPress} />
+        <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.postName} />
+        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postPhone} />
+        <Button style={styles.btn} text={"Aναζήτηση"} onPress={onPress} />
       </View>
-
-
 
     </>
   )
@@ -46,31 +40,24 @@ const SearchForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 10,
     backgroundColor: '#f6f5f6'
-  },
-  topView: {
-    padding: 10,
-    backgroundColor: 'white',
-    height: 50,
-    alignItems: 'center'
-  },
-  inputView: {
-    // padding: 10,
-    marginTop: 15
-  },
-  input: {
-    height: 50,
-    backgroundColor: 'white'
   },
   btn: {
     backgroundColor: COLORS.secondaryColor,
     marginTop: 15,
   },
-  inputText: {
-    marginBottom: 5,
-  }
+  headerContainer: {
+    marginBottom: 30,
+  },
+  divider: {
+    width: 20,
+    height: 3,
+    backgroundColor: COLORS.secondaryColor,
+    marginTop: 5,
+    borderRadius: 20,
+  },
+
 });
 
 export default SearchForm;

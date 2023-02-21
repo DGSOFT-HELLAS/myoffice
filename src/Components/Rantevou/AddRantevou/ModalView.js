@@ -85,8 +85,14 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
 
   useEffect(() => {
     handleFetch();
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleFetch();
+    });
 
-  }, [])
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+
+  }, [navigation])
 
   const RenderItem = ({ item, index }) => {
     return (
