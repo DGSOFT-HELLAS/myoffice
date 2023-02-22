@@ -22,7 +22,7 @@ const NavStyle = ({ navigation, showback, title, }) => {
       <View style={styles.leftView}>
         {showback && (
           <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()} >
-            <Material name="keyboard-backspace" color="white" size={19} />
+            <Material name="keyboard-backspace" color="white" size={21} />
           </TouchableOpacity>
         )}
       </View>
@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
   },
   goBack: {
     marginRight: 10,
+    width: 30,
+    height: 30,
+    justifyContent: 'center'
   }
 });
 
