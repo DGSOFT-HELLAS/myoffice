@@ -78,9 +78,9 @@ const Login = () => {
           handleShowText={handleShowText}
           showPass={showPass}
         />
-        <CheckBox
+        {/* <CheckBox
           isChecked={isChecked}
-          setIsChecked={setIsChecked}></CheckBox>
+          setIsChecked={setIsChecked}></CheckBox> */}
         <Button
           style={styles.loginBtn}
           loading={loading}
