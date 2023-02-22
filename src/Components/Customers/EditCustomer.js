@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../useContext/useContect";
-import { StyleSheet, ScrollView } from "react-native"
+import { StyleSheet, ScrollView, View } from "react-native"
 import Button from "../SharedComp/Buttons/Button";
 import AddView from "../SharedComp/Views/AddView";
 import { COLORS } from "../../shared/COLORS";
@@ -66,7 +66,7 @@ const EditCustomer = () => {
         ...prev, loading: false
       }
     })
-    navigation.navigate('Πελάτες');
+    navigation.navigate('Πελάτες', { name: '' });
   }
 
 
@@ -102,7 +102,10 @@ const EditCustomer = () => {
         <AddInput title="Email2:" value={raw.Email2} onChangeText={(text) => { handleChange(text, 'Email2') }} />
         <AddInput title="WebPage:" value={raw.Webpage} onChangeText={(text) => { handleChange(text, 'Webpage') }} />
         <AddInput title="Παρατηρήσεις:" value={raw.Comments} onChangeText={(text) => { handleChange(text, 'Comments') }} multiline={true} />
-        <Button style={styles.btn} text={"Αποθήκευση"} onPress={handlePost} lodading={state.loading} />
+        <View style={styles.btnContainer}>
+          <Button style={styles.btn} text={"Αποθήκευση"} onPress={handlePost} loading={state.loading} />
+          <Button style={styles.cancelBtn} text={"Ακύρωση"} onPress={() => navigation.goBack()} />
+        </View>
 
       </AddView>
     </ScrollView >
@@ -114,12 +117,21 @@ const styles = StyleSheet.create({
   scrollView: {
     padding: 8,
   },
+  btnContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
   btn: {
     borderRadius: 2,
-    width: 150,
     backgroundColor: COLORS.secondaryColor,
     marginBottom: 20,
   },
+  cancelBtn: {
+    backgroundColor: COLORS.deleteBtn,
+    marginLeft: 5,
+    minWidth: 120
+  }
+
 
 
 });
