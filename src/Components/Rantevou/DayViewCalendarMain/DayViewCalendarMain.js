@@ -75,9 +75,6 @@ const DayViewCalendarMain = () => {
 
 
 
-  // const zonedDate = utcToZonedTime(selectedDate, timeZone);
-  // const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
-  // const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
 
   const onDragCreateEnd = (event) => {
 
