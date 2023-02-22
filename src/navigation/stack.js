@@ -57,7 +57,7 @@ export const IncomingStack = () => {
           component={DayViewCalendarMain}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα 3'} showDayModal={true} />
+              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα'} showDayModal={true} />
             ),
           }}
         />
@@ -73,7 +73,7 @@ export const IncomingStack = () => {
           component={DayView}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Ημέρα'} showDayModal={true} l />
+              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Mέρα'} showDayModal={true} l />
             ),
           }}
         />
@@ -83,7 +83,7 @@ export const IncomingStack = () => {
           component={AppointmentsHistory}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Iστορικό'} showDayModal={true} />
+              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Iστορικό'} showDayModal={true} />
             ),
           }}
         />
@@ -103,7 +103,7 @@ export const IncomingStack = () => {
           options={{
 
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Διόρθωση ραντεβού'} />
+              <NavStyle navigation={navigation} showback={false} title={'Διόρθωση ραντεβού'} />
             ),
           }}
         />
@@ -114,7 +114,7 @@ export const IncomingStack = () => {
           options={{
 
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Μήνας'} />
+              <NavStyle navigation={navigation} showback={false} title={'Μήνας'} />
             ),
           }}
         />
@@ -237,121 +237,6 @@ export const IncomingStack = () => {
     </Stack.Navigator>
   );
 }
-
-
-
-// export const IncomingStack = () => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="Login"
-//         component={Login}
-//         options={{
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name="Ραντεβού"
-//         component={Stack1}
-//         options={{
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name="Eισερχόμενα"
-//         component={Stack2}
-//         options={{
-//           headerShown: false,
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
-
-
-
-// export const Stack1 = () => {
-//   return (
-//     <Stack.Navigator>
-
-//       <Stack.Screen
-//         name="Main"
-//         component={WeekViewCalendar}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-//       <Stack.Screen
-//         name="DayView"
-//         component={DayView}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-//       <Stack.Screen
-//         name="AppointmentsHistory"
-//         component={AppointmentsHistory}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-//       <Stack.Screen
-//         name="AddRantevou"
-//         component={AddRantevou}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-//     </Stack.Navigator>
-//   )
-
-// }
-// export const Stack2 = () => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="IncomingCalls"
-//         component={IncomingCalls}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-
-//       <Stack.Screen
-//         name="IncomingEmails"
-//         component={IncomingEmails}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-//       <Stack.Screen
-//         name="IncomingElta"
-//         component={IncomingElta}
-//         options={{
-//           header: ({ navigation }) => (
-//             <NavStyle navigation={navigation} showback={true} />
-//           ),
-//         }}
-//       />
-//     </Stack.Navigator>
-//   )
-
-// }
-
-
-
 
 
 

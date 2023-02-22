@@ -27,12 +27,12 @@ const NavStyle = ({ navigation, showback, title, showDayModal, dontShowAdd }) =>
             <Material name="keyboard-backspace" color="white" size={19} />
           </TouchableOpacity>
         )}
-        {route.name === 'Πελάτες' ? <AddRantevouBtn screen='Προσθήκη πελάτη' /> : null}
+        {/* {route.name === 'Πελάτες' ? <AddRantevouBtn screen='Προσθήκη πελάτη' /> : null}
         {showDayModal && (
           <>
             {!dontShowAdd && <AddRantevouBtn screen='AddRantevou' />}
           </>
-        )}
+        )} */}
 
 
       </View>
