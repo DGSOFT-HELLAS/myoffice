@@ -37,7 +37,7 @@ const CustomDrawer = (props) => {
             {/* <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} dateBool={true} /> */}
             <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
-            <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} />
+            {/* <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} /> */}
           </DrawerSubItemView>
         )}
       </View>
@@ -118,9 +118,7 @@ const DrawerSubItem = ({ screen, title, setId, date, show, dateBool }) => {
   const navigation = useNavigation()
   // const { setDay } = useContext(DayContext)
   const onPress = () => {
-    // if (dateBool) {
-    //   setDay(new Date())
-    // }
+
     setId({})
     navigation.navigate(screen, { date: date, show: show })
 

@@ -12,9 +12,11 @@ import { useRoute } from "@react-navigation/native";
 import DayViewCalendarHeader from "./DayViewCalendarHeader";
 import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
-import { useIsFocused } from '@react-navigation/native';
-import EventScreen from "../EventScreen/EventScreen";
+import { utcToZonedTime, format } from 'date-fns-tz';
 
+import EventScreen from "../EventScreen/EventScreen";
+const timeZone = 'Europe/Athens';
+const timeZoneOffset = '+02:00';
 
 const DayViewCalendarMain = () => {
   const { day, setDay, setSingleEvent } = useContext(DayContext)
@@ -73,11 +75,18 @@ const DayViewCalendarMain = () => {
 
 
 
+  // const zonedDate = utcToZonedTime(selectedDate, timeZone);
+  // const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
+  // const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
 
   const onDragCreateEnd = (event) => {
+
     let date = event.start.split('T')[0]
-    let start = event.start.split('T')[0] + 'T' + new Date(event.start).toLocaleTimeString()
-    let end = event.end.split('T')[0] + 'T' + new Date(event.end).toLocaleTimeString()
+    const formattedStart = format(new Date(event.start), 'HH:mm', { timeZone, timeZoneOffset });
+    const formattedEnd = format(new Date(event.end), 'HH:mm', { timeZone, timeZoneOffset });
+
+    let start = event.start.split('T')[0] + 'T' + formattedStart
+    let end = event.start.split('T')[0] + 'T' + formattedEnd
     navigation.navigate('AddRantevou', { start: start, end: end, date: date })
 
   };

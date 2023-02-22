@@ -3,11 +3,8 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { getTime } from '../../utils/getTime';
 import { COLORS } from '../../shared/COLORS';
-import { constructDate } from '../../utils/dateFunctions/constructDate';
 import { utcToZonedTime, format } from 'date-fns-tz';
-import { ListBodyDataSet } from '../SharedComp/List/List';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
