@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { LoginInputPass, LoginInputUser } from "./LoginInput/LoginInput";
 import CheckBox from "./LoginButtons/LoginCheckBox";
 import { UserContext } from "../../useContext/useContect";
@@ -61,29 +61,35 @@ const Login = () => {
 
   }
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.textView}>
-        <BoldText style={{ fontSize: 30, color: COLORS.primaryColor }}>MyOffice Services</BoldText>
-        <Text style={{ fontSize: 18, color: COLORS.secondaryColor }}>WE SIMPLIFY YOUR WORK LIFE</Text>
-      </View>
-      <LoginInputUser
-        handleUser={handleUser} />
-      <LoginInputPass
-        handlePass={handlePass}
-        handleShowText={handleShowText}
-        showPass={showPass}
-      />
-      <CheckBox
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}></CheckBox>
-      <Button
-        style={styles.loginBtn}
-        loading={loading}
-        onPress={onPressActions}
-        text={'Login'}
-        message="message"></Button>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.textView}>
+          <Image
+            style={{ width: 250, height: 50 }}
+            source={require('../../assets/imgs/logo.png')}
+          />
+          {/* <BoldText style={{ fontSize: 30, color: COLORS.primaryColor }}>MyOffice Services</BoldText>
+          <Text style={{ fontSize: 18, color: COLORS.secondaryColor }}>WE SIMPLIFY YOUR WORK LIFE</Text> */}
+        </View>
+        <LoginInputUser
+          handleUser={handleUser} />
+        <LoginInputPass
+          handlePass={handlePass}
+          handleShowText={handleShowText}
+          showPass={showPass}
+        />
+        <CheckBox
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}></CheckBox>
+        <Button
+          style={styles.loginBtn}
+          loading={loading}
+          onPress={onPressActions}
+          text={'Login'}
+          message="message"></Button>
 
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -92,7 +98,7 @@ const Login = () => {
 const styles = StyleSheet.create({
   scrollview: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   container: {
     flex: 1,
