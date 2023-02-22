@@ -34,7 +34,7 @@ const CustomDrawer = (props) => {
           <DrawerSubItemView >
             {/* <DrawerSubItem title="Εβδομάδα" parent="Ραντεβού" screen="Ραντεβού: Εβδομάδα" setId={setId} /> */}
             <DrawerSubItem title="Μήνας" screen="Calendar" setId={setId} show={true} />
-            <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} dateBool={true} />
+            {/* <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} dateBool={true} /> */}
             <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
             <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} />
