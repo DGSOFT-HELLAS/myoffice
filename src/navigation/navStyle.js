@@ -1,18 +1,16 @@
-import { View, StyleSheet, Text, TouchableOpacity, } from "react-native"
-import NavButton from '../Components/NavButton/NavButton';
+import { View, StyleSheet, TouchableOpacity, } from "react-native"
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Material from 'react-native-vector-icons/MaterialIcons'
 import { COLORS } from '../shared/COLORS';
 import { useRoute } from "@react-navigation/native";
 import MediumText from "../Components/Atoms/Text/MediumText";
-import AddRantevouBtn from "../Components/SharedComp/Buttons/AddRantevouNavbar";
 
 
 
-const NavStyle = ({ navigation, showback, title, showDayModal, dontShowAdd }) => {
+const NavStyle = ({ navigation, showback, title, }) => {
 
 
-  const route = useRoute();
+
 
 
   const ToggleMenu = () => {
@@ -27,14 +25,6 @@ const NavStyle = ({ navigation, showback, title, showDayModal, dontShowAdd }) =>
             <Material name="keyboard-backspace" color="white" size={19} />
           </TouchableOpacity>
         )}
-        {/* {route.name === 'Πελάτες' ? <AddRantevouBtn screen='Προσθήκη πελάτη' /> : null}
-        {showDayModal && (
-          <>
-            {!dontShowAdd && <AddRantevouBtn screen='AddRantevou' />}
-          </>
-        )} */}
-
-
       </View>
       <View style={styles.rightView}>
         <MediumText style={styles.name}>{title}</ MediumText  >
@@ -97,7 +87,6 @@ const styles = StyleSheet.create({
   },
   name: {
     marginRight: 15,
-    // color: '#5f6060',
     color: 'white',
     letterSpacing: 0.1
   },

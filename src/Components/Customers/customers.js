@@ -33,7 +33,7 @@ const Customers = () => {
       }
     })
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCustomerData', trdr: trdr, postName: router.params.postName, postNumber: router.params.postNumber })
-    console.log(response)
+    // console.log(response)
     try {
       if (response) {
         // console.log(response)
@@ -55,7 +55,7 @@ const Customers = () => {
 
   useEffect(() => {
     handleFetch();
-    console.log(state)
+    // console.log(state)
   }, [isFocused, state.refresh])
 
 

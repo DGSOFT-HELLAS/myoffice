@@ -10,6 +10,9 @@ import CheckboxPaper from "../SharedComp/Buttons/CheckBox";
 import { fetchAPI } from "../../utils/fetchAPI";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+
+
+import CheckboxPaperNew from "../SharedComp/Buttons/CheckBoxPaper";
 const EditCustomer = () => {
   //Data coming from individual customer, previous screen
   const { trdr } = useContext(UserContext);
@@ -23,24 +26,26 @@ const EditCustomer = () => {
     edit: false,
   });
   const [raw, setRaw] = useState({
-    vip: 0,
-    Name: '',
-    Address: '',
-    District: '',
-    City: '',
-    Zip: '',
-    Phone: '',
-    Phone2: '',
-    CellPhone: '',
-    PhoneLocal: '',
-    FAX: '',
-    Email: '',
-    Email2: '',
-    Webpage: '',
-    Comments: '',
-    prsn: '',
+    VIP: routeData["VIP"],
+    Name: routeData["Name"],
+    Address: routeData["Adress"],
+    District: routeData["Disctrict"],
+    City: routeData["City"],
+    Zip: routeData["Zip"],
+    Phone: routeData["Phone"],
+    Phone2: routeData["Phone2"],
+    CellPhone: routeData["CellPhone"],
+    PhoneLocal: routeData["PhoneLocal"],
+    FAX: routeData["FAX"],
+    Email: routeData["Email"],
+    Email2: routeData["Email2"],
+    Webpage: routeData["Webpage"],
+    Comments: routeData["Comments"],
+    prsn: routeData["prsn"],
   })
+  console.log('------------------------ STATEEEEEEE --------------------------------------------')
 
+  console.log(raw)
 
   const handleChange = (text, key) => {
     // console.log(text)
@@ -59,7 +64,7 @@ const EditCustomer = () => {
       }
     })
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'SaveCustomer', trdr: trdr, action: 'update', ...raw })
-    console.log(response);
+    // console.log(response);
 
     setState((prev) => {
       return {
@@ -81,12 +86,22 @@ const EditCustomer = () => {
   }, [])
 
 
+  const onCheckboxPress = () => {
+    if (raw.VIP == 0) {
+      setRaw((prev) => { return { ...prev, VIP: 1 } })
+    }
+
+    if (raw.VIP == 1) {
+      setRaw((prev) => { return { ...prev, VIP: 0 } })
+    }
+
+  }
 
   return (
     <ScrollView style={styles.scrollView} >
       <AddView>
         <HeaderWithDivider text={"Στοιχεία Πελάτη"} />
-        <CheckboxPaper title={"vip"} setState={setState} state={state} />
+        <CheckboxPaperNew title={"vip"} isChecked={raw.VIP == 1 ? true : false} disabled={false} onPress={onCheckboxPress} />
         <AddInput title="Ονοματεπώνυμο:" value={raw.Name} onChangeText={(text) => { handleChange(text, 'Name') }} />
         <AddInput title="Διεύθυνση:" value={raw.Address} onChangeText={(text) => { handleChange(text, 'Address') }} />
         <AddInput title="Περιοχή:" value={raw.District} onChangeText={(text) => { handleChange(text, 'District') }} />

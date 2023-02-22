@@ -51,7 +51,7 @@ const DayViewCalendarMain = () => {
       trdr: trdr,
       stelexos: state.stelexos
     })
-
+    console.log(res)
     const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
     setEvents(updatedData)
 
@@ -152,8 +152,16 @@ const DayViewCalendarMain = () => {
 }
 
 const eventItem = (event) => {
+  console.log(event)
   return (
-    <View style={[styles.customItem]}>
+    <View style={[
+      styles.customItem,
+      event.color === "LightSteelBlue" && styles.lightSteelBlue,
+      event.color === "LimeGreen" && styles.limeGreen,
+      event.color === "Silver" && styles.silver,
+      event.color === "lightred" && styles.lightred,
+      event.personal == 1 && styles.pink
+    ]}>
       <BoldText style={styles.eventText}>{`${event["'Ωρα"]}`}</BoldText>
       <Text style={styles.eventText2}>{` - ${event.title}`}</Text>
     </View>
@@ -172,7 +180,7 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingLeft: 5,
     borderLeftWidth: 4,
-    borderLeftColor: 'green',
+    // borderLeftColor: 'green',
     backgroundColor: '#fbfbfb',
     flexDirection: 'row',
     // alignItems: 'center',
@@ -193,22 +201,22 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   lightSteelBlue: {
-    backgroundColor: '#718FCE',
+    borderLeftColor: '#718FCE',
   },
   limeGreen: {
-    backgroundColor: '#2ab61a',
+    borderLeftColor: '#2ab61a',
   },
   silver: {
-    backgroundColor: 'silver',
+    borderLeftColor: 'silver',
   },
   lightred: {
-    backgroundColor: 'red',
+    borderLeftColor: 'red',
   },
   pink: {
-    backgroundColor: 'pink',
+    borderLeftColor: 'pink',
   },
   orange: {
-    backgroundColor: 'orange',
+    borderLeftColor: 'orange',
   }
 })
 

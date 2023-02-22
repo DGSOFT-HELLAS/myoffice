@@ -6,7 +6,7 @@ import { COLORS } from '../../../shared/COLORS';
 
 const CheckboxPaper = ({ setState, title, state, disabled, vip }) => {
   const [checked, setChecked] = React.useState(false);
-
+  console.log(vip)
   useEffect(() => {
     if (state.eoppy == 1) {
       setChecked(true);
