@@ -35,7 +35,6 @@ const AddCustomer = () => {
 
 
   const handleChange = (text, key) => {
-    console.log(text)
     setState((prev) => {
       return {
         ...prev, [key]: text

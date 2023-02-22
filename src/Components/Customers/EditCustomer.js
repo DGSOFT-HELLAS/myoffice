@@ -66,7 +66,7 @@ const EditCustomer = () => {
         ...prev, loading: false
       }
     })
-    navigation.navigate('Πελάτες', { postName: '', postNumber: '' });
+    navigation.navigate('Πελάτες', { postName: raw.Name, postNumber: '' });
   }
 
 
