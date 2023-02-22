@@ -10,15 +10,16 @@ import { useNavigation } from '@react-navigation/native'
 const SearchForm = () => {
   const navigation = useNavigation()
   const [state, setState] = useState({
-    name: '',
+    postName: '',
+    postNumber: '',
   })
 
-  const onChangeName = (text) => setState((prev) => { return { ...prev, name: text } })
-  const onChangePhone = (text) => setState((prev) => { return { ...prev, phone: text } })
+  const onChangeName = (text) => setState((prev) => { return { ...prev, postName: text } })
+  const onChangePhone = (text) => setState((prev) => { return { ...prev, postNumber: text } })
 
 
   const onPress = () => {
-    navigation.navigate('Πελάτες', { name: state.name })
+    navigation.navigate('Πελάτες', { postName: state.postName, postNumber: state.postNumber })
 
   }
   return (
@@ -29,7 +30,7 @@ const SearchForm = () => {
           <View style={styles.divider}></View>
         </View>
         <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.postName} />
-        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postPhone} />
+        <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postNumber} />
         <Button style={styles.btn} text={"Aναζήτηση"} onPress={onPress} />
       </View>
 

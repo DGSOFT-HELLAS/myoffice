@@ -66,7 +66,7 @@ const EditCustomer = () => {
         ...prev, loading: false
       }
     })
-    navigation.navigate('Πελάτες', { name: '' });
+    navigation.navigate('Πελάτες', { postName: '', postNumber: '' });
   }
 
 

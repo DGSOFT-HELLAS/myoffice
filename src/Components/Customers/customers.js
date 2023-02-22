@@ -10,10 +10,8 @@ import SearchForm from "./SearchForm";
 
 const Customers = () => {
   const router = useRoute()
-  let name;
-  if (router.params.name) {
-    name = router.params.name;
-  }
+
+
 
 
   const { trdr } = useContext(UserContext);
@@ -34,7 +32,7 @@ const Customers = () => {
         ...prev, loading: true
       }
     })
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCustomerData', trdr: trdr, postName: name })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCustomerData', trdr: trdr, postName: router.params.postName, postNumber: router.params.postNumber })
     console.log(response)
     try {
       if (response) {

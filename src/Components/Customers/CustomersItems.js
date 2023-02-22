@@ -48,6 +48,7 @@ const CustomerItems = (props) => {
       getItemLayout={(data, index) => (
         { length: 60, offset: 60 * index, index }
       )}
+    // initialScrollIndex={}
     />
 
 
