@@ -6,10 +6,8 @@ import { format, lastDayOfMonth } from 'date-fns'
 import { DayContext } from '../../../useContext/daysContext';
 import { useNavigation } from '@react-navigation/native';
 import Locales from '../Locales';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import ListView from './List';
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import { COLORS } from '../../../shared/COLORS';
 
 const CalendarMonth = () => {
@@ -38,7 +36,6 @@ const CalendarMonth = () => {
 
     })
 
-    console.log(res)
     const items = {};
     for (let event of res) {
       if (!items[key]) {
@@ -47,7 +44,6 @@ const CalendarMonth = () => {
       const key = new Date(event.RDVdate).toISOString().split('T')[0]
       items[key] = { marked: true, dotColor: 'green', activeOpacity: 0 }
     }
-    console.log(items)
     setEvents(items)
   }
 
@@ -66,10 +62,14 @@ const CalendarMonth = () => {
 
 
   useEffect(() => {
-
     handleFetch();
+    const unsubscribe = navigation.addListener('focus', () => {
+      // do something
+      handleFetch();
+    });
 
-  }, [state.startDate, state.endDate])
+    return unsubscribe;
+  }, [state.startDate, state.endDate, navigation])
 
 
 
