@@ -16,7 +16,7 @@ const AddCustomer = () => {
   const { trdr } = useContext(UserContext)
   const navigation = useNavigation();
   const [state, setState] = useState({
-    VIP: 0,
+    vip: 0,
     Name: '',
     Address: '',
     District: '',
@@ -61,12 +61,12 @@ const AddCustomer = () => {
   }
 
   const onCheckboxPress = () => {
-    if (state.VIP == 0) {
-      setState((prev) => { return { ...prev, VIP: 1 } })
+    if (state.vip == 0) {
+      setState((prev) => { return { ...prev, vip: 1 } })
     }
 
-    if (state.VIP == 1) {
-      setState((prev) => { return { ...prev, VIP: 0 } })
+    if (state.vip == 1) {
+      setState((prev) => { return { ...prev, vip: 0 } })
     }
 
   }
