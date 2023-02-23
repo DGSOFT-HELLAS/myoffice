@@ -49,7 +49,7 @@ const Login = () => {
 
       }
       setTrdr(response[0]['trdr']);
-      setLoading(false)
+
       // navigation.navigate('Ραντεβού: Εβδομάδα')
       navigation.navigate('Calendar', { show: true })
 
@@ -57,7 +57,7 @@ const Login = () => {
     if (response.length == 0) {
       Alert.alert('Λάθος στοιχεία χρήστη', 'Παρακαλώ δοκιμάστε ξανά')
     }
-
+    setLoading(false)
 
   }
   return (

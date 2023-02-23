@@ -8,12 +8,11 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import SearchForm from "./SearchForm";
 
+
+
 const Customers = () => {
   const router = useRoute()
-
-
-
-
+  const navigation = useNavigation()
   const { trdr } = useContext(UserContext);
   const isFocused = useIsFocused();
 
@@ -36,7 +35,8 @@ const Customers = () => {
     // console.log(response)
     try {
       if (response) {
-        // console.log(response)
+        console.log('------------------------ FETCH CUSTOMER --------------------------------------------')
+        console.log(response)
         setState((prev) => {
           return {
             ...prev, data: response
@@ -55,8 +55,12 @@ const Customers = () => {
 
   useEffect(() => {
     handleFetch();
-    // console.log(state)
-  }, [isFocused, state.refresh])
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleFetch();
+    });
+
+    return unsubscribe;
+  }, [navigation])
 
 
   return (

@@ -9,14 +9,14 @@ import CheckboxPaper from "../SharedComp/Buttons/CheckBox";
 import { UserContext } from "../../useContext/useContect";
 import { fetchAPI } from "../../utils/fetchAPI";
 import { useNavigation } from "@react-navigation/native";
-
+import CheckboxPaperNew from "../SharedComp/Buttons/CheckBoxPaper";
 
 const AddCustomer = () => {
 
   const { trdr } = useContext(UserContext)
   const navigation = useNavigation();
   const [state, setState] = useState({
-    vip: 0,
+    VIP: 0,
     Name: '',
     Address: '',
     District: '',
@@ -32,6 +32,8 @@ const AddCustomer = () => {
     Webpage: '',
     Comments: '',
   })
+
+  console.log(state)
 
 
   const handleChange = (text, key) => {
@@ -57,12 +59,24 @@ const AddCustomer = () => {
     }
 
   }
+
+  const onCheckboxPress = () => {
+    if (state.VIP == 0) {
+      setState((prev) => { return { ...prev, VIP: 1 } })
+    }
+
+    if (state.VIP == 1) {
+      setState((prev) => { return { ...prev, VIP: 0 } })
+    }
+
+  }
   return (
     <ScrollView style={styles.scrollView} >
       {/* <HeaderView Icon={FontAws} iconName={"calendar-plus-o"} title="Προσθήκη Ραντεβού" /> */}
       <AddView>
         <HeaderWithDivider text={"Στοιχεία Πελάτη"} />
-        <CheckboxPaper title={"vip"} setState={setState} state={state} />
+        <CheckboxPaperNew title={"vip"} isChecked={false} disabled={false} onPress={onCheckboxPress} />
+        {/* <CheckboxPaper title={"vip"} setState={setState} state={state} /> */}
         <AddInput title="Ονοματεπώνυμο:" value={state.Name} onChangeText={(text) => { handleChange(text, 'Name') }} />
         <AddInput title="Διεύθυνση:" value={state.Address} onChangeText={(text) => { handleChange(text, 'Address') }} />
         <AddInput title="Περιοχή:" value={state.District} onChangeText={(text) => { handleChange(text, 'District') }} />

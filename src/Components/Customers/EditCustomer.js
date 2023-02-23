@@ -26,7 +26,7 @@ const EditCustomer = () => {
     edit: false,
   });
   const [raw, setRaw] = useState({
-    VIP: routeData["VIP"],
+    vip: routeData["VIP"],
     Name: routeData["Name"],
     Address: routeData["Adress"],
     District: routeData["Disctrict"],
@@ -75,24 +75,24 @@ const EditCustomer = () => {
   }
 
 
-  useEffect(() => {
-    for (const [key, value] of Object.entries(routeData)) {
-      setRaw((prev) => {
-        return {
-          ...prev, [key]: value
-        }
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   for (const [key, value] of Object.entries(routeData)) {
+  //     setRaw((prev) => {
+  //       return {
+  //         ...prev, [key]: value
+  //       }
+  //     })
+  //   }
+  // }, [])
 
 
   const onCheckboxPress = () => {
-    if (raw.VIP == 0) {
-      setRaw((prev) => { return { ...prev, VIP: 1 } })
+    if (raw.vip == 0) {
+      setRaw((prev) => { return { ...prev, vip: 1 } })
     }
 
-    if (raw.VIP == 1) {
-      setRaw((prev) => { return { ...prev, VIP: 0 } })
+    if (raw.vip == 1) {
+      setRaw((prev) => { return { ...prev, vip: 0 } })
     }
 
   }
@@ -101,7 +101,7 @@ const EditCustomer = () => {
     <ScrollView style={styles.scrollView} >
       <AddView>
         <HeaderWithDivider text={"Στοιχεία Πελάτη"} />
-        <CheckboxPaperNew title={"vip"} isChecked={raw.VIP == 1 ? true : false} disabled={false} onPress={onCheckboxPress} />
+        <CheckboxPaperNew title={"vip"} isChecked={raw.vip == 1 ? true : false} disabled={false} onPress={onCheckboxPress} />
         <AddInput title="Ονοματεπώνυμο:" value={raw.Name} onChangeText={(text) => { handleChange(text, 'Name') }} />
         <AddInput title="Διεύθυνση:" value={raw.Address} onChangeText={(text) => { handleChange(text, 'Address') }} />
         <AddInput title="Περιοχή:" value={raw.District} onChangeText={(text) => { handleChange(text, 'District') }} />

@@ -11,6 +11,8 @@ import Button from "../SharedComp/Buttons/Button"
 import { COLORS } from "../../shared/COLORS"
 import { fetchAPI } from "../../utils/fetchAPI"
 import CheckboxPaper from "../SharedComp/Buttons/CheckBox"
+import CheckboxPaperNew from "../SharedComp/Buttons/CheckBoxPaper"
+
 
 const CustomerItems = (props) => {
   const navigation = useNavigation()
@@ -73,6 +75,7 @@ const ListBody = ({ data, enabled, onEditBtn, setState, state }) => {
   return (
     <ListBodyView>
       {/* <ListBodyDataSet enabled={enabled} title={'Διεύθυνση:'} value={data["Address"]} handleChange={handleChange} /> */}
+      <CheckboxPaperNew title={"vip"} isChecked={data["VIP"] == 1 ? true : false} disabled={true} />
       <ListBodyDataSet enabled={false} title={'Διεύθυνση:'} value={data["Address"]} />
       <ListBodyDataSet enabled={false} title={'Περιοχή:'} value={data["District"]} />
       <ListBodyDataSet enabled={false} title={'Πόλη:'} value={data["City"]} />
@@ -85,10 +88,6 @@ const ListBody = ({ data, enabled, onEditBtn, setState, state }) => {
       <ListBodyDataSet enabled={false} title={'Email2:'} value={data["Email2"]} />
       <ListBodyDataSet enabled={false} title={'Fax:'} value={data["Fax"]} />
       <ListBodyDataSet enabled={false} title={'Σχόλια:'} value={data["Comments"]} />
-      <CheckboxPaper title={"Vip:"} setState={setState} state={state} disabled={true} vip={data["VIP"]} />
-      {/* BUTTON */}
-      {/* <ListBodyButton onPress={() => onPress(data)} /> */}
-
       <View style={styles.buttonView}>
         <EditButton onPress={() => onEditBtn(data)} />
         <ModalCheck title={"Θέλετε σίγουρα να προχωρήσετε σε διαγραφή του πελάτη;"} onPressDelete={onPressDelete} />
