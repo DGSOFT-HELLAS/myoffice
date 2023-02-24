@@ -1,4 +1,4 @@
-package com.mydata;
+package com.myofficeapp;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
