@@ -10,20 +10,26 @@ import { StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { COLORS } from '../../../shared/COLORS';
 
+
+var today = new Date();
+const firstDateOfMonth = format(today, 'yyyy-MM-01')
+const lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
+
+
 const CalendarMonth = () => {
   const { trdr } = useContext(UserContext)
   const { setDay, day } = useContext(DayContext)
   const navigation = useNavigation()
   const [events, setEvents] = useState()
   const [state, setState] = useState({
-    startDate: new Date(),
-    endDate: '',
+    startDate: firstDateOfMonth,
+    endDate: lastDateOfMonth,
     stelexos: 0,
   })
 
   const route = useRoute();
 
-
+  console.log(state)
 
   const handleFetch = async () => {
     let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
@@ -49,18 +55,17 @@ const CalendarMonth = () => {
 
 
   useEffect(() => {
-    var today = new Date();
-    const firstDateOfMonth = format(today, 'yyyy-MM-01')
-    const lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
-    setState((prev) => {
-      return {
-        ...prev, startDate: firstDateOfMonth, endDate: lastDateOfMonth
-      }
-    })
+
   }, [])
 
 
   useEffect(() => {
+
+    // setState((prev) => {
+    //   return {
+    //     ...prev, startDate: firstDateOfMonth, endDate: lastDateOfMonth
+    //   }
+    // })
     handleFetch();
     const unsubscribe = navigation.addListener('focus', () => {
       // do something

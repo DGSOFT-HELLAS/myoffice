@@ -58,7 +58,7 @@ export const IncomingStack = () => {
           component={HomeScreen}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα'} showDayModal={true} />
+              <NavStyle navigation={navigation} showback={false} title={'Αρχική'} />
             ),
           }}
         />
@@ -67,7 +67,7 @@ export const IncomingStack = () => {
           component={DayViewCalendarMain}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα'} showDayModal={true} />
+              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα'} />
             ),
           }}
         />
@@ -83,7 +83,7 @@ export const IncomingStack = () => {
           component={DayView}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Mέρα'} showDayModal={true} l />
+              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Mέρα'} />
             ),
           }}
         />
@@ -93,7 +93,7 @@ export const IncomingStack = () => {
           component={AppointmentsHistory}
           options={{
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Iστορικό'} showDayModal={true} />
+              <NavStyle navigation={navigation} showback={false} title={'Ραντεβού: Iστορικό'} />
             ),
           }}
         />
@@ -103,7 +103,7 @@ export const IncomingStack = () => {
           options={{
 
             header: ({ navigation }) => (
-              <NavStyle navigation={navigation} showback={true} title={'Προσθήκη Ραντεβού'} showDayModal={true} dontShowAdd={true} />
+              <NavStyle navigation={navigation} showback={true} title={'Προσθήκη Ραντεβού'} />
             ),
           }}
         />

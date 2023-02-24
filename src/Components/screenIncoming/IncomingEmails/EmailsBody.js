@@ -40,7 +40,7 @@ const IncomingEmailsBody = (props) => {
 const ListBody = ({ data }) => {
   return (
     <ListBodyView>
-      <ListBodyDataSet enabled={false} title={'Λεπτομέριες:'} value={data["ΛΕΠΤΟΜΕΡΕΙΕΣ"]} />
+      <ListBodyDataSet enabled={false} title={'Λεπτομέρειες:'} value={data["ΛΕΠΤΟΜΕΡΕΙΕΣ"]} />
     </ListBodyView>
   )
 }

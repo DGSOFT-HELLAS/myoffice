@@ -9,9 +9,6 @@ import { DrawerContentScrollView } from '@react-navigation/drawer';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Material from 'react-native-vector-icons/MaterialIcons'
 import Ion from 'react-native-vector-icons/Ionicons'
-//Import Context:
-import { DayContext } from "../useContext/daysContext";
-
 
 
 
@@ -21,8 +18,6 @@ const CustomDrawer = (props) => {
 
   return (
     <DrawerContentScrollView {...props} >
-
-      {/* <DrawerItemList {...props} /> */}
       <View style={styles.headerView}>
         <BoldText style={{ fontSize: 28, color: COLORS.contrastText }}>MyOffice Services</BoldText>
         <Text style={{ fontSize: 17, color: COLORS.secondaryColor }}>WE SIMPLIFY YOUR WORK LIFE</Text>
@@ -62,10 +57,6 @@ const CustomDrawer = (props) => {
           </DrawerSubItemView>
         )}
       </View>
-      {/* <TouchableOpacity onPress={() => setTheme(theme[1])}>
-        <Text style={{ color: 'white' }}>Change Theme</Text>
-      </TouchableOpacity> */}
-
     </DrawerContentScrollView >
   )
 
