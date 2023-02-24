@@ -7,6 +7,7 @@ import NavStyle from './navStyle';
 
 //Login Screen:
 import Login from '../Components/Login/Login';
+import HomeScreen from '../Components/HomeScreen/HomeScreen';
 //Rantevou Screen:
 import DayView from '../Components/Rantevou/DayView/DayVIew';
 import AppointmentsHistory from '../Components/Rantevou/AppointmentsHistory/AppointmentsHistoryHeader';
@@ -50,6 +51,15 @@ export const IncomingStack = () => {
           component={Login}
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Ραντεβού: Mέρα'} showDayModal={true} />
+            ),
           }}
         />
         <Stack.Screen

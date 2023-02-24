@@ -51,7 +51,8 @@ const Login = () => {
       setTrdr(response[0]['trdr']);
 
       // navigation.navigate('Ραντεβού: Εβδομάδα')
-      navigation.navigate('Calendar', { show: true })
+      // navigation.navigate('Calendar', { show: true })
+      navigation.navigate('Home', { show: true })
 
     }
     if (response.length == 0) {

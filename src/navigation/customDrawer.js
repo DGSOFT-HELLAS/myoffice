@@ -29,15 +29,16 @@ const CustomDrawer = (props) => {
       </View>
 
       <View style={styles.container}>
+        <DrawerItem title="Αρχική" Icon={Entypo} iconName="home" index={4} id={id} setId={setId} homePage={true} />
+
+      </View>
+      <View style={styles.container}>
         <DrawerItem title="Ραντεβού" Icon={Entypo} iconName="calendar" index={1} id={id} setId={setId} />
         {id == 1 && (
           <DrawerSubItemView >
-            {/* <DrawerSubItem title="Εβδομάδα" parent="Ραντεβού" screen="Ραντεβού: Εβδομάδα" setId={setId} /> */}
             <DrawerSubItem title="Μήνας" screen="Calendar" setId={setId} show={true} />
-            {/* <DrawerSubItem title="Mέρα" screen="DayViewCalendarMain" setId={setId} date={new Date().toISOString().split('T')[0]} dateBool={true} /> */}
             <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
             <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
-            {/* <DrawerSubItem title="Προσθήκη Ραντεβού" screen="AddRantevou" setId={setId} /> */}
           </DrawerSubItemView>
         )}
       </View>
@@ -73,7 +74,8 @@ const CustomDrawer = (props) => {
 
 
 
-const DrawerItem = ({ title, Icon, iconName, index, setId, id }) => {
+const DrawerItem = ({ title, Icon, iconName, index, setId, id, homePage }) => {
+  const navigation = useNavigation()
   const handleCollapse = () => {
     if (index == id) {
       setId({})
@@ -83,8 +85,12 @@ const DrawerItem = ({ title, Icon, iconName, index, setId, id }) => {
 
   }
 
+  const goToHome = () => {
+    navigation.navigate('Home')
+  }
+
   return (
-    <TouchableOpacity style={styles.sidebarItem} onPress={handleCollapse} >
+    <TouchableOpacity style={styles.sidebarItem} onPress={homePage ? goToHome : handleCollapse} >
       <View style={styles.iconView}>
         <Icon style={styles.subIcon} name={iconName} size={13} color="white" />
       </View>
