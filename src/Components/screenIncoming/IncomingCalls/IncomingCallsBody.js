@@ -47,6 +47,7 @@ const ListBody = ({ data }) => {
   return (
     <ListBodyView>
       <ListBodyDataSet enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} />
+      <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} />
     </ListBodyView>
   )
 }

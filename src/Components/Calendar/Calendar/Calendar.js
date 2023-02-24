@@ -22,7 +22,6 @@ const CalendarMonth = () => {
   })
 
   const route = useRoute();
-  console.log(route)
 
 
 
@@ -35,7 +34,7 @@ const CalendarMonth = () => {
       stelexos: state.stelexos
 
     })
-
+    console.log(res)
     const items = {};
     for (let event of res) {
       if (!items[key]) {
