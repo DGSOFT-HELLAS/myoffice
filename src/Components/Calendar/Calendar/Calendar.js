@@ -84,8 +84,8 @@ const CalendarMonth = () => {
         markedDates={events}
         onMonthChange={month => {
           let today = new Date(month.dateString);
-          const firstDateOfMonth = format(today, 'yyyy-MM-01')
-          const lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
+          let firstDateOfMonth = format(today, 'yyyy-MM-01')
+          let lastDateOfMonth = format(lastDayOfMonth(today), 'yyyy-MM-dd')
           setState((prev) => {
             return {
               ...prev, startDate: firstDateOfMonth, endDate: lastDateOfMonth

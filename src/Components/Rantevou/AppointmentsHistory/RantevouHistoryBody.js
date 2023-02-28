@@ -51,33 +51,4 @@ const RantevouListBody = ({ data, setState }) => {
 
 
 
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 10,
-//     backgroundColor: '#fafafa',
-//     // backgroundColor: '#fafafa',
-//   },
-//   itemDescription: {
-//     marginTop: 3,
-//     fontFamily: 'Roboto-Regular'
-//   },
-//   itemWrapper: {
-//     marginHorizontal: 10,
-//     backgroundColor: 'white',
-//     elevation: 3,
-//     marginVertical: 5,
-//   },
-//   itemActive: {
-//     borderTopWidth: 2,
-//     borderTopColor: 'green',
-// },
-//   itemExpired: {
-//     borderTopWidth: 2,
-//     borderTopColor: 'red',
-// },
-// })
-
 export default RantevouListBody;
