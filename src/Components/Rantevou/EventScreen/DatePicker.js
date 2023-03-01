@@ -4,7 +4,7 @@ import Text from '../../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import isoDate from '../../../utils/dateFunctions/isoDate';
 
 export const DatePickerComp = ({ day, style, onChange }) => {
 
@@ -42,11 +42,12 @@ export const DatePickerComp = ({ day, style, onChange }) => {
 
 export const ShowTime = ({ onPress, style, leftSide, rightSide, date }) => {
 
+  let dateISO = isoDate(date)
   return (
     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>
       <View style={styles.leftSide}>
         {/* <Text style={[styles.timeText, leftSide]}>{`${date}`}</Text> */}
-        <Text style={[styles.timeText, leftSide]}>{date.toLocaleDateString()}</Text>
+        <Text style={[styles.timeText, leftSide]}>{dateISO}</Text>
       </View>
       <View style={[styles.rightSide, rightSide]}>
         <Entypo style={styles.icon} name="calendar" />
