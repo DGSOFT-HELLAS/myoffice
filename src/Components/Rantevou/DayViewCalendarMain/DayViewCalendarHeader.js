@@ -15,7 +15,6 @@ const DayViewCalendarHeader = ({ date, setState, state }) => {
   const onPress = () => {
     navigation.navigate('Calendar', { show: false })
   }
-  console.log(date)
 
 
   let greekDate = constructGreekDate(date)

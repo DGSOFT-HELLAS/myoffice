@@ -16,6 +16,8 @@ import { TimePicker } from "./timePicker";
 import InputLabel from "../AddRantevou/InputLabel";
 import ModalCheck from "../../SharedComp/ModalCheck/ModalCheck";
 import HeaderWithDivider from "../../SharedComp/Views/HeaderWithDivider";
+import isoDate from "../../../utils/dateFunctions/isoDate";
+
 
 const EventScreen = ({ setIsVisible, setState }) => {
   const navigation = useNavigation()
@@ -35,7 +37,7 @@ const EventScreen = ({ setIsVisible, setState }) => {
     reason: ''
   })
 
-  console.log(raw)
+  // console.log(raw)
   useEffect(() => {
     setRaw(prev => {
       return {
@@ -133,11 +135,15 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => 
   const [loading, setLoading] = useState(false);
 
   const handleDate = (selectredDate) => {
-    let day = selectredDate.toISOString().split('T')[0]
+    // console.log('selected date')
+    // console.log(selectredDate)
+    // console.log(typeof selectredDate)
+    let day = isoDate(selectredDate);
+
     setDay(day)
     setRaw((prevState) => {
       return {
-        ...prevState, date: selectredDate.toISOString()
+        ...prevState, date: selectredDate.toString()
       }
     })
   }

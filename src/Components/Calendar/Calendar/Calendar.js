@@ -5,11 +5,11 @@ import { UserContext } from '../../../useContext/useContect';
 import { format, lastDayOfMonth } from 'date-fns'
 import { DayContext } from '../../../useContext/daysContext';
 import { useNavigation } from '@react-navigation/native';
-import Locales from '../Locales';
+import Locales from './Locales';
 import { StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { COLORS } from '../../../shared/COLORS';
-
+import isoDate from '../../../utils/dateFunctions/isoDate';
 
 var today = new Date();
 const firstDateOfMonth = format(today, 'yyyy-MM-01')
@@ -46,7 +46,10 @@ const CalendarMonth = () => {
       if (!items[key]) {
         items[key] = {};
       }
-      const key = new Date(event.RDVdate).toISOString().split('T')[0]
+      // const key = new Date(event.RDVdate).toISOString().split('T')[0]
+      const key = isoDate(event.RDVdate)
+
+
       items[key] = { marked: true, dotColor: 'green', activeOpacity: 0 }
     }
     setEvents(items)
@@ -82,6 +85,7 @@ const CalendarMonth = () => {
     <>
       <Calendar
         markedDates={events}
+        firstDay={1}
         onMonthChange={month => {
           let today = new Date(month.dateString);
           let firstDateOfMonth = format(today, 'yyyy-MM-01')
