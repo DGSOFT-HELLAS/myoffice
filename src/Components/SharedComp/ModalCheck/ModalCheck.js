@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../Buttons/Button";
-import { View, Modal, StyleSheet, Pressable, TouchableOpacity } from "react-native";
+import { View, Modal, StyleSheet, TouchableOpacity } from "react-native";
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { COLORS } from "../../../shared/COLORS";
 import Text from "../../Atoms/Text";
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: COLORS.secondaryColor,
     border: 'none',
+    marginBottom: 10,
   },
   closeIcon: {
     marginTop: 10,
