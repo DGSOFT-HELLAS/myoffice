@@ -5,12 +5,23 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getTime } from '../../../utils/getTime';
 import { COLORS } from '../../../shared/COLORS';
+import { utcToZonedTime, format } from 'date-fns-tz';
 
-export const TimePicker = ({ handleState, style, propsTime, minTime }) => {
+const timeZone = 'Europe/Athens';
+const timeZoneOffset = '+02:00';
+
+
+
+
+export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
   const [show, setShow] = useState(false);
   const [time, setTime] = useState(propsTime)
-  const date = new Date();
 
+  const dateString = `2023-02-22T${propsTime}`;
+  const d = new Date(dateString);
+  const zonedDate = utcToZonedTime(d, timeZone);
+  console.log(typeof zonedDate)
+  // const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
 
   const showTimepicker = () => {
     setShow(true)
@@ -26,16 +37,12 @@ export const TimePicker = ({ handleState, style, propsTime, minTime }) => {
 
 
 
-
-
-
-
   return (
     <View>
       <ShowTime onPress={showTimepicker} date={time} style={style} />
       {show && (
         <DateTimePicker
-          value={date}
+          value={zonedDate}
           mode={'time'}
           is24Hour={true}
           onChange={onChange}

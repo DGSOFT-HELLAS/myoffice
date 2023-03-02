@@ -26,7 +26,6 @@ const CustomDrawer = (props) => {
 
         <View style={styles.tabContainer}>
           <DrawerItem title="Αρχική" Icon={Entypo} iconName="home" index={4} id={id} setId={setId} homePage={true} />
-
         </View>
         <View style={styles.tabContainer}>
           <DrawerItem title="Ραντεβού" Icon={Entypo} iconName="calendar" index={1} id={id} setId={setId} />

@@ -211,10 +211,10 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => 
         <DatePickerComp day={new Date(raw.date)} onChange={handleDate} style={{ width: '70%' }} />
       </InputLabel>
       <InputLabel title="* Έναρξη:">
-        <TimePicker style={{ width: '70%' }} propsTime={raw.fromTime} handleState={handleStartTime} />
+        <TimePicker style={{ width: '70%' }} day={raw.date} propsTime={raw.fromTime} handleState={handleStartTime} />
       </InputLabel>
       <InputLabel title="* Λήξη:">
-        <TimePicker style={{ width: '70%' }} propsTime={raw.toTime} handleState={handleEndTime} />
+        <TimePicker style={{ width: '70%' }} day={raw.date} propsTime={raw.toTime} handleState={handleEndTime} />
       </InputLabel>
       <HeaderWithDivider text={"Επαναπρογραμματισμός"} />
       <View style={styles.row}>
