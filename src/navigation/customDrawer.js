@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Animated, BackHandler, ScrollView } from "react-native";
 import { COLORS } from "../shared/COLORS";
 import BoldText from "../Components/Atoms/Text/BoldText";
 import Text from "../Components/Atoms/Text";
@@ -17,45 +17,53 @@ const CustomDrawer = (props) => {
 
 
   return (
-    <DrawerContentScrollView {...props} >
+    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}  >
       <View style={styles.headerView}>
         <BoldText style={{ fontSize: 28, color: COLORS.contrastText }}>MyOffice Services</BoldText>
         <Text style={{ fontSize: 17, color: COLORS.secondaryColor }}>WE SIMPLIFY YOUR WORK LIFE</Text>
       </View>
+      <View style={{ flex: 1, zIndex: 20 }}>
 
-      <View style={styles.container}>
-        <DrawerItem title="Αρχική" Icon={Entypo} iconName="home" index={4} id={id} setId={setId} homePage={true} />
+        <View style={styles.tabContainer}>
+          <DrawerItem title="Αρχική" Icon={Entypo} iconName="home" index={4} id={id} setId={setId} homePage={true} />
 
+        </View>
+        <View style={styles.tabContainer}>
+          <DrawerItem title="Ραντεβού" Icon={Entypo} iconName="calendar" index={1} id={id} setId={setId} />
+          {id == 1 && (
+            <DrawerSubItemView >
+              <DrawerSubItem title="Μήνας" screen="Calendar" setId={setId} show={true} />
+              <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
+              <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
+            </DrawerSubItemView>
+          )}
+        </View>
+        <View style={styles.tabContainer}>
+          <DrawerItem title="Εισερχόμενα" Icon={Material} iconName="call-received" index={2} id={id} setId={setId} />
+          {id == 2 && (
+            <DrawerSubItemView>
+              <DrawerSubItem title="Κλήσεις" screen="IncomingCallsForm" setId={setId} />
+              <DrawerSubItem title="Email" screen="IncomingEmailForm" setId={setId} />
+              <DrawerSubItem title="Εlta" screen="IncomingEltaForm" setId={setId} />
+              <DrawerSubItem title="Αναφορά Εργασίας" screen="IncomingTaskForm" setId={setId} />
+            </DrawerSubItemView>
+          )}
+        </View>
+        <View style={styles.tabContainer}>
+          <DrawerItem title="Πελάτες" Icon={Ion} iconName="person" index={3} id={id} setId={setId} />
+          {id == 3 && (
+            <DrawerSubItemView>
+              <DrawerSubItem title="Πελάτες" screen="CustomerSearchForm" setId={setId} />
+              <DrawerSubItem title="Προσθήκη Πελάτη" screen="Προσθήκη πελάτη" setId={setId} />
+            </DrawerSubItemView>
+          )}
+        </View>
       </View>
-      <View style={styles.container}>
-        <DrawerItem title="Ραντεβού" Icon={Entypo} iconName="calendar" index={1} id={id} setId={setId} />
-        {id == 1 && (
-          <DrawerSubItemView >
-            <DrawerSubItem title="Μήνας" screen="Calendar" setId={setId} show={true} />
-            <DrawerSubItem title="Μέρα Λίστα" parent="Ραντεβού" screen="DayView" setId={setId} />
-            <DrawerSubItem title="Ιστορικό" screen="AppointmentsHistory" setId={setId} />
-          </DrawerSubItemView>
-        )}
-      </View>
-      <View style={styles.container}>
-        <DrawerItem title="Εισερχόμενα" Icon={Material} iconName="call-received" index={2} id={id} setId={setId} />
-        {id == 2 && (
-          <DrawerSubItemView>
-            <DrawerSubItem title="Κλήσεις" screen="IncomingCallsForm" setId={setId} />
-            <DrawerSubItem title="Email" screen="IncomingEmailForm" setId={setId} />
-            <DrawerSubItem title="Εlta" screen="IncomingEltaForm" setId={setId} />
-            <DrawerSubItem title="Αναφορά Εργασίας" screen="IncomingTaskForm" setId={setId} />
-          </DrawerSubItemView>
-        )}
-      </View>
-      <View style={styles.container}>
-        <DrawerItem title="Πελάτες" Icon={Ion} iconName="person" index={3} id={id} setId={setId} />
-        {id == 3 && (
-          <DrawerSubItemView>
-            <DrawerSubItem title="Πελάτες" screen="CustomerSearchForm" setId={setId} />
-            <DrawerSubItem title="Προσθήκη Πελάτη" screen="Προσθήκη πελάτη" setId={setId} />
-          </DrawerSubItemView>
-        )}
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+        <TouchableOpacity style={styles.exitBtn} onPress={() => BackHandler.exitApp()}>
+          <Ion name="exit-outline" color="white" size={18} />
+          <Text style={{ color: 'white', marginLeft: 5 }}>Exit</Text>
+        </TouchableOpacity>
       </View>
     </DrawerContentScrollView >
   )
@@ -130,7 +138,7 @@ const DrawerSubItem = ({ screen, title, setId, date, show, dateBool }) => {
 
 
 const styles = StyleSheet.create({
-  container: {
+  tabContainer: {
     marginBottom: 2,
   },
   headerView: {
@@ -196,6 +204,14 @@ const styles = StyleSheet.create({
   },
   subIcon: {
     color: COLORS.secondaryColorShade001
+  },
+  exitBtn: {
+    backgroundColor: COLORS.sideBarsubItem,
+    width: '100%',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row'
   }
 });
 

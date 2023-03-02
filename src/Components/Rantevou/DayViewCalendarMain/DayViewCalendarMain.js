@@ -118,15 +118,16 @@ const DayViewCalendarMain = () => {
           <TimelineCalendar
             viewMode="day"
             isShowHeader={false}
-            // initialDate={route.params ? route.params.date : new Date().toISOString().split('T')[0]}
             initialDate={day}
             events={events}
             onDateChanged={(date) => {
               setDay(date)
             }}
+            spaceFromTop={50}
             locale="gr"
             timeInterval={60}
-            start={6}
+            start={4}
+            end={24}
             // locale="gr"
             initialTimeIntervalHeight={120}
             overlapEventsSpacing={2}
@@ -140,10 +141,7 @@ const DayViewCalendarMain = () => {
             onDragCreateEnd={(e) => onDragCreateEnd(e)}
 
           />
-
-          {/* <ModalFullEvent event={event} isVisible={isVisible} setIsVisible={setIsVisible} state={state} setState={setState} /> */}
         </View>
-        // {setState: updates loading, refresh, delete, stelexos}
       ) : <EventScreen setIsVisible={setIsVisible} setState={setState} />}
     </Provider>
   )
@@ -152,7 +150,6 @@ const DayViewCalendarMain = () => {
 }
 
 const eventItem = (event) => {
-  console.log(event)
   return (
     <View style={[
       styles.customItem,
