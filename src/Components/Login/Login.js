@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { LoginInputPass, LoginInputUser } from "./LoginInput/LoginInput";
 import CheckBox from "./LoginButtons/LoginCheckBox";
@@ -38,6 +38,9 @@ const Login = () => {
 
   }
 
+  const onPressCheckbox = async () => {
+    await AsyncStorage.setItem('@checkbox', JSON.stringify(true));
+  }
 
   const onPressActions = async () => {
     setLoading(true)
@@ -55,12 +58,16 @@ const Login = () => {
       navigation.navigate('Home', { show: true })
 
     }
+
     if (response.length == 0) {
       Alert.alert('Λάθος στοιχεία χρήστη', 'Παρακαλώ δοκιμάστε ξανά')
     }
     setLoading(false)
 
   }
+
+
+
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -79,16 +86,16 @@ const Login = () => {
           handleShowText={handleShowText}
           showPass={showPass}
         />
-        {/* <CheckBox
+        <CheckBox
+          onPressCheckbox={onPressCheckbox}
           isChecked={isChecked}
-          setIsChecked={setIsChecked}></CheckBox> */}
+          setIsChecked={setIsChecked}></CheckBox>
         <Button
           style={styles.loginBtn}
           loading={loading}
           onPress={onPressActions}
           text={'Login'}
           message="message"></Button>
-
       </ScrollView>
     </View>
   );

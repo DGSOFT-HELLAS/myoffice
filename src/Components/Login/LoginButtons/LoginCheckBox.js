@@ -5,9 +5,10 @@ import FontAws from 'react-native-vector-icons/FontAwesome5'
 import { COLORS } from '../../../shared/COLORS';
 
 
-const CheckBox = ({ isChecked, setIsChecked }) => {
+const CheckBox = ({ isChecked, setIsChecked, onPressCheckbox }) => {
 
   const onPress = () => {
+    onPressCheckbox()
     setIsChecked(true)
   }
 
