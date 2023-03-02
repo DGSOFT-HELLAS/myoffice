@@ -143,7 +143,7 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => 
     setDay(day)
     setRaw((prevState) => {
       return {
-        ...prevState, date: selectredDate.toString()
+        ...prevState, date: isoDate(selectredDate)
       }
     })
   }
