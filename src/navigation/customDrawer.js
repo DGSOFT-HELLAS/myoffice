@@ -67,7 +67,6 @@ const CustomDrawer = (props) => {
       </View>
     </DrawerContentScrollView >
   )
-
 }
 
 

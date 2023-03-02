@@ -15,7 +15,7 @@ const Button = props => {
           {props.loading ? (
             <Spinner />
           ) : (
-            <Text style={styles.buttonText}>{props.text}</Text>
+            <Text style={[styles.buttonText, props.textStyle]}>{props.text}</Text>
           )}
         </View>
       </TouchableOpacity>

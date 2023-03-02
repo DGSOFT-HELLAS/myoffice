@@ -17,7 +17,7 @@ const Login = () => {
     username, setUsername,
     password, setPassword,
     trdr, setTrdr,
-    setIsLoggedIn
+
   } = useContext(UserContext);
 
   const navigation = useNavigation()
@@ -33,28 +33,19 @@ const Login = () => {
     setUsername(text)
   };
 
-  const handleIsLogged = async () => {
-    await AsyncStorage.setItem('@isLogged', JSON.stringify(true));
 
-  }
 
-  const onPressCheckbox = async () => {
-    await AsyncStorage.setItem('@checkbox', JSON.stringify(true));
-  }
+
 
   const onPressActions = async () => {
     setLoading(true)
     const response = await fetchUser('https://portal.myoffice.com.gr/mobApi/loginMob.php', { username: username, password: password });
     if (response.length > 0) {
       if (isChecked) {
-        setIsLoggedIn(true);
-        handleIsLogged()
-
+        await AsyncStorage.setItem('@username', username);
+        await AsyncStorage.setItem('@password', password);
       }
       setTrdr(response[0]['trdr']);
-
-      // navigation.navigate('Ραντεβού: Εβδομάδα')
-      // navigation.navigate('Calendar', { show: true })
       navigation.navigate('Home', { show: true })
 
     }
@@ -66,6 +57,43 @@ const Login = () => {
 
   }
 
+  //Checkbox press, to save password
+  const onPressCheckbox = async () => {
+    setIsChecked(true)
+
+    await AsyncStorage.setItem('@checkbox', JSON.stringify(true));
+
+  }
+
+  const clearLogin = async () => {
+    await AsyncStorage.setItem('@checkbox', JSON.stringify(false));
+    await AsyncStorage.setItem('@password', '');
+    await AsyncStorage.setItem('@username', '');
+    setIsChecked(false)
+    setPassword('')
+    setUsername('')
+  }
+  const getAsync = async () => {
+    let item = await AsyncStorage.getItem('@checkbox');
+    if (item === 'true') {
+      setIsChecked(true)
+    }
+    if (item === 'false') {
+      setIsChecked(false)
+    }
+
+    let password = await AsyncStorage.getItem('@password');
+    let username = await AsyncStorage.getItem('@username');
+    if (password && username) {
+      setPassword(password)
+      setUsername(username)
+    }
+  }
+
+  useEffect(() => {
+
+    getAsync()
+  }, [])
 
 
   return (
@@ -87,7 +115,7 @@ const Login = () => {
           showPass={showPass}
         />
         <CheckBox
-          onPressCheckbox={onPressCheckbox}
+          onPress={onPressCheckbox}
           isChecked={isChecked}
           setIsChecked={setIsChecked}></CheckBox>
         <Button
@@ -96,6 +124,12 @@ const Login = () => {
           onPress={onPressActions}
           text={'Login'}
           message="message"></Button>
+        {isChecked && <Button
+          textStyle={styles.clearLoginText}
+          style={styles.clearLogin}
+          // onPress={onPressActions}
+          onPress={clearLogin}
+          text={'Clear Login'}></Button>}
       </ScrollView>
     </View>
   );
@@ -128,6 +162,16 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.secondaryColor,,
     backgroundColor: COLORS.primaryColor,
     height: 60,
+  },
+  clearLogin: {
+    backgroundColor: 'white',
+    elevation: 0,
+    marginTop: 5,
+    width: '100%',
+  },
+  clearLoginText: {
+    color: 'black',
+    textDecorationLine: 'underline'
   }
 });
 

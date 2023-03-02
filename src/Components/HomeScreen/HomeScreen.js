@@ -16,7 +16,7 @@ const HomeScreen = () => {
     <ScrollView>
       <Section>
         <View style={styles.headerView}>
-          <BoldText>Εισερχόμενα</BoldText>
+          <BoldText>Ραντεβού</BoldText>
         </View>
         <View style={styles.spacebetweenView}>
           <TouchableOpacity onPress={() => navigation.navigate('Calendar')} style={styles.tabView}>
@@ -41,7 +41,7 @@ const HomeScreen = () => {
       </Section>
       <Section>
         <View style={styles.headerView}>
-          <BoldText>Kλήσεις</BoldText>
+          <BoldText>Εισερχόμενα</BoldText>
         </View>
         <View style={styles.spacebetweenView}>
           <TouchableOpacity onPress={() => navigation.navigate('IncomingCallsForm')} style={styles.tabView}>
