@@ -8,7 +8,7 @@ import EditButton from "../SharedComp/Buttons/EditButton";
 import { COLORS } from "../../shared/COLORS";
 import Button from "../SharedComp/Buttons/Button";
 import DeleteButton from "../SharedComp/Buttons/DeleteButton";
-
+import { fetchAPI } from "../../utils/fetchAPI";
 
 const CustomersView = () => {
 
@@ -17,7 +17,11 @@ const CustomersView = () => {
   const data = route.params.data;
 
   const onPressDelete = async () => {
-    await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'SaveCustomer', action: 'delete', prsn: data["prsn"] })
+    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'SaveCustomer', action: 'delete', prsn: data["prsn"] })
+
+    if (response.errorMessage === '') {
+      navigation.goBack()
+    }
   }
 
   const onEditBtn = () => {
@@ -54,6 +58,8 @@ const CustomersView = () => {
 
 const ModalCheck = ({ title, onPressDelete }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation()
+
   return (
     <>
       <Modal
@@ -84,6 +90,7 @@ const ModalCheck = ({ title, onPressDelete }) => {
         </View>
       </Modal>
       <DeleteButton onPress={() => setModalVisible(true)} style={{ marginLeft: 10 }} />
+      {/* <DeleteButton onPress={() => navigation.goBack()} style={{ marginLeft: 10 }} /> */}
     </>
   )
 }
@@ -158,7 +165,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'pink',
     width: '100%',
   }
 
