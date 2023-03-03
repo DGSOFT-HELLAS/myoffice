@@ -39,6 +39,7 @@ const CustomersView = () => {
         <ListBodyDataSet enabled={false} title={'Email2:'} value={data["Email2"]} />
         <ListBodyDataSet enabled={false} title={'Fax:'} value={data["Fax"]} />
         <ListBodyDataSet enabled={false} title={'Σχόλια:'} value={data["Comments"]} />
+        <ListBodyDataSet enabled={false} title={'WebPage:'} value={data["WebPage"]} />
         <View style={styles.buttonView}>
           <EditButton onPress={() => onEditBtn(data)} />
           <ModalCheck title={"Θέλετε σίγουρα να προχωρήσετε σε διαγραφή του πελάτη;"} onPressDelete={onPressDelete} />

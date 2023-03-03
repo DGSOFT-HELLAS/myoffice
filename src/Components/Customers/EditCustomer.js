@@ -19,7 +19,8 @@ const EditCustomer = () => {
   const navigation = useNavigation();
   const route = useRoute();
   let routeData = route.params.data;
-
+  console.log('------------------------ ROUTE DATA --------------------------------------------')
+  console.log(routeData)
   const [state, setState] = useState({
     data: [],
     loading: false,
@@ -28,8 +29,8 @@ const EditCustomer = () => {
   const [raw, setRaw] = useState({
     vip: routeData["VIP"],
     Name: routeData["Name"],
-    Address: routeData["Adress"],
-    District: routeData["Disctrict"],
+    Address: routeData["Address"],
+    District: routeData["District"],
     City: routeData["City"],
     Zip: routeData["Zip"],
     Phone: routeData["Phone"],
