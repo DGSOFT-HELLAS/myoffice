@@ -1,0 +1,33 @@
+import { COLORS } from "../../../shared/COLORS";
+import Text from "../../Atoms/Text";
+import Ion from 'react-native-vector-icons/Ionicons'
+import { FlatList, TouchableOpacity, View, StyleSheet } from "react-native";
+
+const FloatBtn = ({ onPress }) => {
+  return (
+    <TouchableOpacity style={styles.floatBtn} onPress={onPress}>
+      <Ion name="add" size={18} color={'white'} />
+    </TouchableOpacity>
+  )
+}
+
+
+
+const styles = StyleSheet.create({
+
+  floatBtn: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: COLORS.secondaryColor,
+    width: 35,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: COLORS.secondaryColorShade001
+  }
+});
+export default FloatBtn;

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useEffect, useContext, useState } from "react";
 import { DayContext } from "../../../useContext/daysContext";
 import { fetchAPI } from "../../../utils/fetchAPI";
@@ -13,7 +13,11 @@ import { incrementDecrementDate } from "../../../utils/incrementDecrementDate";
 import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import FloatBtn from "../../SharedComp/Buttons/FloatButton";
+import { utcToZonedTime, format } from 'date-fns-tz';
 
+const timeZone = 'Europe/Athens';
+const timeZoneOffset = '+02:00';
 
 
 const DayView = () => {
@@ -34,7 +38,7 @@ const DayView = () => {
     stelexos: 0,
   })
 
-  console.log(raw)
+  console.log('raw: ' + raw.startDate)
 
   const onChange = (selectedDate) => {
     setRaw(prev => {
@@ -64,7 +68,6 @@ const DayView = () => {
     })
   }
 
-
   const handleFetch = async () => {
     setState((prev) => {
       return {
@@ -90,6 +93,12 @@ const DayView = () => {
 
   }
 
+  const onAddPress = () => {
+    const zonedDate = utcToZonedTime(raw?.startDate, timeZone);
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd', { timeZone, timeZoneOffset });
+    navigation.navigate('AddRantevou', { start: formattedDate, end: formattedDate, date: formattedDate })
+  }
+
   useEffect(() => {
     handleFetch()
     const unsubscribe = navigation.addListener('focus', () => {
@@ -109,8 +118,7 @@ const DayView = () => {
         <ArrowButton onPress={nextButton} iconType="nextIcon" />
       </AppointmentsView >
       {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <DayViewBody data={state.data} setState={setState} />}
-
-
+      <FloatBtn onPress={onAddPress} />
     </Provider>
   )
 }
@@ -129,7 +137,8 @@ const styles = StyleSheet.create({
 
   calendarIcon: {
     fontSize: 20,
-  }
+  },
+
 });
 
 export default DayView;

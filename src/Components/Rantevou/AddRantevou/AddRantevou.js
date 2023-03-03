@@ -19,6 +19,7 @@ import { DayContext } from '../../../useContext/daysContext';
 import { useRoute } from '@react-navigation/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ListBodyDataSet } from '../../SharedComp/List/List';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AddRantevou = () => {
   const route = useRoute();
@@ -75,7 +76,8 @@ const AddRantevou = () => {
           if (response.error) {
             Alert.alert(`${response.errorMessage}`)
           } else {
-            navigation.navigate('DayViewCalendarMain', { date: date.toString() })
+            // navigation.navigate('DayViewCalendarMain', { date: date.toString() })
+            navigation.goBack();
           }
         }
       } catch (error) {
@@ -110,6 +112,7 @@ const AddRantevou = () => {
           </View>
         </AddView>
       </ScrollView >
+
     </Provider>
 
   )
