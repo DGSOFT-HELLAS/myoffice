@@ -12,7 +12,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 export const ListBodyRantevou = ({ data, setState }) => {
   const navigation = useNavigation()
-  console.log('setState: ' + setState)
   const [raw, setRaw] = useState({
     soaction: data["soaction"],
   })
