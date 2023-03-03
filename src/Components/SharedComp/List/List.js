@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput } from "react-native"
+import { View, StyleSheet, TextInput, Linking, TouchableOpacity } from "react-native"
 import BoldText from "../Text/BoldText"
 import Text from "../Text/RegularText"
 import { COLORS } from '../../../shared/COLORS'
@@ -54,6 +54,17 @@ export const ListBodyDataSet = ({ title, value, enabled, onChangeText }) => {
     <View style={styles.listBodyDataSetView}>
       <BoldText style={styles.title}>{title}</BoldText>
       <TextInput style={[styles.input, enabled && styles.inputEnabled]} editable={enabled} multiline={true} onChangeText={onChangeText} value={value} />
+    </View>
+  )
+}
+export const ListBodyMobile = ({ title, value, enabled, onChangeText }) => {
+  return (
+    <View style={styles.listBodyDataSetView}>
+      <BoldText style={styles.title}>{title}</BoldText>
+      <TouchableOpacity onPress={() => Linking.openURL(`tel:${value}`)}>
+        <TextInput style={[styles.inputMobile, enabled && styles.inputEnabled]} editable={enabled} multiline={true} onChangeText={onChangeText} value={value} />
+      </TouchableOpacity>
+
     </View>
   )
 }
@@ -114,6 +125,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     color: '#b0acaf',
     fontSize: 16
+  },
+  inputMobile: {
+    minHeight: 50,
+    paddingLeft: 10,
+    borderWidth: 1,
+    borderColor: '#dfe0e0',
+    backgroundColor: '#f5f5f5',
+    color: COLORS.secondaryColor,
+    fontSize: 16,
+    textDecorationLine: 'underline'
   },
   inputEnabled: {
     color: 'black'

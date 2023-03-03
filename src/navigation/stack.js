@@ -29,6 +29,7 @@ import IncomingTaskForm from '../Components/screenIncoming/IncomingTasks/TaskFor
 //Screen Customers:
 import Customers from '../Components/Customers/customers';
 import CustomerSearchForm from '../Components/Customers/SearchForm';
+import CustomersView from '../Components/Customers/CustomersView';
 import AddCustomer from '../Components/Customers/AddCustomer';
 import EditCustomer from '../Components/Customers/EditCustomer';
 
@@ -219,6 +220,15 @@ export const IncomingStack = () => {
           options={{
             header: ({ navigation }) => (
               <NavStyle navigation={navigation} showback={true} title={'Πελάτες'} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="CustomersView"
+          component={CustomersView}
+          options={{
+            header: ({ navigation }) => (
+              <NavStyle navigation={navigation} showback={true} title={'Πελάτης'} />
             ),
           }}
         />

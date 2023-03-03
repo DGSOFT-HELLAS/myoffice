@@ -4,9 +4,8 @@ import { fetchAPI } from "../../utils/fetchAPI";
 import CustomerItems from "./CustomersItems";
 import Spinner from "../Atoms/ActivityIndicator";
 import NoDataView from "../Atoms/View/NoDataView";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import SearchForm from "./SearchForm";
 
 
 
@@ -14,7 +13,6 @@ const Customers = () => {
   const router = useRoute()
   const navigation = useNavigation()
   const { trdr } = useContext(UserContext);
-  const isFocused = useIsFocused();
 
 
   const [state, setState] = useState({
@@ -22,7 +20,6 @@ const Customers = () => {
     loading: false,
     refresh: false,
   })
-  console.log(state.refresh)
 
 
   const handleFetch = async () => {
