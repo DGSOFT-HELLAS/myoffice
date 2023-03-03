@@ -61,7 +61,7 @@ export const ListBodyMobile = ({ title, value, enabled, onChangeText }) => {
   return (
     <View style={styles.listBodyDataSetView}>
       <BoldText style={styles.title}>{title}</BoldText>
-      <TouchableOpacity onPress={() => Linking.openURL(`tel:${value}`)}>
+      <TouchableOpacity onPress={() => value && Linking.openURL(`tel:${value}`)}>
         <TextInput style={[styles.inputMobile, enabled && styles.inputEnabled]} editable={enabled} multiline={true} onChangeText={onChangeText} value={value} />
       </TouchableOpacity>
 
