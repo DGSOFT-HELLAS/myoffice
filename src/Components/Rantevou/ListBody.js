@@ -81,7 +81,7 @@ const ModalCheck = ({ subscriberReschedule, customerReschedule }) => {
         <View style={styles.modalContainer} >
           <View style={styles.modalView} >
             <View style={styles.topView}>
-              <Text>Επαναπρογραμματισμός Ραντεβού από:</Text>
+              <Text>Ακύρωση από:</Text>
             </View>
             <Button style={styles.modalBtn} text={"Πελάτη"} onPress={() => {
               setModalVisible(false);
