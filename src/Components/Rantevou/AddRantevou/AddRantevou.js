@@ -39,7 +39,8 @@ const AddRantevou = () => {
     status: 1
   })
 
-  console.log(route.params)
+  // console.log(route.params)
+  console.log(state)
 
   useEffect(() => {
     //On day view if we press on a specific time, we get the input of that time formatted as a date, and we convert it to plain time ex. 12: 40

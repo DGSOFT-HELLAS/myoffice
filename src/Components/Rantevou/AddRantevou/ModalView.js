@@ -14,15 +14,17 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }) => {
-
+  const { trdr } = useContext(UserContext);
   const navigation = useNavigation()
   const [data, setData] = useState([])
   const [filteredDataSource, setFilteredDataSource] = useState([]);
 
   const [value, setValue] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
-  const { trdr } = useContext(UserContext);
+
   const [search, setSearch] = useState('');
+
+  const [item, setItem] = useState(null)
 
 
   const showModal = () => {
@@ -32,17 +34,6 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
   const hideModal = () => {
     setVisible(false)
   };
-
-  const onValueChange = (newValue) => {
-
-    setValue(newValue)
-    setState((prevState) => {
-      return {
-        ...prevState, [updateValue]: newValue["id"]
-      }
-    })
-    hideModal()
-  }
 
 
   const searchFilterFunction = (text) => {
@@ -65,10 +56,6 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
       setSearch(text);
     }
   };
-
-
-
-
 
 
   const handleFetch = async () => {
@@ -94,30 +81,40 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
 
   }, [navigation])
 
+
+
   const RenderItem = ({ item, index }) => {
+    const onPress = () => {
+      let key = Object.keys(item)[1]
+      let value = item[`${key}`]
+      setValue(value)
+      setState((prevState) => {
+        return {
+          ...prevState, [updateValue]: item.id
+        }
+      })
+      hideModal()
+    }
     return (
-      <ListItem item={item} />)
+      <TouchableOpacity onPress={onPress}>
+        <ListItem item={item} />
+      </TouchableOpacity>
+    )
   };
 
-  const HandleTitle = () => {
-    if (title) {
-      let cleanTitle = title.split('*')[1]
-      return (
-        <Text>{cleanTitle}</Text>
-      )
-    }
-  }
+
 
   return (
     <>
+      {/* Input component */}
       <InputLabel title={hideLabel ? null : title}>
         <TouchableOpacity onPress={showModal} style={styles.addInput}>
           {hideLabel && <AntDesign name="search1" size={20} />}
-          {<Text>{value[Object.keys(value)[1]]}</Text>}
+          {<Text>{value}</Text>}
           <AntDesign name="down" size={18} />
         </TouchableOpacity>
-
       </InputLabel >
+      {/* Modal that opens and fetches data -> available customers, available services */}
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
           <View style={{ flexDirection: 'row', padding: 10 }}>
@@ -135,17 +132,15 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
                 <Ion name="person-add-sharp" size={20} color={COLORS.secondaryColor} />
               </TouchableOpacity>}
           </View>
-          <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value.id}>
-            <FlatList
-              data={filteredDataSource}
-              renderItem={RenderItem}
-              keyExtractor={item => item.id}
-              ItemSeparatorComponent={Seperator}
-              maxToRenderPerBatch={20}
-              initialNumToRender={13}
-              updateCellsBatchingPeriod={10}
-            />
-          </RadioButton.Group>
+          <FlatList
+            data={filteredDataSource}
+            renderItem={RenderItem}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={Seperator}
+            maxToRenderPerBatch={20}
+            initialNumToRender={13}
+            updateCellsBatchingPeriod={10}
+          />
         </Modal>
       </Portal>
 
@@ -161,12 +156,10 @@ const Seperator = () => {
 
 const ListItem = memo(({ item }) => {
   let value = Object.keys(item)[1]
-  console.log(item)
 
   return (
     <View style={styles.radioListView}>
       <Text style={styles.listItemText}>{item[`${value}`]}</Text>
-      <RadioButton value={item} />
     </View>
   )
 })
@@ -208,11 +201,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
+    height: 60,
   },
   seperator: {
     width: '100%',
     height: 2,
-    backgroundColor: 'black'
+    backgroundColor: '#d9d9d9'
   },
   listItemText: {
     color: '#656666'
