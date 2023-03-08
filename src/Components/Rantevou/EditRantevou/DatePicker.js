@@ -33,7 +33,6 @@ export const ModalDatePicker = ({ day, style, onChange }) => {
           mode={'date'}
           is24Hour={true}
           onChange={(event, selectedDate) => {
-            console.log(selectedDate)
             setShow(false)
             onChange(selectedDate)
           }}

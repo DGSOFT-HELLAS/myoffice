@@ -31,7 +31,7 @@ const IncomingCalls = () => {
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { ...parsedRouter, trdr: trdr, query: "getCalls" })
     try {
       if (response) {
-        console.log(response)
+        // console.log(response)
         setState((prevState) => {
           return {
             ...prevState, data: response

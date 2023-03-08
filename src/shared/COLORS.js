@@ -21,6 +21,7 @@ export const COLORS = {
   //Black Color:
   primaryColor: '#1d1d1d',
   secondaryColor: '#6200EE',
+  secondaryColorShade: '#9042ff',
   secondaryColorShade001: '#CFBCFF',
   secondaryColorShade002: '#e6ddff',
   secondaryColorShade003: '#f3efff',

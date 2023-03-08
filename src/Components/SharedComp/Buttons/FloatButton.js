@@ -6,7 +6,7 @@ import { FlatList, TouchableOpacity, View, StyleSheet } from "react-native";
 const FloatBtn = ({ onPress }) => {
   return (
     <TouchableOpacity style={styles.floatBtn} onPress={onPress}>
-      <Ion name="add" size={18} color={'white'} />
+      <Ion name="add" size={20} color={'white'} />
     </TouchableOpacity>
   )
 }
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
     backgroundColor: COLORS.secondaryColor,
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,

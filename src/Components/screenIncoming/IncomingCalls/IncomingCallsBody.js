@@ -1,8 +1,10 @@
-import { View, ScrollView, StyleSheet, FlatList } from "react-native"
+import { View, ScrollView, StyleSheet, FlatList, TouchableOpacity, Text } from "react-native"
+
 import { List } from "react-native-paper"
 import { ListBodyDataSet, ListTitle, ListBodyView, DescriptionTitle, ListBodyMobile } from "../../SharedComp/List/List"
 import Material from 'react-native-vector-icons/MaterialIcons'
 
+import MessageRequest from "./messageRequest"
 const IncomingCallsBody = (props) => {
 
 
@@ -44,15 +46,17 @@ const IncomingCallsBody = (props) => {
 }
 
 const ListBody = ({ data }) => {
+
   return (
     <ListBodyView>
       {/* <ListBodyDataSet enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} /> */}
       <ListBodyMobile enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} />
-
       <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} />
+      <MessageRequest data={data} />
     </ListBodyView>
   )
 }
+
 
 
 const styles = StyleSheet.create({
