@@ -16,6 +16,7 @@ import DayViewCalendarMain from '../Components/Rantevou/DayViewCalendarMain/DayV
 import EditRantevou from '../Components/Rantevou/EditRantevou/EditRantevou';
 import CalendarMonth from '../Components/Calendar/Calendar/Calendar';
 import EventScreen from '../Components/Rantevou/EventScreen/EventScreen';
+import ShowPass from '../Components/Login/ChangePass';
 //------------------Import Screens:
 //Sreen Incoming:
 import IncomingCalls from '../Components/screenIncoming/IncomingCalls/IncomingCalls';
@@ -50,6 +51,13 @@ export const IncomingStack = () => {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ShowPass"
+          component={ShowPass}
           options={{
             headerShown: false,
           }}

@@ -124,6 +124,11 @@ const Login = () => {
           onPress={onPressActions}
           text={'Login'}
           message="message"></Button>
+        <Button
+          style={styles.changePassBtn}
+          onPress={() => navigation.navigate('ShowPass')}
+          text={'Change Password'}
+        ></Button>
         {isChecked && <Button
           textStyle={styles.clearLoginText}
           style={styles.clearLogin}
@@ -162,6 +167,12 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.secondaryColor,,
     backgroundColor: COLORS.primaryColor,
     height: 60,
+  },
+  changePassBtn: {
+    width: '100%',
+    backgroundColor: 'red',
+    height: 60,
+    marginTop: 20,
   },
   clearLogin: {
     backgroundColor: 'white',
