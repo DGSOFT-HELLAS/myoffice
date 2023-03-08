@@ -18,7 +18,7 @@ const IncomingCallsBody = (props) => {
             descriptionStyle={styles.itemDescription}
             style={{ backgroundColor: 'white' }}
           >
-            <ListBody data={data} />
+            <ListBody data={data} setRefresh={props.setRefresh} />
           </List.Accordion>
         </View>
       </View>
@@ -45,14 +45,14 @@ const IncomingCallsBody = (props) => {
   )
 }
 
-const ListBody = ({ data }) => {
+const ListBody = ({ data, setRefresh }) => {
 
   return (
     <ListBodyView>
       {/* <ListBodyDataSet enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} /> */}
       <ListBodyMobile enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} />
       <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} />
-      <MessageRequest data={data} />
+      <MessageRequest data={data} setRefresh={setRefresh} />
     </ListBodyView>
   )
 }

@@ -15,7 +15,8 @@ const IncomingCalls = () => {
   let parsedRouter = JSON.parse(router.params.state)
   const [state, setState] = useState({
     data: [],
-    loading: true
+    loading: true,
+    refresh: false
   });
 
 
@@ -51,15 +52,14 @@ const IncomingCalls = () => {
 
   useEffect(() => {
     handleFetch();
-  }, [])
+  }, [state.refresh])
 
 
 
   return (
     <>
       {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} /> */}
-      {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <IncomingCallsBody data={state.data} />}
-
+      {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <IncomingCallsBody data={state.data} setRefresh={setState} />}
     </>
 
   )

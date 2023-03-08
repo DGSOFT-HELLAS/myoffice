@@ -6,13 +6,16 @@ import { fetchAPI } from "../../../utils/fetchAPI"
 import { ListBodyDataSet } from "../../SharedComp/List/List"
 import BoldText from "../../Atoms/Text/BoldText"
 
-const MessageRequest = ({ data }) => {
+const MessageRequest = ({ data, setRefresh }) => {
   console.log(data)
+  console.log(setRefresh)
   const [state, setState] = useState({
     show: false,
     data: [],
     text: ''
   })
+
+
   const onChangeText = (text) => {
     setState(prev => {
       return {
@@ -62,9 +65,16 @@ const MessageRequest = ({ data }) => {
 
     try {
       console.log(response)
+      setRefresh(prev => {
+        return {
+          ...prev, refresh: !prev.refresh
+        }
+      })
     } catch (error) {
       console.log(error)
     }
+
+
   }
 
   return (
