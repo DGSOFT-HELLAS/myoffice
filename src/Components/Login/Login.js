@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'red',
     height: 60,
-    marginTop: 20,
+    marginTop: 10,
   },
   clearLogin: {
     backgroundColor: 'white',
