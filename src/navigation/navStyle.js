@@ -1,6 +1,7 @@
 import { View, StyleSheet, TouchableOpacity, } from "react-native"
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Material from 'react-native-vector-icons/MaterialIcons'
+import Entypo from 'react-native-vector-icons/Entypo'
 import { COLORS } from '../shared/COLORS';
 import { useRoute } from "@react-navigation/native";
 import MediumText from "../Components/Atoms/Text/MediumText";
@@ -20,6 +21,9 @@ const NavStyle = ({ navigation, showback, title, }) => {
   return (
     <View style={styles.navView}>
       <View style={styles.leftView}>
+        <TouchableOpacity style={styles.home} onPress={() => navigation.navigate('Home')} >
+          <Entypo name="home" color={COLORS.secondaryColorShade002} size={21} />
+        </TouchableOpacity>
         {showback && (
           <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()} >
             <Material name="keyboard-backspace" color="white" size={21} />
@@ -49,8 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     zIndex: 4,
     elevation: 3,
-    height: 90
-
+    minHeight: 80,
   },
   leftView: {
     flexDirection: 'row',
@@ -95,6 +98,15 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     justifyContent: 'center'
+  },
+  home: {
+    width: 35,
+    height: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 2,
+    borderWidth: 0.5,
+    borderColor: COLORS.secondaryColorShade002
   }
 });
 
