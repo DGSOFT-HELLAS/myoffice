@@ -21,6 +21,9 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+
+
+
 target 'myData' do
   config = use_native_modules!
 
@@ -69,9 +72,12 @@ target 'myData' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
+    
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
     __apply_Xcode_14_3_RC_post_install_workaround(installer)
+    
   end
+  
 end
 
 
