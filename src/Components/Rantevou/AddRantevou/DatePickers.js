@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
   },
   datePickerView: {
     flexWrap: 'wrap',
-    flexDirection: 'row'
+    flexDirection: 'row',
+   
+    
   },
   datepickerRightView: {
     marginLeft: 10,

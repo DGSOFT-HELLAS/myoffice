@@ -124,7 +124,10 @@ const styles = StyleSheet.create({
     borderColor: '#dfe0e0',
     backgroundColor: '#f5f5f5',
     color: '#b0acaf',
-    fontSize: 16
+    fontSize: 16,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   inputMobile: {
     minHeight: 50,

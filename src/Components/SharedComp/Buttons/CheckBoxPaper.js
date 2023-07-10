@@ -16,11 +16,13 @@ const CheckboxPaperNew = ({ title, isChecked, disabled, onPress }) => {
 
   return (
     <View style={styles.view}>
+
       <Checkbox
         status={check ? 'checked' : 'unchecked'}
         onPress={handlePress}
         disabled={disabled}
       />
+ 
       <Text>{title}</Text>
     </View>
   );
@@ -31,8 +33,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-    backgroundColor: COLORS.input,
     height: 50,
+  },
+  checkbox: {
+    backgroundColor: 'red',
+    width: '40px',
+    borderRadius: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

@@ -19,7 +19,6 @@ import { DayContext } from '../../../useContext/daysContext';
 import { useRoute } from '@react-navigation/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ListBodyDataSet } from '../../SharedComp/List/List';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AddRantevou = () => {
   const route = useRoute();
@@ -41,7 +40,7 @@ const AddRantevou = () => {
   })
 
   // console.log(route.params)
-  console.log(state)
+  console.log('state for addrantebou: ' + state)
 
   useEffect(() => {
     //On day view if we press on a specific time, we get the input of that time formatted as a date, and we convert it to plain time ex. 12: 40
@@ -56,6 +55,8 @@ const AddRantevou = () => {
     }
   }, [])
 
+        
+s
 
   const handleEmptyState = () => {
     if (state.service == '' || state.person == '' || state.customer == '' || state.place == '' || state.fromTime == '' || state.toTime == '') {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../shared/COLORS';
@@ -12,12 +12,24 @@ const timeZoneOffset = '+02:00';
 
 
 export const ModalDatePickerComp = ({ day, style, onChange }) => {
-
   const [show, setShow] = useState(false);
   const showTimepicker = () => {
     setShow(true)
   };
 
+  if(Platform.OS=== 'ios') {
+    return (
+      <DateTimePicker
+      value={new Date(day)}
+      mode={'date'}
+      is24Hour={true}
+      onChange={(event, selectedDate) => {
+        setShow(false)
+        onChange(selectedDate)
+      }}
+    />
+    )
+  }
 
 
   return (

@@ -27,7 +27,7 @@ const DayViewBody = ({ data, setState }) => {
           data.personal == 1 && styles.pink
         ]} >
         <List.Accordion
-          description={<DescriptionTitle value={data['Πελάτης'] ? data['Πελάτης'] : "Δεν βρέθηκε όνομα"} />}
+          description={data['Πελάτης']}
           descriptionStyle={styles.itemDescription}
           title={<ListTitle value={`${data["Ημ/νία"]} - ${data["'Ωρα"]}`} Icon={Enty} iconName="calendar" />}
           style={{ backgroundColor: 'white' }}
