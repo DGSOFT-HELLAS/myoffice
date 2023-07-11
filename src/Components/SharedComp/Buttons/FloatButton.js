@@ -1,7 +1,7 @@
 import { COLORS } from "../../../shared/COLORS";
 import Text from "../../Atoms/Text";
 import Ion from 'react-native-vector-icons/Ionicons'
-import { FlatList, TouchableOpacity, View, StyleSheet } from "react-native";
+import { FlatList, TouchableOpacity, View, StyleSheet, Platform } from "react-native";
 
 const FloatBtn = ({ onPress }) => {
   return (
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
 
   floatBtn: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
+    bottom: 20,
+    right: 20,
     backgroundColor: COLORS.secondaryColor,
     width: 40,
     height: 40,

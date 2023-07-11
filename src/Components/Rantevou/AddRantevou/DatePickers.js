@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
   },
   rightView: {
     marginLeft: 20,
+  },
+  iosView: {
+    display: 'flex',
+    alignItems: 'start'
+
   }
 
 

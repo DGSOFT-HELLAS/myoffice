@@ -17,8 +17,7 @@ import InputLabel from "../AddRantevou/InputLabel";
 import ModalCheck from "../../SharedComp/ModalCheck/ModalCheck";
 import HeaderWithDivider from "../../SharedComp/Views/HeaderWithDivider";
 import isoDate from "../../../utils/dateFunctions/isoDate";
-
-
+import { SafeAreaView } from "react-native";
 const EventScreen = ({ setIsVisible, setState }) => {
   const navigation = useNavigation()
   const { day, singleEvent, setDay } = useContext(DayContext)
@@ -206,7 +205,7 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => 
   }, [raw.reason])
 
   return (
-    <>
+    <SafeAreaView >
       <InputLabel title="* Ημερομηνία:">
         <DatePickerComp day={new Date(raw.date)} onChange={handleDate} style={{ width: '70%' }} />
       </InputLabel>
@@ -225,7 +224,7 @@ const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => 
           <Text style={styles.reprogramText}>Συνδρομητής</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </SafeAreaView >
   )
 }
 

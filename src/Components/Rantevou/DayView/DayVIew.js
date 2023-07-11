@@ -96,9 +96,8 @@ const DayView = () => {
   const onAddPress = () => {
     const zonedDate = utcToZonedTime(raw?.startDate, timeZone);
     const formattedDate = format(zonedDate, 'yyyy-MM-dd', { timeZone, timeZoneOffset });
-    console.log(zonedDate)    // // navigation.navigate('AddRantevou', { start: formattedDate, end: formattedDate, date: formattedDate })
-    navigation.navigate('AddRantevou')
-    console.log('click')
+    console.log(zonedDate)
+    navigation.navigate('AddRantevou', { start: formattedDate, end: formattedDate, date: formattedDate })
   }
 
   useEffect(() => {

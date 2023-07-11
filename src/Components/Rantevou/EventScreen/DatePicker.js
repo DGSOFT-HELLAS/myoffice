@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import Text from '../../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
 import isoDate from '../../../utils/dateFunctions/isoDate';
+
 
 export const DatePickerComp = ({ day, style, onChange }) => {
 
@@ -17,8 +18,25 @@ export const DatePickerComp = ({ day, style, onChange }) => {
     setShow(true)
   };
 
+  if (Platform.OS === 'ios') {
+    return (
+      <View style={styles.iosView}>
+        <DateTimePicker
+          value={new Date(date)}
+          mode={'date'}
+          is24Hour={true}
+          onChange={(event, selectedDate) => {
+            setShow(false)
+            setDate(selectedDate)
+            onChange(selectedDate)
+          }}
+        />
+      </View>
 
+    )
+  }
 
+  
   return (
     <View>
       <ShowTime onPress={showTimepicker} day={day} style={style} date={date} />
@@ -88,6 +106,11 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 19,
     color: 'white'
+  },
+  iosView: {
+    display: 'flex',
+    alignItems: 'start'
+
   }
 
 });
