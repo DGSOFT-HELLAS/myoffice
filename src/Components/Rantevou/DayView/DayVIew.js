@@ -39,7 +39,7 @@ const DayView = () => {
   })
 
   console.log('raw: ' + raw.startDate)
-
+  console.log('raw stelexos:  ' + raw.stelexos)
   const onChange = (selectedDate) => {
     setRaw(prev => {
       return {

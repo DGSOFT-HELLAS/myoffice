@@ -76,7 +76,6 @@ const ListBody = ({ data, onEditBtn, setState, raw, setIsVisible }) => {
     setIsVisible(false)
   }
   const customerReschedule = () => {
-    console.log('press cancel customer')
     handlePost('customer');
     setIsVisible(false)
     // navigation.navigate('DayViewCalendarMain')

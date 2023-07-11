@@ -55,8 +55,16 @@ const ModalPersons = ({ query, setState, updateValue }) => {
   }, [])
 
   const RenderItem = ({ item, index }) => {
+    let value = Object.keys(item)[1]
     return (
-      <ListItem item={item} />)
+      <TouchableOpacity onPress={() => onValueChange(item)}>
+        <View style={styles.radioListView}>
+          <Text style={styles.listItemText}>{item[`${value}`]}</Text>
+          {/* <RadioButton value={item} /> */}
+        </View>
+      </TouchableOpacity>
+
+    )
 
   };
 
@@ -88,7 +96,7 @@ const ModalPersons = ({ query, setState, updateValue }) => {
 
           <Portal>
             <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle} style={styles.modalBackgroundStyle} >
-              <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value.id}>
+              {/* <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value.id}> */}
                 <FlatList
                   data={data}
                   renderItem={RenderItem}
@@ -97,7 +105,7 @@ const ModalPersons = ({ query, setState, updateValue }) => {
 
                 />
 
-              </RadioButton.Group>
+              {/* </RadioButton.Group> */}
             </Modal>
           </Portal>
         </>
@@ -110,17 +118,6 @@ const ModalPersons = ({ query, setState, updateValue }) => {
 const Seperator = () => {
   return (
     <View style={styles.seperator}></View>
-  )
-}
-
-const ListItem = ({ item }) => {
-  let value = Object.keys(item)[1]
-
-  return (
-    <View style={styles.radioListView}>
-      <Text style={styles.listItemText}>{item[`${value}`]}</Text>
-      <RadioButton value={item} />
-    </View>
   )
 }
 
