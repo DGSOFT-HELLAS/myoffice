@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import Text from '../../Atoms/Text';
 import { COLORS } from '../../../shared/COLORS';
-
+import CheckIcon from 'react-native-vector-icons/AntDesign'
 const CheckboxPaperNew = ({ title, isChecked, disabled, onPress }) => {
   const [check, setCheck] = useState(isChecked)
 
   const handlePress = () => {
-    setCheck(!check)
-    onPress()
+    if(!disabled) {
+      setCheck(!check)
+    }
+    onPress && onPress()
   }
 
-
+  
 
   return (
-    <View style={styles.view}>
-
-      <Checkbox
-        status={check ? 'checked' : 'unchecked'}
-        onPress={handlePress}
-        disabled={disabled}
-      />
- 
-      <Text>{title}</Text>
-    </View>
+    <TouchableOpacity  style={styles.view}  onPress={handlePress}>
+    <View  disabled={disabled} style={styles.checkboxContainer} >
+        {check ? <CheckIcon name= "check"/> : null}
+    </View >
+    <Text>{title}</Text>
+</TouchableOpacity>
   );
 };
 
@@ -42,6 +40,20 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  iosView: {
+    border: 1
+  },
+  checkboxContainer: {
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: 'black',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 25,
+    height: 25,
+    marginRight: 10,
   }
 });
 

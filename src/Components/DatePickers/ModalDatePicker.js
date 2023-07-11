@@ -19,7 +19,8 @@ export const ModalDatePickerComp = ({ day, style, onChange }) => {
 
   if(Platform.OS=== 'ios') {
     return (
-      <DateTimePicker
+      <View style={styles.iosView}>
+          <DateTimePicker
       value={new Date(day)}
       mode={'date'}
       is24Hour={true}
@@ -28,6 +29,7 @@ export const ModalDatePickerComp = ({ day, style, onChange }) => {
         onChange(selectedDate)
       }}
     />
+      </View>
     )
   }
 
@@ -99,6 +101,11 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 19,
     color: 'white'
+  }, 
+  iosView: {
+      display: 'flex',
+      alignItems: 'start',
+      marginTop: 10,
   }
 
 });
