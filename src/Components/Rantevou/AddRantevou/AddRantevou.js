@@ -56,7 +56,7 @@ const AddRantevou = () => {
   }, [])
 
         
-s
+
 
   const handleEmptyState = () => {
     if (state.service == '' || state.person == '' || state.customer == '' || state.place == '' || state.fromTime == '' || state.toTime == '') {

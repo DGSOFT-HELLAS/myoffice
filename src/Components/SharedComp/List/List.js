@@ -49,11 +49,12 @@ export const ActiveExpiredWrapper = ({ children, data }) => {
   )
 }
 
-export const ListBodyDataSet = ({ title, value, enabled, onChangeText }) => {
+export const ListBodyDataSet = ({ title, value, enabled, onChangeText, multiline }) => {
   return (
     <View style={styles.listBodyDataSetView}>
       <BoldText style={styles.title}>{title}</BoldText>
-      <TextInput style={[styles.input, enabled && styles.inputEnabled]} editable={enabled} multiline={true} onChangeText={onChangeText} value={value} />
+      <TextInput style={[styles.input, enabled && styles.inputEnabled]} editable={enabled} multiline={multiline} onChangeText={onChangeText} value={value} />
+      {/* <TextInput style={styles.textinput} value={value} editable={enabled} multiline={multi}  onChangeText={onChangeText}/> */}
     </View>
   )
 }
@@ -63,6 +64,7 @@ export const ListBodyMobile = ({ title, value, enabled, onChangeText }) => {
       <BoldText style={styles.title}>{title}</BoldText>
       <TouchableOpacity onPress={() => value && Linking.openURL(`tel:${value}`)}>
         <TextInput style={[styles.inputMobile, enabled && styles.inputEnabled]} editable={enabled} onChangeText={onChangeText} value={value} />
+       
       </TouchableOpacity>
 
     </View>
@@ -118,11 +120,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   input: {
-    minHeight: 50,
+    minHeight: 45,
     paddingLeft: 10,
     borderWidth: 1,
     borderColor: '#dfe0e0',
-    backgroundColor: '#f5f5f5',
+    // backgroundColor: '#f5f5f5',
     color: '#b0acaf',
     fontSize: 16,
     display: 'flex',
@@ -148,6 +150,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 100,
     height: 40,
+  },
+  textinput: {
+      padding: 10,
+      borderWidth: 1,
+      borderColor: '#dfe0e0',
+      backgroundColor: '#f5f5f5',
   },
 
 
