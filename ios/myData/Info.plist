@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationCategoryType</key>
+	<string>  post_install do |installer|
+    react_native_post_install(installer)
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    installer.pods_project.build_configurations.each do |config| config.build_settings[&quot;EXCLUDED_ARCHS[sdk=iphonesimulator*]&quot;] = &quot;arm64&quot;
+    end
+  end</string>
 	<key></key>
 	<string></string>
 	<key>CFBundleDevelopmentRegion</key>

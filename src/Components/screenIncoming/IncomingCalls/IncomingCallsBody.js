@@ -55,7 +55,7 @@ const ListBody = ({ data, setRefresh }) => {
     <ListBodyView>
       {/* <ListBodyDataSet enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} /> */}
       <ListBodyMobile enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} />
-      <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} />
+      <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} multiline={true} />
       <MessageRequest data={data} setRefresh={setRefresh} />
     </ListBodyView>
   )

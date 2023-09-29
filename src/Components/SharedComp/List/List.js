@@ -53,8 +53,8 @@ export const ListBodyDataSet = ({ title, value, enabled, onChangeText, multiline
   return (
     <View style={styles.listBodyDataSetView}>
       <BoldText style={styles.title}>{title}</BoldText>
-      <TextInput style={[styles.input, enabled && styles.inputEnabled]} editable={enabled} multiline={multiline} onChangeText={onChangeText} value={value} />
-      {/* <TextInput style={styles.textinput} value={value} editable={enabled} multiline={multi}  onChangeText={onChangeText}/> */}
+        <TextInput style={[styles.input, enabled && styles.inputEnabled]} editable={enabled} multiline={multiline} onChangeText={onChangeText} value={value} /> 
+           {/* <TextInput style={styles.textinput} value={value} editable={enabled} multiline={multi}  onChangeText={onChangeText}/> */}
     </View>
   )
 }
