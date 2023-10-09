@@ -32,9 +32,7 @@ const AddCustomer = () => {
     Webpage: '',
     Comments: '',
   })
-  console.log('state')
-  console.log(state)
-
+ 
 
   const handleChange = (text, key) => {
     setState((prev) => {

@@ -29,7 +29,7 @@ const Customers = () => {
       }
     })
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'fetchCustomerData', trdr: trdr, postName: router.params.postName, postNumber: router.params.postNumber })
-    // console.log(response)
+    
     try {
       if (response) {
        
