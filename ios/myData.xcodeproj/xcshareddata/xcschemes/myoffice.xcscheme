@@ -65,8 +65,12 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "K7DV3SCHGT.com.myofficeapp.myoffice"
+         RemotePath = "/Users/ccm_chiout/Library/Developer/CoreSimulator/Devices/B3313936-40E2-4D74-A9C3-30B2CFB26E12/data/Containers/Bundle/Application/A842B381-CC80-48EB-A822-AF5A7F8A9218/myData.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
@@ -74,7 +78,7 @@
             BlueprintName = "myData"
             ReferencedContainer = "container:myData.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
