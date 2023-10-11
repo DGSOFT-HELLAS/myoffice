@@ -32,8 +32,7 @@ const Customers = () => {
     // console.log(response)
     try {
       if (response) {
-        console.log('------------------------ FETCH CUSTOMER --------------------------------------------')
-        console.log(response)
+       
         setState((prev) => {
           return {
             ...prev, data: response

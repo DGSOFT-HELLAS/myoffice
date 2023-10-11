@@ -39,7 +39,7 @@ const DayView = () => {
   })
 
   console.log('raw: ' + raw.startDate)
-
+  console.log('raw stelexos:  ' + raw.stelexos)
   const onChange = (selectedDate) => {
     setRaw(prev => {
       return {
@@ -96,6 +96,7 @@ const DayView = () => {
   const onAddPress = () => {
     const zonedDate = utcToZonedTime(raw?.startDate, timeZone);
     const formattedDate = format(zonedDate, 'yyyy-MM-dd', { timeZone, timeZoneOffset });
+    console.log(zonedDate)
     navigation.navigate('AddRantevou', { start: formattedDate, end: formattedDate, date: formattedDate })
   }
 

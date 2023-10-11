@@ -14,13 +14,11 @@ import { useNavigation } from "@react-navigation/native";
 
 import CheckboxPaperNew from "../SharedComp/Buttons/CheckBoxPaper";
 const EditCustomer = () => {
-  //Data coming from individual customer, previous screen
   const { trdr } = useContext(UserContext);
   const navigation = useNavigation();
   const route = useRoute();
   let routeData = route.params.data;
-  console.log('------------------------ ROUTE DATA --------------------------------------------')
-  console.log(routeData)
+
   const [state, setState] = useState({
     data: [],
     loading: false,
@@ -44,9 +42,7 @@ const EditCustomer = () => {
     Comments: routeData["Comments"],
     prsn: routeData["prsn"],
   })
-  console.log('------------------------ STATEEEEEEE --------------------------------------------')
 
-  console.log(raw)
 
   const handleChange = (text, key) => {
     // console.log(text)
@@ -65,7 +61,6 @@ const EditCustomer = () => {
       }
     })
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: 'SaveCustomer', trdr: trdr, action: 'update', ...raw })
-    // console.log(response);
 
     setState((prev) => {
       return {
@@ -75,16 +70,6 @@ const EditCustomer = () => {
     navigation.navigate('Πελάτες', { postName: raw.Name, postNumber: '' });
   }
 
-
-  // useEffect(() => {
-  //   for (const [key, value] of Object.entries(routeData)) {
-  //     setRaw((prev) => {
-  //       return {
-  //         ...prev, [key]: value
-  //       }
-  //     })
-  //   }
-  // }, [])
 
 
   const onCheckboxPress = () => {

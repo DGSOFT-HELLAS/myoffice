@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Text from '../../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getTime } from '../../../utils/getTime';
 import { COLORS } from '../../../shared/COLORS';
-
 export const ModalTimePicker = ({ handleState, style, propsTime, minTime }) => {
   const [show, setShow] = useState(false);
   const [time, setTime] = useState(propsTime)
   const date = new Date();
-
 
   const showTimepicker = () => {
     setShow(true)
@@ -25,9 +23,26 @@ export const ModalTimePicker = ({ handleState, style, propsTime, minTime }) => {
   };
 
 
-
-
-
+  if (Platform.OS === 'ios') {
+    const time = propsTime; // Example time in format 'HH:mm'
+    const currentDate = new Date();
+    const greekTimeOffset = 2; // Greece is typically UTC+2 in standard time
+    currentDate.setHours(currentDate.getHours() + greekTimeOffset);
+    const [hours, minutes] = time.split(':').map(Number);
+    currentDate.setHours(hours);
+    currentDate.setMinutes(minutes);
+    return (
+      <View style={styles.iosView}>
+        <DateTimePicker
+          value={currentDate}
+          mode={'time'}
+          is24Hour={true}
+          onChange={onChange}
+        // minimumDate={minTime}
+        />
+      </View>
+    )
+  }
 
 
   return (
@@ -39,7 +54,7 @@ export const ModalTimePicker = ({ handleState, style, propsTime, minTime }) => {
           mode={'time'}
           is24Hour={true}
           onChange={onChange}
-          minimumDate={minTime}
+        // minimumDate={minTime}
         />
       )}
 
@@ -92,6 +107,11 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 18,
     color: 'white'
+  },
+  iosView: {
+    display: 'flex',
+    // alignItems: 'start'
   }
+
 
 });

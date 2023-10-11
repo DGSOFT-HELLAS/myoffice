@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     color: '#656666'
   },
   textInputStyle: {
+    padding: 15,
   },
   addIcon: {
     width: 35,

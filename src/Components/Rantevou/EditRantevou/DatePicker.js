@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Text from '../../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../../shared/COLORS';
@@ -23,6 +23,22 @@ export const ModalDatePicker = ({ day, style, onChange }) => {
     date = new Date(date)
     setDate(date)
   }, [])
+
+  if(Platform.OS === 'ios') {
+    return (
+      <View style={styles.iosView}>
+        <DateTimePicker
+          value={date}
+          mode={'date'}
+          is24Hour={true}
+          onChange={(event, selectedDate) => {
+            setShow(false)
+            onChange(selectedDate)
+          }}
+        />
+      </View>
+    )
+  }
 
   return (
     <View>
@@ -91,6 +107,10 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 19,
     color: 'white'
+  },
+  iosView: {
+    display: 'flex',
+    alignItems: 'start'
   }
 
 });

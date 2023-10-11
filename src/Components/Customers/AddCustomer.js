@@ -32,7 +32,7 @@ const AddCustomer = () => {
     Webpage: '',
     Comments: '',
   })
-
+  console.log('state')
   console.log(state)
 
 

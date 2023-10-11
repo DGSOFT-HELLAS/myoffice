@@ -63,6 +63,7 @@ const AppointmentsHistory = () => {
 
   useEffect(() => {
     handleFetch()
+    console.log('appointment history screen')
     const unsubscribe = navigation.addListener('focus', () => {
       handleFetch()
     });

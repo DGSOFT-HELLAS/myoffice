@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { splitDate } from "../../../utils/dateFunctions/splitDate"
-import ChooseDates from "../../SharedComp/ChooseDates/ChoseDates"
+
 import IncomingCallsBody from "./IncomingCallsBody"
 import { fetchAPI } from "../../../utils/fetchAPI"
 import { UserContext } from "../../../useContext/useContect"
@@ -28,11 +27,9 @@ const IncomingCalls = () => {
         ...prevState, loading: true
       }
     })
-    // const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { startDate: state.startDate, endDate: state.endDate, trdr: trdr, query: "getCalls" })
     const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { ...parsedRouter, trdr: trdr, query: "getCalls" })
     try {
       if (response) {
-        // console.log(response)
         setState((prevState) => {
           return {
             ...prevState, data: response
@@ -43,7 +40,6 @@ const IncomingCalls = () => {
             ...prevState, loading: false
           }
         })
-        // setData(response)
       }
     } catch (error) {
       console.log(error)
@@ -58,7 +54,6 @@ const IncomingCalls = () => {
 
   return (
     <>
-      {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} /> */}
       {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <IncomingCallsBody data={state.data} setRefresh={setState} />}
     </>
 

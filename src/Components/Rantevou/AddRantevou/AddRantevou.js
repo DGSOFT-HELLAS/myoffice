@@ -3,23 +3,19 @@ import { StyleSheet, ScrollView, Alert, View } from 'react-native'
 import React from 'react'
 import { Provider } from 'react-native-paper';
 import { COLORS } from '../../../shared/COLORS';
-//Import Icons:
 import ModalView from './ModalView';
 import CommentInput from './CommentInput';
 import DatePickers from './DatePickers';
-import { ModalDatePickerComp } from '../../DatePickers/ModalDatePicker';
 import Button from '../../SharedComp/Buttons/Button';
 import { fetchAPI } from '../../../utils/fetchAPI';
-//Imports from other Files:
 import AddView from '../../SharedComp/Views/AddView';
 import CheckboxPaper from '../../SharedComp/Buttons/CheckBox';
 import HeaderWithDivider from '../../SharedComp/Views/HeaderWithDivider';
 import { UserContext } from '../../../useContext/useContect';
 import { DayContext } from '../../../useContext/daysContext';
 import { useRoute } from '@react-navigation/native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { ListBodyDataSet } from '../../SharedComp/List/List';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AddRantevou = () => {
   const route = useRoute();
@@ -41,7 +37,7 @@ const AddRantevou = () => {
   })
 
   // console.log(route.params)
-  console.log(state)
+  console.log('state for addrantebou: ' + state)
 
   useEffect(() => {
     //On day view if we press on a specific time, we get the input of that time formatted as a date, and we convert it to plain time ex. 12: 40
@@ -55,6 +51,8 @@ const AddRantevou = () => {
       })
     }
   }, [])
+
+        
 
 
   const handleEmptyState = () => {

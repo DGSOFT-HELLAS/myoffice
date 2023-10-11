@@ -76,7 +76,6 @@ const ListBody = ({ data, onEditBtn, setState, raw, setIsVisible }) => {
     setIsVisible(false)
   }
   const customerReschedule = () => {
-    console.log('press cancel customer')
     handlePost('customer');
     setIsVisible(false)
     // navigation.navigate('DayViewCalendarMain')
@@ -260,7 +259,6 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 20,
   },

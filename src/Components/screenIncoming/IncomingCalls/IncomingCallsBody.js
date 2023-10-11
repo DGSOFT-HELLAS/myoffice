@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet, FlatList, TouchableOpacity, Text } from "react-native"
+import { View, ScrollView,   SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Text } from "react-native"
 
 import { List } from "react-native-paper"
 import { ListBodyDataSet, ListTitle, ListBodyView, DescriptionTitle, ListBodyMobile } from "../../SharedComp/List/List"
@@ -6,7 +6,9 @@ import Material from 'react-native-vector-icons/MaterialIcons'
 
 import MessageRequest from "./messageRequest"
 const IncomingCallsBody = (props) => {
-
+  const description = () => {
+    return <DescriptionTitle value={data["Επωνυμία"] ? data["Επωνυμία"] : "Δεν βρέθηκε Επωνυμία"} />
+  }
 
   const Item = ({ data, index }) => {
     return (
@@ -14,22 +16,23 @@ const IncomingCallsBody = (props) => {
         <View style={[styles.itemWrapper]} >
           <List.Accordion
             title={<ListTitle value={data["Ημ/νία Λήψης"]} Icon={Material} iconName="phone-callback" />}
-            description={<DescriptionTitle value={data["Επωνυμία"] ? data["Επωνυμία"] : "'Δεν βρέθηκε Επωνυμία'"} />}
+            description={data["Επωνυμία"]}
             descriptionStyle={styles.itemDescription}
             style={{ backgroundColor: 'white' }}
           >
             <ListBody data={data} setRefresh={props.setRefresh} />
           </List.Accordion>
+        
         </View>
       </View>
     )
   }
 
 
-
   return (
 
-    <FlatList
+  <SafeAreaView style={{flex: 1}}> 
+      <FlatList
       data={props.data}
       renderItem={({ item, index }) => <Item index={index} data={item} />}
       keyExtractor={(item, index) => {
@@ -41,6 +44,7 @@ const IncomingCallsBody = (props) => {
         { length: 73.8, offset: 73.8 * index, index }
       )}
     />
+  </SafeAreaView>
 
   )
 }
@@ -51,7 +55,7 @@ const ListBody = ({ data, setRefresh }) => {
     <ListBodyView>
       {/* <ListBodyDataSet enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} /> */}
       <ListBodyMobile enabled={false} title={'Τηλ. Επικοινωνίας:'} value={data["Τηλ. Επικοινωνίας"]} />
-      <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} />
+      <ListBodyDataSet enabled={false} title={'Mήνυμα:'} value={data["Remarks"]} multiline={true} />
       <MessageRequest data={data} setRefresh={setRefresh} />
     </ListBodyView>
   )

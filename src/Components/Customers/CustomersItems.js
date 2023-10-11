@@ -1,10 +1,10 @@
 import { memo } from "react"
-import { View, StyleSheet, FlatList } from "react-native"
+import { View, StyleSheet, FlatList, Text, TouchableOpacity, SafeAreaView } from "react-native"
 import { List } from "react-native-paper"
 import { ListTitle } from "../SharedComp/List/List"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from "@react-navigation/native"
-
+import { COLORS } from "../../shared/COLORS"
 
 const CustomerItems = (props) => {
   const navigation = useNavigation()
@@ -12,49 +12,53 @@ const CustomerItems = (props) => {
   const Item = memo(({ data, index }) => {
     const handlePress = () => {
       navigation.navigate('CustomersView', { data: data })
-    };
-
+    };   
+   
     return (
-      <View key={index}>
-        <View style={[styles.itemWrapper]} >
-          <List.Item
-            style={{ height: 60, justifyContent: 'center' }}
-            onPress={handlePress}
-            title={<ListTitle value={data["Name"]} Icon={IonIcons} iconName="person" />}
-          />
-        </View>
-      </View>
+          <TouchableOpacity onPress={handlePress} style={styles.itemWrapper}>
+              <IonIcons style={styles.icon} name={'person'}  />
+              <Text style={styles.textList}>{data.Name}</Text>
+          </TouchableOpacity>
     )
   })
 
 
   return (
+    <SafeAreaView style={{flex: 1}}> 
     <FlatList
       data={props.data}
+      style={{padding: 10, backgroundColor: '#e9e9e9'}}
       renderItem={({ item, index }) => <Item index={index} data={item} />}
       keyExtractor={(item, index) => {
         return index;
       }}
       initialNumToRender={10}
       maxToRenderPerBatch={20}
-      getItemLayout={(data, index) => (
-        { length: 60, offset: 60 * index, index }
-      )}
     />
-
+    </ SafeAreaView>
 
   )
 }
 
-
 const styles = StyleSheet.create({
-  itemWrapper: {
-    marginHorizontal: 10,
-    backgroundColor: 'white',
-    elevation: 3,
-    marginVertical: 5,
-
-  },
+      itemWrapper: {
+          elevation: 1,
+          display: 'flex',
+          marginBottom: 4,
+          flexDirection: 'row',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          padding: 15,
+          marginBottom: 5,
+      },
+      icon: {
+        marginRight: 4,
+        fontSize: 15,
+        color: COLORS.secondaryColor,
+      },
+      textList: {
+        lineHeight: 20,
+      }
 })
 
 export default CustomerItems

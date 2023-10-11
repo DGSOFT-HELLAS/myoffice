@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Text from '../../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -35,7 +35,21 @@ export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
 
   };
 
+  if (Platform.OS === 'ios') {
+    return (
+      <View style={styles.iosView}>
+        <DateTimePicker
+          value={zonedDate}
+          mode={'time'}
+          is24Hour={true}
+          onChange={onChange}
+          minimumDate={minTime}
+          minuteInterval={5}
+        />
+      </View>
 
+    )
+  }
 
   return (
     <View>
@@ -102,6 +116,11 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 18,
     color: 'white'
+  },
+  iosView: {
+    display: 'flex',
+    alignItems: 'start'
+
   }
 
 });
