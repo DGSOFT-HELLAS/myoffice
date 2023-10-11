@@ -48,7 +48,7 @@ export const ListBodyRantevou = ({ data, setState }) => {
       <ListBodyDataSet title={'Ύπηρεσία/Τύπος'} value={data["Ύπηρεσία/Τύπος"]} enabled={false} />
       <ListBodyDataSet title={'Σημείο'} value={data["Σημείο"]} enabled={false} />
       <ListBodyDataSet title={'Κατάσταση'} value={data["Κατάσταση"]} enabled={false} />
-      <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
+      <ListBodyDataSet multiline={true} title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
 
       <View style={styles.buttonView}>
         <EditButton onPress={() => onEditBtn(data)} />

@@ -265,9 +265,3 @@ export const IncomingStack = () => {
     </Stack.Navigator>
   );
 }
-
-
-
-
-
-

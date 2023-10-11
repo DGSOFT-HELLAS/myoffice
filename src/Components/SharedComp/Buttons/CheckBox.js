@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import Text from '../../Atoms/Text';
 import { COLORS } from '../../../shared/COLORS';
+import CheckIcon from 'react-native-vector-icons/AntDesign'
 
-const CheckboxPaper = ({ setState, title, state, disabled, vip }) => {
+const CheckboxPaper = ({ setState, title, state, disabled, vip}) => {
   const [checked, setChecked] = React.useState(false);
-  console.log(vip)
+    console.log(checked)
   useEffect(() => {
     if (state.eoppy == 1) {
       setChecked(true);
@@ -26,7 +27,9 @@ const CheckboxPaper = ({ setState, title, state, disabled, vip }) => {
   }, [])
 
   const onPress = () => {
-    setChecked(!checked);
+    if(!disabled) {
+      setChecked((prev) => !prev );
+    }
     //
     if (title === 'EΟΠΠΥ') {
       if (state.eoppy == 1) {
@@ -83,25 +86,37 @@ const CheckboxPaper = ({ setState, title, state, disabled, vip }) => {
 
 
   return (
-    <View style={styles.view}>
-      <Checkbox
-        status={checked ? 'checked' : 'unchecked'}
-        onPress={onPress}
-        disabled={disabled}
-      />
-      <Text>{title}</Text>
-    </View>
+    <TouchableOpacity style={styles.view}  onPress={onPress}>
+        <View  disabled={disabled} style={styles.checkboxContainer} >
+            {checked ? <CheckIcon name= "check"/> : null}
+        </View >
+        <Text>{title}</Text>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   view: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 10,
     backgroundColor: COLORS.input,
     height: 50,
+    padding: 8,
+  },
+  checkboxContainer: {
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: 'black',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 25,
+    height: 25,
   }
+  
 });
 
 export default CheckboxPaper;

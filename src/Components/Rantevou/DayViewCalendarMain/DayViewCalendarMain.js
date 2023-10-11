@@ -126,9 +126,8 @@ const DayViewCalendarMain = () => {
             spaceFromTop={50}
             locale="gr"
             timeInterval={60}
-            start={4}
+            start={0}
             end={24}
-            // locale="gr"
             initialTimeIntervalHeight={120}
             overlapEventsSpacing={2}
             containerStyle={styles.customItem}

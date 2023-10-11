@@ -1,21 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, ScrollView } from 'react-native'
+import { StyleSheet, View } from "react-native";
 
-
-const AddScrollView = ({ children }) => {
-  return (
-    <ScrollView style={styles.view}>
-      {children}
-    </ScrollView >
-  )
+const AddView = ({ children }) => {
+  return <View style={styles.addView}>{children}</View>
 }
 
 
-
 const styles = StyleSheet.create({
-  view: {
-    padding: 20,
-  }
-})
+  addView: {
+    backgroundColor: 'white',
+    padding: 15,
+    marginBottom: 30,
+  },
+});
 
-export default AddScrollView;
+export default AddView;

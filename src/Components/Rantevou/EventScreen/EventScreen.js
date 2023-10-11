@@ -110,7 +110,7 @@ const ListBody = ({ data, raw, setIsVisible, setDay, setState, day, setRaw }) =>
       <ListBodyDataSet title={"Ημ/νία"} value={data["Ημ/νία"]} enabled={false} />
       <CheckboxPaper title={"EΟΠΠΥ"} state={data.cccRDVEOPYY} disabled={true} />
       <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} state={data.personal} disabled={true} />
-      <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
+      <ListBodyDataSet multiline={true} title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
       {hide ? (
         <>
           < HeaderWithDivider text={"Κατάσταση"} />
