@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   }, 
   iosView: {
       display: 'flex',
-      alignItems: 'start',
+      alignItems: 'flex-start',
       marginTop: 10,
   }
 

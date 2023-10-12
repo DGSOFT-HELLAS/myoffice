@@ -1,15 +1,15 @@
 import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
-import { useState, useContext } from 'react'
+import { useState, useContext } from 'react';
 import Text from '../../Atoms/Text'
 import Button from '../../SharedComp/Buttons/Button'
-import { COLORS } from '../../../shared/COLORS'
-import BoldText from '../../Atoms/Text/BoldText'
+import { COLORS } from '../../../shared/COLORS';
+import BoldText from '../../Atoms/Text/BoldText';
 import { useNavigation } from '@react-navigation/native'
 import SearchInput from '../../SharedComp/Inputs/searchInput'
 import { ModalDatePickerComp } from '../../DatePickers/ModalDatePicker'
 
 const IncomingCallsForm = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [state, setState] = useState({
     postName: '',
     postPhone: '',
@@ -63,62 +63,58 @@ const IncomingCallsForm = () => {
               <ModalDatePickerComp style={styles.modalContainer} day={state.endDate} onChange={onChangeEndDay} />
             </View>
           </View>
-          {/* <ChooseDates day={state.startDate} endDay={state.endDate} onChangeStartDay={onChangeStartDay} onChangeEndDay={onChangeEndDay} containerStyle={styles.containerStyle} /> */}
         </View>
         <SearchInput title="Όνομα:" onChangeText={onChangeName} value={state.postName} />
         <SearchInput title="Tηλέφωνο:" onChangeText={onChangePhone} value={state.postPhone} />
-
-
         <Button style={styles.btn} text={"Aναζήτηση"} onPress={onPress} />
       </View>
-
     </>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 10,
     backgroundColor: '#f6f5f6',
 
   },
   headerContainer: {
 
-    marginBottom: 30,
+    // marginBottom: 30,
   },
 
   divider: {
-    width: 20,
-    height: 3,
-    backgroundColor: COLORS.secondaryColor,
-    marginTop: 5,
-    borderRadius: 20,
+    // width: 20,
+    // height: 3,
+    // backgroundColor: COLORS.secondaryColor,
+    // marginTop: 5,
+    // borderRadius: 20,
   },
 
   containerStyle: {
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    elevation: 1,
-    borderRadius: 3,
-    marginBottom: 10,
-    borderWidth: 0.5,
-    borderColor: COLORS.secondaryColorShade002
+    // backgroundColor: 'white',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // padding: 10,
+    // elevation: 1,
+    // borderRadius: 3,
+    // marginBottom: 10,
+    // borderWidth: 0.5,
+    // borderColor: COLORS.secondaryColorShade002
   },
   topView: {
-    padding: 10,
-    backgroundColor: 'white',
-    height: 50,
-    alignItems: 'center'
+    // padding: 10,
+    // backgroundColor: 'white',
+    // height: 50,
+    // alignItems: 'center'
   },
   inputView: {
-    marginTop: 15
+    marginTop: 15,
   },
   input: {
     height: 50,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   btn: {
     backgroundColor: COLORS.secondaryColor,
