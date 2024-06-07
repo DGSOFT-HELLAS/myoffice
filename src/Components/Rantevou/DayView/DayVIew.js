@@ -1,28 +1,28 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
-import { useEffect, useContext, useState } from "react";
-import { DayContext } from "../../../useContext/daysContext";
-import { fetchAPI } from "../../../utils/fetchAPI";
-import DayViewBody from "./DayViewBody";
-import Spinner from "../../Atoms/ActivityIndicator";
-import NoDataView from "../../Atoms/View/NoDataView";
-import { UserContext } from "../../../useContext/useContect";
-import AppointmentsView from "../../Atoms/View/AppointmentsView";
-import ArrowButton from "../../Atoms/ArrowButton";
-import { ModalDatePickerComp } from "../../DatePickers/ModalDatePicker";
-import { incrementDecrementDate } from "../../../utils/incrementDecrementDate";
-import ModalPersons from "../Modal";
-import { Provider } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import FloatBtn from "../../SharedComp/Buttons/FloatButton";
-import { utcToZonedTime, format } from 'date-fns-tz';
+import {StyleSheet} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {DayContext} from '../../../useContext/daysContext';
+import {fetchAPI} from '../../../utils/fetchAPI';
+import DayViewBody from './DayViewBody';
+import Spinner from '../../Atoms/ActivityIndicator';
+import NoDataView from '../../Atoms/View/NoDataView';
+import {UserContext} from '../../../useContext/userContext';
+import AppointmentsView from '../../Atoms/View/AppointmentsView';
+import ArrowButton from '../../Atoms/ArrowButton';
+import {ModalDatePickerComp} from '../../DatePickers/ModalDatePicker';
+import {incrementDecrementDate} from '../../../utils/incrementDecrementDate';
+import ModalPersons from '../Modal';
+import {Provider} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
+import FloatBtn from '../../SharedComp/Buttons/FloatButton';
+import {format} from 'date-fns-tz';
+import isoDate from '../../../utils/dateFunctions/isoDate';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
 
-
 const DayView = () => {
-  const { trdr } = useContext(UserContext)
-  const { day, setDay } = useContext(DayContext);
+  const {trdr} = useContext(UserContext);
+  const {day} = useContext(DayContext);
   const navigation = useNavigation();
 
   const [state, setState] = useState({
@@ -30,101 +30,125 @@ const DayView = () => {
     loading: false,
     delete: false,
     refresh: false,
-  })
+  });
 
   const [raw, setRaw] = useState({
     startDate: day ? day : new Date(),
-    endDate: "",
+    endDate: '',
     stelexos: 0,
-  })
+  });
 
-  console.log('raw: ' + raw.startDate)
-  console.log('raw stelexos:  ' + raw.stelexos)
-  const onChange = (selectedDate) => {
+  const onChange = selectedDate => {
     setRaw(prev => {
       return {
-        ...prev, startDate: selectedDate
-      }
-    })
-
+        ...prev,
+        startDate: selectedDate,
+      };
+    });
   };
 
   const nextButton = () => {
-    let startDate = incrementDecrementDate(new Date(raw.startDate), 'increment');
+    let startDate = incrementDecrementDate(
+      new Date(raw.startDate),
+      'increment',
+    );
 
     setRaw(prev => {
       return {
-        ...prev, startDate: startDate
-      }
-    })
-  }
+        ...prev,
+        startDate: startDate,
+      };
+    });
+  };
 
   const prevButton = () => {
-    let startDate = incrementDecrementDate(new Date(raw.startDate), 'decrement');
+    let startDate = incrementDecrementDate(
+      new Date(raw.startDate),
+      'decrement',
+    );
     setRaw(prev => {
       return {
-        ...prev, startDate: startDate
-      }
-    })
-  }
+        ...prev,
+        startDate: startDate,
+      };
+    });
+  };
 
   const handleFetch = async () => {
-    setState((prev) => {
+    setState(prev => {
       return {
-        ...prev, loading: true
-      }
-    })
-
-    let res = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', {
-      startDate: raw.startDate,
-      endDate: "",
-      trdr: trdr,
-      stelexos: raw.stelexos,
-      query: "wpFetchRDVForCalendar"
-
-    })
-
-    setState((prev) => {
-      return {
-        ...prev, loading: false, data: res
-      }
-    })
-
-
-  }
-
-  const onAddPress = () => {
-    const zonedDate = utcToZonedTime(raw?.startDate, timeZone);
-    const formattedDate = format(zonedDate, 'yyyy-MM-dd', { timeZone, timeZoneOffset });
-    console.log(zonedDate)
-    navigation.navigate('AddRantevou', { start: formattedDate, end: formattedDate, date: formattedDate })
-  }
-
-  useEffect(() => {
-    handleFetch()
-    const unsubscribe = navigation.addListener('focus', () => {
-      handleFetch()
+        ...prev,
+        loading: true,
+      };
     });
 
+    let res = await fetchAPI(
+      'https://portal.myoffice.com.gr/mobApi/queryIncoming.php',
+      {
+        startDate: raw.startDate,
+        endDate: '',
+        trdr: trdr,
+        stelexos: raw.stelexos,
+        query: 'wpFetchRDVForCalendar',
+      },
+    );
+
+    setState(prev => {
+      return {
+        ...prev,
+        loading: false,
+        data: res,
+      };
+    });
+  };
+
+  const onAddPress = () => {
+    const zonedDate = isoDate(raw?.startDate, true);
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd', {
+      timeZone,
+      timeZoneOffset,
+    });
+    navigation.navigate('AddRantevou', {
+      start: formattedDate,
+      end: formattedDate,
+      date: formattedDate,
+    });
+  };
+
+  useEffect(() => {
+    handleFetch();
     // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [raw.startDate, state.delete, raw.stelexos, day, navigation])
+    return navigation.addListener('focus', () => {
+      handleFetch();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raw.startDate, state.delete, raw.stelexos, day, navigation]);
 
   return (
     <Provider>
-      <ModalPersons title={"Στέλεχος"} query="GetPersons" setState={setRaw} updateValue={"stelexos"} hideLabel={true} />
+      <ModalPersons
+        title={'Στέλεχος'}
+        query="GetPersons"
+        setState={setRaw}
+        updateValue={'stelexos'}
+        hideLabel={true}
+      />
       <AppointmentsView style={styles.dayViewHeader}>
         <ArrowButton onPress={prevButton} iconType="prevIcon" />
-        < ModalDatePickerComp day={raw.startDate} onChange={onChange} />
+        <ModalDatePickerComp day={raw.startDate} onChange={onChange} />
         <ArrowButton onPress={nextButton} iconType="nextIcon" />
-      </AppointmentsView >
-      {state.loading ? <Spinner /> : state.data?.length == 0 ? <NoDataView /> : <DayViewBody data={state.data} setState={setState} />}
+      </AppointmentsView>
+      {state.loading ? (
+        <Spinner />
+      ) : state.data?.length === 0 ? (
+        <NoDataView />
+      ) : (
+        <DayViewBody data={state.data} setState={setState} />
+      )}
       <FloatBtn onPress={onAddPress} />
     </Provider>
-  )
-}
-
-
+  );
+};
 
 const styles = StyleSheet.create({
   dayViewHeader: {
@@ -133,13 +157,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 0.4,
     borderBottomColor: '#d1cfce',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
 
   calendarIcon: {
     fontSize: 20,
   },
-
 });
 
 export default DayView;

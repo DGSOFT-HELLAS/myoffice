@@ -1,22 +1,34 @@
-import { useState, useEffect, useContext, memo } from 'react';
-import { StyleSheet, View, TouchableOpacity, FlatList, TextInput } from 'react-native'
-import Text from "../../Atoms/Text";
-import React from 'react'
-import { Modal, RadioButton, Portal, Provider } from 'react-native-paper';
-import { COLORS } from '../../../shared/COLORS';
+import {useState, useEffect, useContext, memo} from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  FlatList,
+  TextInput,
+} from 'react-native';
+import Text from '../../Atoms/Text';
+import React from 'react';
+import {Modal, RadioButton, Portal, Provider} from 'react-native-paper';
+import {COLORS} from '../../../shared/COLORS';
 //Import Icons:
-import { UserContext } from '../../../useContext/useContect';
-import { fetchAPI } from '../../../utils/fetchAPI'
+import {UserContext} from '../../../useContext/userContext';
+import {fetchAPI} from '../../../utils/fetchAPI';
 import InputLabel from '../../SharedComp/Views/InputLabel';
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Ion from 'react-native-vector-icons/Ionicons'
-import { useNavigation } from '@react-navigation/native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ion from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
-
-const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }) => {
-  const { trdr } = useContext(UserContext);
-  const navigation = useNavigation()
-  const [data, setData] = useState([])
+const ModalView = ({
+  title,
+  query,
+  setState,
+  updateValue,
+  hideLabel,
+  addClient,
+}) => {
+  const {trdr} = useContext(UserContext);
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
   const [filteredDataSource, setFilteredDataSource] = useState([]);
 
   const [value, setValue] = React.useState([]);
@@ -24,26 +36,21 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
 
   const [search, setSearch] = useState('');
 
-  const [item, setItem] = useState(null)
-
+  const [item, setItem] = useState(null);
 
   const showModal = () => {
-    setVisible(true)
-
+    setVisible(true);
   };
   const hideModal = () => {
-    setVisible(false)
+    setVisible(false);
   };
 
-
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = text => {
     // Check if searched text is not blank
     if (text) {
       const newData = data.filter(function (item) {
-        let title = item[Object.keys(item)[1]]
-        const itemData = title
-          ? title.toUpperCase()
-          : ''.toUpperCase();
+        let title = item[Object.keys(item)[1]];
+        const itemData = title ? title.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -57,18 +64,20 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
     }
   };
 
-
   const handleFetch = async () => {
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { trdr: trdr, query: query })
+    const response = await fetchAPI(
+      'https://portal.myoffice.com.gr/mobApi/queryIncoming.php',
+      {trdr: trdr, query: query},
+    );
     try {
       if (response) {
-        setData(response)
+        setData(response);
         setFilteredDataSource(response);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     handleFetch();
@@ -78,31 +87,27 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
+  }, [navigation]);
 
-  }, [navigation])
-
-
-
-  const RenderItem = ({ item, index }) => {
+  const RenderItem = ({item, index}) => {
     const onPress = () => {
-      let key = Object.keys(item)[1]
-      let value = item[`${key}`]
-      setValue(value)
-      setState((prevState) => {
+      let key = Object.keys(item)[1];
+      let value = item[`${key}`];
+      setValue(value);
+      setState(prevState => {
         return {
-          ...prevState, [updateValue]: item.id
-        }
-      })
-      hideModal()
-    }
+          ...prevState,
+          [updateValue]: item.id,
+        };
+      });
+      hideModal();
+    };
     return (
       <TouchableOpacity onPress={onPress}>
         <ListItem item={item} />
       </TouchableOpacity>
-    )
+    );
   };
-
-
 
   return (
     <>
@@ -113,24 +118,34 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
           {<Text>{value}</Text>}
           <AntDesign name="down" size={18} />
         </TouchableOpacity>
-      </InputLabel >
+      </InputLabel>
       {/* Modal that opens and fetches data -> available customers, available services */}
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
-          <View style={{ flexDirection: 'row', padding: 10 }}>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={styles.containerStyle}>
+          <View style={{flexDirection: 'row', padding: 10}}>
             <View style={styles.searchView}>
               <TextInput
                 style={styles.textInputStyle}
-                onChangeText={(text) => searchFilterFunction(text)}
+                onChangeText={text => searchFilterFunction(text)}
                 value={search}
                 underlineColorAndroid="transparent"
                 placeholder="Αναζήτηση"
               />
             </View>
-            {addClient &&
-              <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('Προσθήκη πελάτη')}>
-                <Ion name="person-add-sharp" size={20} color={COLORS.secondaryColor} />
-              </TouchableOpacity>}
+            {addClient && (
+              <TouchableOpacity
+                style={styles.addIcon}
+                onPress={() => navigation.navigate('Προσθήκη πελάτη')}>
+                <Ion
+                  name="person-add-sharp"
+                  size={20}
+                  color={COLORS.secondaryColor}
+                />
+              </TouchableOpacity>
+            )}
           </View>
           <FlatList
             data={filteredDataSource}
@@ -143,29 +158,22 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
           />
         </Modal>
       </Portal>
-
     </>
-
-  )
-}
+  );
+};
 const Seperator = () => {
-  return (
-    <View style={styles.seperator}></View>
-  )
-}
+  return <View style={styles.seperator} />;
+};
 
-const ListItem = memo(({ item }) => {
-  let value = Object.keys(item)[1]
+const ListItem = memo(({item}) => {
+  let value = Object.keys(item)[1];
 
   return (
     <View style={styles.radioListView}>
       <Text style={styles.listItemText}>{item[`${value}`]}</Text>
     </View>
-  )
-})
-
-
-
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -206,10 +214,10 @@ const styles = StyleSheet.create({
   seperator: {
     width: '100%',
     height: 2,
-    backgroundColor: '#d9d9d9'
+    backgroundColor: '#d9d9d9',
   },
   listItemText: {
-    color: '#656666'
+    color: '#656666',
   },
   textInputStyle: {
     padding: 15,
@@ -219,10 +227,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 10,
-
-  }
-
-})
-
+  },
+});
 
 export default ModalView;

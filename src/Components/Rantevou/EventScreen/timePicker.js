@@ -1,45 +1,36 @@
-import { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import {useState} from 'react';
+import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import Text from '../../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import { getTime } from '../../../utils/getTime';
-import { COLORS } from '../../../shared/COLORS';
-import { utcToZonedTime, format } from 'date-fns-tz';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {getTime} from '../../../utils/getTime';
+import {COLORS} from '../../../shared/COLORS';
+import isoDate from '../../../utils/dateFunctions/isoDate';
 
-const timeZone = 'Europe/Athens';
-const timeZoneOffset = '+02:00';
-
-
-
-
-export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
+export const TimePicker = ({handleState, style, propsTime, minTime}) => {
   const [show, setShow] = useState(false);
-  const [time, setTime] = useState(propsTime)
+  const [time, setTime] = useState(propsTime);
 
   const dateString = `2023-02-22T${propsTime}`;
   const d = new Date(dateString);
-  const zonedDate = utcToZonedTime(d, timeZone);
-  console.log(typeof zonedDate)
-  // const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
+  const zonedDate = isoDate(d, true);
 
   const showTimepicker = () => {
-    setShow(true)
+    setShow(true);
   };
 
   const onChange = (event, selectedDate) => {
     setShow(false);
-    let time = getTime(selectedDate);
-    setTime(time)
-    handleState(time)
-
+    let selectedTime = getTime(selectedDate);
+    setTime(selectedTime);
+    handleState(selectedTime);
   };
 
   if (Platform.OS === 'ios') {
     return (
       <View style={styles.iosView}>
         <DateTimePicker
-          value={zonedDate}
+          value={new Date(zonedDate)}
           mode={'time'}
           is24Hour={true}
           onChange={onChange}
@@ -47,8 +38,7 @@ export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
           minuteInterval={5}
         />
       </View>
-
-    )
+    );
   }
 
   return (
@@ -56,7 +46,7 @@ export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
       <ShowTime onPress={showTimepicker} date={time} style={style} />
       {show && (
         <DateTimePicker
-          value={zonedDate}
+          value={new Date(zonedDate)}
           mode={'time'}
           is24Hour={true}
           onChange={onChange}
@@ -64,14 +54,11 @@ export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
           minuteInterval={5}
         />
       )}
-
     </View>
   );
 };
 
-
-export const ShowTime = ({ date, onPress, style }) => {
-
+export const ShowTime = ({date, onPress, style}) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>
       <View style={styles.leftSide}>
@@ -80,9 +67,9 @@ export const ShowTime = ({ date, onPress, style }) => {
       <View style={styles.rightSide}>
         <AntDesign style={styles.icon} name="clockcircle" />
       </View>
-    </TouchableOpacity >
-  )
-}
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   timeContainer: {
@@ -92,13 +79,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     borderRadius: 2,
     justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   leftSide: {
     width: '70%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   rightSide: {
     width: '30%',
@@ -111,16 +98,14 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 17,
-    color: 'black'
+    color: 'black',
   },
   icon: {
     fontSize: 18,
-    color: 'white'
+    color: 'white',
   },
   iosView: {
     display: 'flex',
-    alignItems: 'start'
-
-  }
-
+    alignItems: 'start',
+  },
 });

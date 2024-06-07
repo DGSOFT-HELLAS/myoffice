@@ -1,60 +1,62 @@
-import { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import {useState, useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import { COLORS } from '../../shared/COLORS';
-import { utcToZonedTime, format } from 'date-fns-tz';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {COLORS} from '../../shared/COLORS';
+import {format} from 'date-fns-tz';
+import isoDate from '../../utils/dateFunctions/isoDate';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
 
-
-export const ModalTimePickerComp = ({ handleState, style, time }) => {
+export const ModalTimePickerComp = ({handleState, style, time}) => {
   const [date, setDate] = useState(new Date());
   const [displayDate, setDisplayDate] = useState();
   const [show, setShow] = useState(false);
 
-
-
   const onChange = (event, selectedDate) => {
-    setShow(false)
+    setShow(false);
 
-    const zonedDate = utcToZonedTime(selectedDate, timeZone);
-    const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
-    const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
-    setDisplayDate(formattedTime)
-    setDate(formattedDate)
-    handleState(formattedDate)
-
-
+    const zonedDate = isoDate(selectedDate, true);
+    const formattedTime = format(zonedDate, 'HH:mm', {
+      timeZone,
+      timeZoneOffset,
+    });
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', {
+      timeZone,
+      timeZoneOffset,
+    });
+    setDisplayDate(formattedTime);
+    setDate(formattedDate);
+    handleState(formattedDate);
   };
-
-
-
 
   useEffect(() => {
     let date;
     if (time) {
       date = new Date(time);
     } else {
-      date = new Date()
+      date = new Date();
     }
-    const zonedDate = utcToZonedTime(date, timeZone);
-    const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
-    const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
+    const zonedDate = isoDate(date, true);
+    const formattedTime = format(zonedDate, 'HH:mm', {
+      timeZone,
+      timeZoneOffset,
+    });
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', {
+      timeZone,
+      timeZoneOffset,
+    });
 
-    setDisplayDate(formattedTime.toString())
+    setDisplayDate(formattedTime.toString());
 
-    setDate(formattedDate)
-    handleState(formattedDate)
-
-
-  }, [time])
-
+    setDate(formattedDate);
+    handleState(formattedDate);
+  }, [time]);
 
   const showTimepicker = () => {
-    setShow(true)
+    setShow(true);
   };
 
   return (
@@ -68,14 +70,11 @@ export const ModalTimePickerComp = ({ handleState, style, time }) => {
           onChange={onChange}
         />
       ) : null}
-
     </View>
   );
 };
 
-
-export const ShowTime = ({ date, onPress, style }) => {
-
+export const ShowTime = ({date, onPress, style}) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>
       <View style={styles.leftSide}>
@@ -84,9 +83,9 @@ export const ShowTime = ({ date, onPress, style }) => {
       <View style={styles.rightSide}>
         <AntDesign style={styles.icon} name="clockcircle" />
       </View>
-    </TouchableOpacity >
-  )
-}
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   timeContainer: {
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
     height: '100%',
 
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   rightSide: {
     width: '35%',
@@ -117,7 +116,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 18,
-    color: 'white'
-  }
-
+    color: 'white',
+  },
 });

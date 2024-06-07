@@ -1,22 +1,26 @@
-import { useState } from "react";
-import Button from "../Buttons/Button";
-import { View, Modal, StyleSheet, TouchableOpacity } from "react-native";
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import { COLORS } from "../../../shared/COLORS";
-import Text from "../../Atoms/Text";
+import {useState} from 'react';
+import Button from '../Buttons/Button';
+import {View, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {COLORS} from '../../../shared/COLORS';
+import Text from '../../Atoms/Text';
 
-const Cancel = ({ onPress }) => {
+const Cancel = ({onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <AntDesign style={styles.closeIcon} name="closecircle" />
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-
-const ModalCheck = ({ subscriberReschedule, customerReschedule, title, Element, elementStyle }) => {
+const ModalCheck = ({
+  subscriberReschedule,
+  customerReschedule,
+  title,
+  Element,
+  elementStyle,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(subscriberReschedule)
   return (
     <>
       <Modal
@@ -26,31 +30,33 @@ const ModalCheck = ({ subscriberReschedule, customerReschedule, title, Element, 
         onRequestClose={() => {
           setModalVisible(false);
         }}>
-        <View style={styles.modalContainer} >
-          <View style={styles.modalView} >
-            <Text>{title}
-            </Text>
-            <Button style={styles.modalBtn} text={"Πελάτη"} onPress={() => {
-              setModalVisible(false);
-              customerReschedule();
-
-            }} />
-            <Button style={styles.modalBtn} text={"Συνδρομητή"} onPress={() => {
-              setModalVisible(false)
-              subscriberReschedule();
-            }} />
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text>{title}</Text>
+            <Button
+              style={styles.modalBtn}
+              text={'Πελάτη'}
+              onPress={() => {
+                setModalVisible(false);
+                customerReschedule();
+              }}
+            />
+            <Button
+              style={styles.modalBtn}
+              text={'Συνδρομητή'}
+              onPress={() => {
+                setModalVisible(false);
+                subscriberReschedule();
+              }}
+            />
             <Cancel onPress={() => setModalVisible(false)} />
           </View>
         </View>
-
       </Modal>
       <Element onPress={() => setModalVisible(true)} style={elementStyle} />
     </>
-  )
-}
-
-
-
+  );
+};
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -86,8 +92,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#E1341E',
     fontSize: 30,
-  }
+  },
 });
-
 
 export default ModalCheck;

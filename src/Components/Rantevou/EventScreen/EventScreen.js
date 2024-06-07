@@ -1,278 +1,349 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
-import { COLORS } from "../../../shared/COLORS";
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import { ListBodyDataSet, ListBodyView } from "../../SharedComp/List/List";
-import DeleteButton from "../../SharedComp/Buttons/DeleteButton";
+import React, {useEffect, useState, useContext} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import {COLORS} from '../../../shared/COLORS';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {ListBodyDataSet, ListBodyView} from '../../SharedComp/List/List';
+import DeleteButton from '../../SharedComp/Buttons/DeleteButton';
 // import Button from "../../SharedComp/Buttons/Button";
-import EditButton from "../../SharedComp/Buttons/EditButton";
-import CheckboxPaper from "../../SharedComp/Buttons/CheckBox";
-import { useNavigation } from "@react-navigation/native";
-import BoldText from "../../Atoms/Text/BoldText";
-import { fetchAPI } from "../../../utils/fetchAPI";
-import { DayContext } from "../../../useContext/daysContext";
-import { DatePickerComp } from "./DatePicker";
-import { TimePicker } from "./timePicker";
-import InputLabel from "../AddRantevou/InputLabel";
-import ModalCheck from "../../SharedComp/ModalCheck/ModalCheck";
-import HeaderWithDivider from "../../SharedComp/Views/HeaderWithDivider";
-import isoDate from "../../../utils/dateFunctions/isoDate";
-import { SafeAreaView } from "react-native";
-const EventScreen = ({ setIsVisible, setState }) => {
-  const navigation = useNavigation()
-  const { day, singleEvent, setDay } = useContext(DayContext)
-
+import EditButton from '../../SharedComp/Buttons/EditButton';
+import CheckboxPaper from '../../SharedComp/Buttons/CheckBox';
+import {useNavigation} from '@react-navigation/native';
+import BoldText from '../../Atoms/Text/BoldText';
+import {fetchAPI} from '../../../utils/fetchAPI';
+import {DayContext} from '../../../useContext/daysContext';
+import {DatePickerComp} from './DatePicker';
+import {TimePicker} from './timePicker';
+import InputLabel from '../AddRantevou/InputLabel';
+import ModalCheck from '../../SharedComp/ModalCheck/ModalCheck';
+import HeaderWithDivider from '../../SharedComp/Views/HeaderWithDivider';
+import isoDate from '../../../utils/dateFunctions/isoDate';
+import {SafeAreaView} from 'react-native';
+const EventScreen = ({setIsVisible, setState}) => {
+  const navigation = useNavigation();
+  const {day, singleEvent, setDay} = useContext(DayContext);
 
   let startTime = singleEvent["'Ωρα"].split(' : ')[0];
   let endTime = singleEvent["'Ωρα"].split(' : ')[1];
 
-
   const [raw, setRaw] = useState({
-    eoppy: singleEvent["cccRDVEOPYY"],
+    eoppy: singleEvent.cccRDVEOPYY,
     date: day,
     fromTime: startTime,
     toTime: endTime,
-    soaction: singleEvent["soaction"],
-    reason: ''
-  })
+    soaction: singleEvent.soaction,
+    reason: '',
+  });
 
   // console.log(raw)
   useEffect(() => {
     setRaw(prev => {
       return {
-        ...prev, soaction: singleEvent["soaction"]
-      }
-    })
-  }, [singleEvent["soaction"]])
-
+        ...prev,
+        soaction: singleEvent.soaction,
+      };
+    });
+  }, [singleEvent.soaction]);
 
   return (
     <View style={styles.container}>
       <View style={styles.topView}>
         <View style={styles.topViewLeftInfo}>
           <BoldText style={styles.topViewText}>{singleEvent["'Ωρα"]}</BoldText>
-          <Text style={{ fontSize: 17 }}>{singleEvent["Πελάτης"] ? singleEvent["Πελάτης"] : "No Name"}</Text>
+          <Text style={{fontSize: 17}}>
+            {singleEvent['Πελάτης'] ? singleEvent['Πελάτης'] : 'No Name'}
+          </Text>
         </View>
 
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            setIsVisible(false)
-          }}
-        >
+            setIsVisible(false);
+          }}>
           <AntDesign name="closecircle" size={20} color={'#ea2a15'} />
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.bodyView}>
-        <ListBody data={singleEvent} raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} />
+        <ListBody
+          data={singleEvent}
+          raw={raw}
+          setRaw={setRaw}
+          setDay={setDay}
+          setIsVisible={setIsVisible}
+          setState={setState}
+        />
       </ScrollView>
     </View>
   );
-}
+};
 
-
-const ListBody = ({ data, raw, setIsVisible, setDay, setState, day, setRaw }) => {
-  const [hide, setHide] = useState()
-
+const ListBody = ({data, raw, setIsVisible, setDay, setState, day, setRaw}) => {
+  const [hide, setHide] = useState();
 
   const subscriberReschedule = () => {
     handlePost('subscriber');
-
-  }
+  };
   const customerReschedule = () => {
     handlePost('customer');
-  }
+  };
 
-
-  const handlePost = async (reason) => {
-
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "CancelRDV", reason: reason, soaction: raw.soaction })
+  const handlePost = async reason => {
+    const response = await fetchAPI(
+      'https://portal.myoffice.com.gr/mobApi/queryIncoming.php',
+      {query: 'CancelRDV', reason: reason, soaction: raw.soaction},
+    );
     if (setState) {
       setState(prev => {
         return {
-          ...prev, delete: !prev.delete
-        }
-      })
+          ...prev,
+          delete: !prev.delete,
+        };
+      });
     }
-    setIsVisible(false)
-  }
-
-
-
+    setIsVisible(false);
+  };
 
   return (
     <ListBodyView>
-      <ListBodyDataSet title={'Στέλεχος'} value={data["Στέλεχος"]} enabled={false} />
-      <ListBodyDataSet title={'Ύπηρεσία/Τύπος'} value={data["Ύπηρεσία/Τύπος"]} enabled={false} />
-      <ListBodyDataSet title={'Σημείο'} value={data["Σημείο"]} enabled={false} />
-      <ListBodyDataSet title={'Κατάσταση'} value={data["Κατάσταση"]} enabled={false} />
+      <ListBodyDataSet
+        title={'Στέλεχος'}
+        value={data['Στέλεχος']}
+        enabled={false}
+      />
+      <ListBodyDataSet
+        title={'Ύπηρεσία/Τύπος'}
+        value={data['Ύπηρεσία/Τύπος']}
+        enabled={false}
+      />
+      <ListBodyDataSet
+        title={'Σημείο'}
+        value={data['Σημείο']}
+        enabled={false}
+      />
+      <ListBodyDataSet
+        title={'Κατάσταση'}
+        value={data['Κατάσταση']}
+        enabled={false}
+      />
       <ListBodyDataSet title={"'Ωρα"} value={data["'Ωρα"]} enabled={false} />
-      <ListBodyDataSet title={"Ημ/νία"} value={data["Ημ/νία"]} enabled={false} />
-      <CheckboxPaper title={"EΟΠΠΥ"} state={data.cccRDVEOPYY} disabled={true} />
-      <CheckboxPaper title={"ΠΡΟΣΩΠΙΚΟ"} state={data.personal} disabled={true} />
-      <ListBodyDataSet title={'Σχόλια'} value={data["Σχόλια"]} enabled={false} />
+      <ListBodyDataSet
+        title={'Ημ/νία'}
+        value={data['Ημ/νία']}
+        enabled={false}
+      />
+      <CheckboxPaper title={'EΟΠΠΥ'} state={data.cccRDVEOPYY} disabled={true} />
+      <CheckboxPaper
+        title={'ΠΡΟΣΩΠΙΚΟ'}
+        state={data.personal}
+        disabled={true}
+      />
+      <ListBodyDataSet
+        title={'Σχόλια'}
+        value={data['Σχόλια']}
+        enabled={false}
+      />
       {hide ? (
         <>
-          < HeaderWithDivider text={"Κατάσταση"} />
-          <Text style={styles.smallText}>Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το ραντεβού:</Text>
+          <HeaderWithDivider text={'Κατάσταση'} />
+          <Text style={styles.smallText}>
+            Αλλάξτε την ημερομηνία και την ώρα και καταχωρήστε εκ νέου το
+            ραντεβού:
+          </Text>
 
-
-          <ShowEditComponents raw={raw} setRaw={setRaw} setDay={setDay} setIsVisible={setIsVisible} setState={setState} />
+          <ShowEditComponents
+            raw={raw}
+            setRaw={setRaw}
+            setDay={setDay}
+            setIsVisible={setIsVisible}
+            setState={setState}
+          />
         </>
-      ) : (null)}
+      ) : null}
       <View style={styles.buttonView}>
-        <EditButton onPress={() => setHide((prev) => !prev)} bool={hide} />
-        {!hide && <ModalCheck title={"Aκύρωση από:"} Element={DeleteButton} elementStyle={{ marginLeft: 10 }} subscriberReschedule={subscriberReschedule} customerReschedule={customerReschedule} />}
+        <EditButton onPress={() => setHide(prev => !prev)} bool={hide} />
+        {!hide && (
+          <ModalCheck
+            title={'Aκύρωση από:'}
+            Element={DeleteButton}
+            elementStyle={{marginLeft: 10}}
+            subscriberReschedule={subscriberReschedule}
+            customerReschedule={customerReschedule}
+          />
+        )}
       </View>
-
-
     </ListBodyView>
-  )
-}
+  );
+};
 
-const ShowEditComponents = ({ raw, setRaw, setDay, setIsVisible, setState }) => {
+const ShowEditComponents = ({raw, setRaw, setDay, setIsVisible, setState}) => {
   const [loading, setLoading] = useState(false);
 
-  const handleDate = (selectredDate) => {
+  const handleDate = selectredDate => {
     // console.log('selected date')
     // console.log(selectredDate)
     // console.log(typeof selectredDate)
-    let day = isoDate(selectredDate);
+    let day = isoDate(selectredDate, true);
 
-    setDay(day)
-    setRaw((prevState) => {
+    setDay(day);
+    setRaw(prevState => {
       return {
-        ...prevState, date: isoDate(selectredDate)
-      }
-    })
-  }
+        ...prevState,
+        date: isoDate(selectredDate, true),
+      };
+    });
+  };
 
   //handle State for TimePickers
-  const handleStartTime = (time) => {
-    setRaw((prevState) => {
+  const handleStartTime = time => {
+    setRaw(prevState => {
       return {
-        ...prevState, fromTime: time
-      }
-    })
-  }
+        ...prevState,
+        fromTime: time,
+      };
+    });
+  };
   //handle State for TimePickers
-  const handleEndTime = (time) => {
-    setRaw((prevState) => {
+  const handleEndTime = time => {
+    setRaw(prevState => {
       return {
-        ...prevState, toTime: time
-      }
-    })
-  }
+        ...prevState,
+        toTime: time,
+      };
+    });
+  };
 
   //Reschedule Event:
   const customerReschedule = () => {
-    setRaw((prevState) => {
+    setRaw(prevState => {
       return {
-        ...prevState, reason: 'customer'
-      }
-    })
-  }
+        ...prevState,
+        reason: 'customer',
+      };
+    });
+  };
 
   //Reschedule Event:
   const subscriberReschedule = () => {
-    setRaw((prevState) => {
+    setRaw(prevState => {
       return {
-        ...prevState, reason: 'subscriber'
-      }
-    })
-  }
-
+        ...prevState,
+        reason: 'subscriber',
+      };
+    });
+  };
 
   const handlePost = async () => {
-    setLoading(true)
-    const response = await fetchAPI('https://portal.myoffice.com.gr/mobApi/queryIncoming.php', { query: "RescheduleRDV", ...raw })
-    setIsVisible(false)
+    setLoading(true);
+    const response = await fetchAPI(
+      'https://portal.myoffice.com.gr/mobApi/queryIncoming.php',
+      {query: 'RescheduleRDV', ...raw},
+    );
+    setIsVisible(false);
 
     setState(prev => {
       return {
-        ...prev, refresh: !prev.refresh
-      }
-    })
-    setLoading(false)
-  }
+        ...prev,
+        refresh: !prev.refresh,
+      };
+    });
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (raw.reason !== '') {
-      console.log('handlePost')
       handlePost();
     }
-
-  }, [raw.reason])
+  }, [raw.reason]);
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <InputLabel title="* Ημερομηνία:">
-        <DatePickerComp day={new Date(raw.date)} onChange={handleDate} style={{ width: '70%' }} />
+        <DatePickerComp
+          day={new Date(raw.date)}
+          onChange={handleDate}
+          style={{width: '70%'}}
+        />
       </InputLabel>
       <InputLabel title="* Έναρξη:">
-        <TimePicker style={{ width: '70%' }} day={raw.date} propsTime={raw.fromTime} handleState={handleStartTime} />
+        <TimePicker
+          style={{width: '70%'}}
+          day={raw.date}
+          propsTime={raw.fromTime}
+          handleState={handleStartTime}
+        />
       </InputLabel>
       <InputLabel title="* Λήξη:">
-        <TimePicker style={{ width: '70%' }} day={raw.date} propsTime={raw.toTime} handleState={handleEndTime} />
+        <TimePicker
+          style={{width: '70%'}}
+          day={raw.date}
+          propsTime={raw.toTime}
+          handleState={handleEndTime}
+        />
       </InputLabel>
-      <HeaderWithDivider text={"Επαναπρογραμματισμός"} />
+      <HeaderWithDivider text={'Επαναπρογραμματισμός'} />
       <View style={styles.row}>
-        <TouchableOpacity onPress={customerReschedule} style={styles.reprogram} >
-          {loading ? <ActivityIndicator color="white" /> : <Text style={styles.reprogramText} >Πελάτης</Text>}
+        <TouchableOpacity onPress={customerReschedule} style={styles.reprogram}>
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.reprogramText}>Πελάτης</Text>
+          )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={subscriberReschedule} style={styles.reprogram}>
+        <TouchableOpacity
+          onPress={subscriberReschedule}
+          style={styles.reprogram}>
           <Text style={styles.reprogramText}>Συνδρομητής</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView >
-  )
-}
-
-
-
-
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
     // position: 'absolute',
     top: 0,
-    zIndex: 11
+    zIndex: 11,
   },
 
   topView: {
     minHeight: 60,
     padding: 15,
-    width: "100%",
+    width: '100%',
     flexDirection: 'row',
     // backgroundColor: "#f9f9f9",
-    alignItems: "center",
-    justifyContent: "space-between",
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingRight: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#d7d6d6',
   },
   topViewLeftInfo: {
     // flexDirection: 'row'
-
   },
   topViewText: {
     fontSize: 14,
-    color: 'black'
+    color: 'black',
   },
   bodyView: {
     flex: 1,
     padding: 10,
-    width: "100%",
-    backgroundColor: "white",
+    width: '100%',
+    backgroundColor: 'white',
   },
   closeIcon: {
     borderWidth: 2,
-    backgroundColor: '#ea2a15'
-
+    backgroundColor: '#ea2a15',
   },
   buttonView: {
     flexDirection: 'row',
@@ -295,7 +366,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.63)',
     padding: 10,
-
   },
   modalView: {
     width: '80%',
@@ -325,15 +395,10 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
   },
-  buttonView: {
-    flexDirection: 'row',
-    // justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 20,
-  },
+
   editTileText: {
     marginTop: 20,
-    fontSize: 20
+    fontSize: 20,
   },
   smallText: {
     fontSize: 13,
@@ -351,10 +416,8 @@ const styles = StyleSheet.create({
   reprogramText: {
     color: 'white',
     fontSize: 15,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-
-
 });
 
 export default EventScreen;

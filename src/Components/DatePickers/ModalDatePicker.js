@@ -1,38 +1,35 @@
-import { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { COLORS } from '../../shared/COLORS';
+import {COLORS} from '../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { utcToZonedTime, format } from 'date-fns-tz';
-
+import {format} from 'date-fns-tz';
+import isoDate from '../../utils/dateFunctions/isoDate';
 
 const timeZone = 'Europe/Athens';
-const timeZoneOffset = '+02:00';
 
-
-export const ModalDatePickerComp = ({ day, style, onChange }) => {
+export const ModalDatePickerComp = ({day, style, onChange}) => {
   const [show, setShow] = useState(false);
   const showTimepicker = () => {
-    setShow(true)
+    setShow(true);
   };
 
-  if(Platform.OS=== 'ios') {
+  if (Platform.OS === 'ios') {
     return (
       <View style={styles.iosView}>
-          <DateTimePicker
-      value={new Date(day)}
-      mode={'date'}
-      is24Hour={true}
-      onChange={(event, selectedDate) => {
-        setShow(false)
-        onChange(selectedDate)
-      }}
-    />
+        <DateTimePicker
+          value={new Date(day)}
+          mode={'date'}
+          is24Hour={true}
+          onChange={(event, selectedDate) => {
+            setShow(false);
+            onChange(selectedDate);
+          }}
+        />
       </View>
-    )
+    );
   }
-
 
   return (
     <View>
@@ -43,8 +40,8 @@ export const ModalDatePickerComp = ({ day, style, onChange }) => {
           mode={'date'}
           is24Hour={true}
           onChange={(event, selectedDate) => {
-            setShow(false)
-            onChange(selectedDate)
+            setShow(false);
+            onChange(selectedDate);
           }}
         />
       )}
@@ -52,10 +49,9 @@ export const ModalDatePickerComp = ({ day, style, onChange }) => {
   );
 };
 
-
-export const ShowTime = ({ onPress, day, style, leftSide, rightSide }) => {
-  const zonedDate = utcToZonedTime(day, timeZone);
-  const formattedDate = format(zonedDate, 'dd-MM-yyyy', { timeZone, timeZoneOffset });
+export const ShowTime = ({onPress, day, style, leftSide, rightSide}) => {
+  const zonedDate = isoDate(day, true);
+  const formattedDate = format(zonedDate, 'dd-MM-yyyy', {timeZone});
   return (
     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>
       <View style={styles.leftSide}>
@@ -65,9 +61,9 @@ export const ShowTime = ({ onPress, day, style, leftSide, rightSide }) => {
       <View style={[styles.rightSide, rightSide]}>
         <Entypo style={styles.icon} name="calendar" />
       </View>
-    </TouchableOpacity >
-  )
-}
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   timeContainer: {
@@ -77,13 +73,13 @@ const styles = StyleSheet.create({
     padding: 3,
     backgroundColor: '#f5f5f5',
     borderRadius: 2,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   leftSide: {
     width: '70%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   rightSide: {
     width: '30%',
@@ -96,16 +92,15 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 17,
-    color: 'black'
+    color: 'black',
   },
   icon: {
     fontSize: 19,
-    color: 'white'
-  }, 
+    color: 'white',
+  },
   iosView: {
-      display: 'flex',
-      alignItems: 'start',
-      marginTop: 10,
-  }
-
+    display: 'flex',
+    alignItems: 'flex-start',
+    marginTop: 10,
+  },
 });

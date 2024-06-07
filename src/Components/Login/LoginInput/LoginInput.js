@@ -1,14 +1,14 @@
 // $result = mssql_query($query);
-import React, { useContext } from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import React, {useContext} from 'react';
+import {TextInput, View, StyleSheet} from 'react-native';
 import ShowPass from './ShowPassword';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { UserContext } from '../../../useContext/useContect';
-import { COLORS } from '../../../shared/COLORS';
+import {UserContext} from '../../../useContext/userContext';
+import {COLORS} from '../../../shared/COLORS';
 
-export const LoginInputUser = ({ handleUser }) => {
-  const { username } = useContext(UserContext);
+export const LoginInputUser = ({handleUser}) => {
+  const {username} = useContext(UserContext);
 
   return (
     <>
@@ -19,19 +19,15 @@ export const LoginInputUser = ({ handleUser }) => {
           value={username}
           placeholder={'USERNAME'}
           placeholderTextColor={'#969696'}
-          onChangeText={handleUser}></TextInput>
+          onChangeText={handleUser}
+        />
       </View>
     </>
   );
 };
 
-
-export const LoginInputPass = ({
-  handlePass,
-  handleShowText,
-  showPass
-}) => {
-  const { password } = useContext(UserContext);
+export const LoginInputPass = ({handlePass, handleShowText, showPass}) => {
+  const {password} = useContext(UserContext);
   return (
     <>
       <View style={styles.inputWrapper}>
@@ -42,7 +38,8 @@ export const LoginInputPass = ({
           placeholder={'PASSWORD'}
           placeholderTextColor={'#969696'}
           secureTextEntry={showPass}
-          onChangeText={handlePass}></TextInput>
+          onChangeText={handlePass}
+        />
         <ShowPass bool={showPass} action={handleShowText} />
       </View>
     </>
@@ -50,7 +47,7 @@ export const LoginInputPass = ({
 };
 
 //Generic Input
-export const Input = ({ placeholder, text, handleType }) => {
+export const Input = ({placeholder, text, handleType}) => {
   return (
     <>
       <View style={styles.inputWrapper}>
@@ -59,7 +56,8 @@ export const Input = ({ placeholder, text, handleType }) => {
           style={styles.input}
           defaultValue={text}
           placeholder={placeholder}
-          onChangeText={handleType}></TextInput>
+          onChangeText={handleType}
+        />
       </View>
     </>
   );

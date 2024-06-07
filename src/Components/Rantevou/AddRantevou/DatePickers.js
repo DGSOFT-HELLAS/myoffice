@@ -1,37 +1,36 @@
-import { StyleSheet, View } from "react-native"
-import { ModalTimePickerComp } from "../../DatePickers/ModalTimePicker"
-import InputLabel from "../../SharedComp/Views/InputLabel"
+import {StyleSheet, View} from 'react-native';
+import {ModalTimePickerComp} from '../../DatePickers/ModalTimePicker';
+import InputLabel from '../../SharedComp/Views/InputLabel';
 
-const DatePickers = ({ setState, startTime, endTime }) => {
-  // console.log('----- START TIME END TIME')
-  // console.log(startTime)
-  // console.log(endTime)
-  const handleStartTime = (startTime) => {
-    setState((prevState) => {
+const DatePickers = ({setState, startTime, endTime}) => {
+  const handleStartTime = startTime => {
+    setState(prevState => {
       return {
-        ...prevState, fromTime: startTime
-      }
-    })
-  }
-  const handleEndTime = (startTime) => {
-    setState((prevState) => {
+        ...prevState,
+        fromTime: startTime,
+      };
+    });
+  };
+  const handleEndTime = startTime => {
+    setState(prevState => {
       return {
-        ...prevState, toTime: startTime
-      }
-    })
-  }
+        ...prevState,
+        toTime: startTime,
+      };
+    });
+  };
 
   return (
     <View style={styles.datePickerView}>
       <InputLabel title="* Έναρξη:">
-        < ModalTimePickerComp handleState={handleStartTime} time={startTime} />
+        <ModalTimePickerComp handleState={handleStartTime} time={startTime} />
       </InputLabel>
       <InputLabel style={styles.rightView} title="* Λήξη:">
-        < ModalTimePickerComp handleState={handleEndTime} time={endTime} />
+        <ModalTimePickerComp handleState={handleEndTime} time={endTime} />
       </InputLabel>
     </View>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   text: {
     marginBottom: 5,
@@ -39,8 +38,6 @@ const styles = StyleSheet.create({
   datePickerView: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-   
-    
   },
   datepickerRightView: {
     marginLeft: 10,
@@ -55,11 +52,8 @@ const styles = StyleSheet.create({
   },
   iosView: {
     display: 'flex',
-    alignItems: 'start'
-
-  }
-
-
+    alignItems: 'start',
+  },
 });
 
 export default DatePickers;

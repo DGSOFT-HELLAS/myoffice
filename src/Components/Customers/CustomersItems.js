@@ -12,8 +12,8 @@ const CustomerItems = (props) => {
   const Item = memo(({ data, index }) => {
     const handlePress = () => {
       navigation.navigate('CustomersView', { data: data })
-    };   
-   
+    };
+
     return (
           <TouchableOpacity onPress={handlePress} style={styles.itemWrapper}>
               <IonIcons style={styles.icon} name={'person'}  />
@@ -23,8 +23,8 @@ const CustomerItems = (props) => {
   })
 
 
-  return (s
-    <SafeAreaView style={{flex: 1}}> 
+  return (
+    <SafeAreaView style={{flex: 1}}>
     <FlatList
       data={props.data}
       style={{padding: 10, backgroundColor: '#e9e9e9'}}
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
       itemWrapper: {
           elevation: 1,
           display: 'flex',
-          marginBottom: 4,
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: 'white',
