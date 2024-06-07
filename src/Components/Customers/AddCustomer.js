@@ -1,11 +1,10 @@
-import {useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import Button from '../SharedComp/Buttons/Button';
 import AddView from '../SharedComp/Views/AddView';
 import {COLORS} from '../../shared/COLORS';
 import AddInput from '../SharedComp/Inputs/AddInput';
 import HeaderWithDivider from '../SharedComp/Views/HeaderWithDivider';
-import CheckboxPaper from '../SharedComp/Buttons/CheckBox';
 import {UserContext} from '../../useContext/userContext';
 import {fetchAPI} from '../../utils/fetchAPI';
 import {useNavigation} from '@react-navigation/native';
@@ -56,13 +55,13 @@ const AddCustomer = () => {
   };
 
   const onCheckboxPress = () => {
-    if (state.vip == 0) {
+    if (state.vip === 0) {
       setState(prev => {
         return {...prev, vip: 1};
       });
     }
 
-    if (state.vip == 1) {
+    if (state.vip === 1) {
       setState(prev => {
         return {...prev, vip: 0};
       });

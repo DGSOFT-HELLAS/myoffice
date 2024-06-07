@@ -11,7 +11,6 @@ import {COLORS} from '../../../shared/COLORS';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ListBodyDataSet, ListBodyView} from '../../SharedComp/List/List';
 import DeleteButton from '../../SharedComp/Buttons/DeleteButton';
-// import Button from "../../SharedComp/Buttons/Button";
 import EditButton from '../../SharedComp/Buttons/EditButton';
 import CheckboxPaper from '../../SharedComp/Buttons/CheckBox';
 import {useNavigation} from '@react-navigation/native';
@@ -26,7 +25,6 @@ import HeaderWithDivider from '../../SharedComp/Views/HeaderWithDivider';
 import isoDate from '../../../utils/dateFunctions/isoDate';
 import {SafeAreaView} from 'react-native';
 const EventScreen = ({setIsVisible, setState}) => {
-  const navigation = useNavigation();
   const {day, singleEvent, setDay} = useContext(DayContext);
 
   let startTime = singleEvent["'Ωρα"].split(' : ')[0];

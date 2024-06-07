@@ -5,7 +5,7 @@ import {fetchAPI} from '../../../utils/fetchAPI';
 import {UserContext} from '../../../useContext/userContext';
 import {TimelineCalendar} from '@howljs/calendar-kit';
 import BoldText from '../../Atoms/Text/BoldText';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import DayViewCalendarHeader from './DayViewCalendarHeader';
 import ModalPersons from '../Modal';
 import {Provider} from 'react-native-paper';
@@ -20,6 +20,7 @@ const DayViewCalendarMain = () => {
   const {day, setDay, setSingleEvent} = useContext(DayContext);
   const navigation = useNavigation();
   const {trdr} = useContext(UserContext);
+  const isFocused = useIsFocused();
   const [events, setEvents] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -68,11 +69,8 @@ const DayViewCalendarMain = () => {
 
   useEffect(() => {
     handleFetch();
-    return navigation.addListener('focus', () => {
-      handleFetch();
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [day, state.delete, state.stelexos, navigation, state.refresh]);
+  }, [isFocused, isVisible]);
 
   const onDragCreateEnd = event => {
     let date = event.start.split('T')[0];
