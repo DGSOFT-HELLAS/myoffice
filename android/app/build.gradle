@@ -100,8 +100,8 @@ android {
         applicationId "com.myofficeapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "2.0"
+        versionCode 502
+        versionName "5.0.2"
     }
 
     splits {
@@ -127,7 +127,7 @@ android {
                 keyPassword MYAPP_UPLOAD_KEY_PASSWORD
             }
         }
-        
+
     }
     buildTypes {
         debug {
