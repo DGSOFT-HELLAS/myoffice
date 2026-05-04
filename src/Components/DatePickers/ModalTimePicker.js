@@ -4,7 +4,7 @@ import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { COLORS } from '../../shared/COLORS';
-import { utcToZonedTime, format } from 'date-fns-tz';
+import { toZonedTime, format } from 'date-fns-tz';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
@@ -20,7 +20,7 @@ export const ModalTimePickerComp = ({ handleState, style, time }) => {
   const onChange = (event, selectedDate) => {
     setShow(false)
 
-    const zonedDate = utcToZonedTime(selectedDate, timeZone);
+    const zonedDate = toZonedTime(selectedDate, timeZone);
     const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
     const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
     setDisplayDate(formattedTime)
@@ -40,7 +40,7 @@ export const ModalTimePickerComp = ({ handleState, style, time }) => {
     } else {
       date = new Date()
     }
-    const zonedDate = utcToZonedTime(date, timeZone);
+    const zonedDate = toZonedTime(date, timeZone);
     const formattedTime = format(zonedDate, 'HH:mm', { timeZone, timeZoneOffset });
     const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
 

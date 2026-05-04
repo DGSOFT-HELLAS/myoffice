@@ -1,18 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import React, { useEffect, useState, useContext, useCallback } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { DayContext } from "../../../useContext/daysContext";
 import { fetchAPI } from "../../../utils/fetchAPI";
 import { UserContext } from "../../../useContext/useContect";
-import ModalFullEvent from "./ModalView";
-import { TimelineCalendar } from '@howljs/calendar-kit'
-import { COLORS } from "../../../shared/COLORS";
+import { CalendarContainer, CalendarBody } from '@howljs/calendar-kit'
 import BoldText from "../../Atoms/Text/BoldText";
 import { useNavigation } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/native";
 import DayViewCalendarHeader from "./DayViewCalendarHeader";
 import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
-import { utcToZonedTime, format } from 'date-fns-tz';
+import { format } from 'date-fns-tz';
 
 import EventScreen from "../EventScreen/EventScreen";
 const timeZone = 'Europe/Athens';
@@ -52,7 +49,7 @@ const DayViewCalendarMain = () => {
       stelexos: state.stelexos
     })
     console.log(res)
-    const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color }));
+    const updatedData = res.map(item => ({ ...item, id: item.soaction, start: new Date(item.start), end: new Date(item.end), title: item.title, style: item.color, color: item.color }));
     setEvents(updatedData)
 
     setState(prev => {
@@ -73,25 +70,24 @@ const DayViewCalendarMain = () => {
 
   }, [day, state.delete, state.stelexos, navigation, state.refresh])
 
+  const renderCalendarEvent = useCallback((ev) => eventItem(ev), []);
 
-
-
-  const onDragCreateEnd = (event) => {
-
-    let date = event.start.split('T')[0]
-    const formattedStart = format(new Date(event.start), 'HH:mm', { timeZone, timeZoneOffset });
-    const formattedEnd = format(new Date(event.end), 'HH:mm', { timeZone, timeZoneOffset });
-
-    let start = event.start.split('T')[0] + 'T' + formattedStart
-    let end = event.start.split('T')[0] + 'T' + formattedEnd
-    navigation.navigate('AddRantevou', { start: start, end: end, date: date })
-
+  const onDragCreateEnd = (dragPayload) => {
+    const startIso = typeof dragPayload.start === 'string' ? dragPayload.start : dragPayload.start?.dateTime;
+    const endIso = typeof dragPayload.end === 'string' ? dragPayload.end : dragPayload.end?.dateTime;
+    if (!startIso || !endIso) return;
+    const date = startIso.split('T')[0];
+    const formattedStart = format(new Date(startIso), 'HH:mm', { timeZone, timeZoneOffset });
+    const formattedEnd = format(new Date(endIso), 'HH:mm', { timeZone, timeZoneOffset });
+    const start = `${date}T${formattedStart}`;
+    const end = `${date}T${formattedEnd}`;
+    navigation.navigate('AddRantevou', { start, end, date });
   };
 
   const onPressEvent = (evt) => {
     const obj = Object.keys(evt)
       .filter((key) => {
-        return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour'
+        return key !== 'duration' && key !== 'height' && key !== 'top' && key !== 'left' && key !== 'leftByIndex' && key !== 'width' && key !== 'startHour' && key !== '_internal' && key !== 'localId'
       })
       .reduce((obj, key) => {
         return Object.assign(obj, {
@@ -114,33 +110,28 @@ const DayViewCalendarMain = () => {
         <View style={styles.container}>
           <ModalPersons title={"Στέλεχος"} query="GetPersons" setState={setState} updateValue={"stelexos"} hideLabel={true} />
           <DayViewCalendarHeader date={day} setState={setState} state={state} />
-          {/* <ColorLoader loading={state.loading} /> */}
-          <TimelineCalendar
-            viewMode="day"
-            isShowHeader={false}
-            initialDate={day}
-            events={events}
-            onDateChanged={(date) => {
-              setDay(date)
-            }}
-            spaceFromTop={50}
-            locale="gr"
-            timeInterval={60}
-            start={4}
-            end={24}
-            // locale="gr"
-            initialTimeIntervalHeight={120}
-            overlapEventsSpacing={2}
-            containerStyle={styles.customItem}
-            renderEventContent={(event) => eventItem(event)}
-            onPressEvent={(evt) => {
-              onPressEvent(evt)
-            }}
-            allowDragToCreate
-            dragCreateInterval={30}
-            onDragCreateEnd={(e) => onDragCreateEnd(e)}
-
-          />
+          <View style={styles.calendarWrap}>
+            <CalendarContainer
+              numberOfDays={1}
+              initialDate={day}
+              events={events}
+              onDateChanged={setDay}
+              spaceFromTop={50}
+              locale="gr"
+              timeZone={timeZone}
+              timeInterval={60}
+              start={4 * 60}
+              end={24 * 60}
+              initialTimeIntervalHeight={120}
+              overlapEventsSpacing={2}
+              onPressEvent={onPressEvent}
+              allowDragToCreate
+              dragStep={30}
+              onDragCreateEventEnd={onDragCreateEnd}
+            >
+              <CalendarBody renderEvent={renderCalendarEvent} />
+            </CalendarContainer>
+          </View>
         </View>
       ) : <EventScreen setIsVisible={setIsVisible} setState={setState} />}
     </Provider>
@@ -171,6 +162,10 @@ const eventItem = (event) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  calendarWrap: {
+    flex: 1,
+    minHeight: 0,
   },
   customItem: {
     padding: 2,

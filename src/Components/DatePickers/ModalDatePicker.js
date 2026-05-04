@@ -4,7 +4,7 @@ import Text from '../Atoms/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { utcToZonedTime, format } from 'date-fns-tz';
+import { toZonedTime, format } from 'date-fns-tz';
 
 
 const timeZone = 'Europe/Athens';
@@ -40,7 +40,7 @@ export const ModalDatePickerComp = ({ day, style, onChange }) => {
 
 
 export const ShowTime = ({ onPress, day, style, leftSide, rightSide }) => {
-  const zonedDate = utcToZonedTime(day, timeZone);
+  const zonedDate = toZonedTime(day, timeZone);
   const formattedDate = format(zonedDate, 'dd-MM-yyyy', { timeZone, timeZoneOffset });
   return (
     <TouchableOpacity onPress={onPress} style={[styles.timeContainer, style]}>

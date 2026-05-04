@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getTime } from '../../../utils/getTime';
 import { COLORS } from '../../../shared/COLORS';
-import { utcToZonedTime, format } from 'date-fns-tz';
+import { toZonedTime, format } from 'date-fns-tz';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
@@ -19,7 +19,7 @@ export const TimePicker = ({ handleState, style, propsTime, minTime, day }) => {
 
   const dateString = `2023-02-22T${propsTime}`;
   const d = new Date(dateString);
-  const zonedDate = utcToZonedTime(d, timeZone);
+  const zonedDate = toZonedTime(d, timeZone);
   console.log(typeof zonedDate)
   // const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone, timeZoneOffset });
 

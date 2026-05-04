@@ -5,10 +5,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../../shared/COLORS';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { splitDate } from '../../../utils/dateFunctions/splitDate';
-import { utcToZonedTime, format } from 'date-fns-tz';
-
-const timeZone = 'Europe/Athens';
-const timeZoneOffset = '+02:00';
 
 export const ModalDatePicker = ({ day, style, onChange }) => {
 

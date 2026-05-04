@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
   },
   description: {
     marginTop: 10,
+    height: 40,
     fontSize: 11
   },
   //LIST ACCORDION ---- BODY ---- STYLES:
-
   timeView: {
     height: 50,
     overflow: 'hidden',
@@ -110,8 +110,7 @@ const styles = StyleSheet.create({
   },
   listView: {
     width: '100%',
-    paddingHorizontal: 15,
-    paddingBottom: 15,
+    paddingHorizontal: 15
   },
   title: {
     fontSize: 17,
@@ -139,17 +138,14 @@ const styles = StyleSheet.create({
   inputEnabled: {
     color: 'black'
   },
-
   button: {
     backgroundColor: COLORS.secondaryColorShade001,
     marginTop: 10,
     width: 100,
     height: 40,
   },
-
-
   listBodyDataSetView: {
-    marginBottom: 10,
+    marginBottom: 20,
   }
 
 })

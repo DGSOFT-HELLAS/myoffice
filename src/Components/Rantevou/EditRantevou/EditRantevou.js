@@ -125,7 +125,7 @@ const EditRantevou = () => {
           <AntDesign name="closecircle" size={20} color={'#ea2a15'} />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollView} >
+      <ScrollView contentContainerStyle={styles.scrollView} >
         <AddView>
           <AddInput title="Πελάτης:" value={routeData["Πελάτης"]} enabled={false} />
           <AddInput title="Στέλεχος:" value={routeData["Στέλεχος"]} enabled={false} />
@@ -169,7 +169,7 @@ const EditRantevou = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginBottom: 70
+    paddingBottom: 120,
   },
   topView: {
     minHeight: 60,
@@ -279,9 +279,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center'
   },
-
-
-
 });
 
 

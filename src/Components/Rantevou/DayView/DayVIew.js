@@ -14,7 +14,7 @@ import ModalPersons from "../Modal";
 import { Provider } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import FloatBtn from "../../SharedComp/Buttons/FloatButton";
-import { utcToZonedTime, format } from 'date-fns-tz';
+import { toZonedTime, format } from 'date-fns-tz';
 
 const timeZone = 'Europe/Athens';
 const timeZoneOffset = '+02:00';
@@ -94,7 +94,7 @@ const DayView = () => {
   }
 
   const onAddPress = () => {
-    const zonedDate = utcToZonedTime(raw?.startDate, timeZone);
+    const zonedDate = toZonedTime(raw?.startDate, timeZone);
     const formattedDate = format(zonedDate, 'yyyy-MM-dd', { timeZone, timeZoneOffset });
     navigation.navigate('AddRantevou', { start: formattedDate, end: formattedDate, date: formattedDate })
   }
