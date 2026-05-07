@@ -11,6 +11,7 @@ import RowView from "../../Atoms/View/RowView";
 import { days } from "../../../shared/months";
 import AppointmentsView from "../../Atoms/View/AppointmentsView";
 import { COLORS } from "../../../shared/COLORS";
+import { format } from "date-fns-tz";
 const HorizontalWeekView = ({ handleNextWeek, handlePreviousWeek, today, week, displayMonth, setState }) => {
     const [hide, setHide] = useState(false)
     const navigation = useNavigation();
@@ -18,9 +19,9 @@ const HorizontalWeekView = ({ handleNextWeek, handlePreviousWeek, today, week, d
 
 
     const onDayPress = (day, index) => {
-
-        setDay(day)
-        navigation.navigate('DayViewCalendarMain')
+        const date = format(day, 'yyyy-MM-dd')
+        setDay(date)
+        navigation.navigate('DayViewCalendarMain', { date })
     }
 
     const onPress = () => {

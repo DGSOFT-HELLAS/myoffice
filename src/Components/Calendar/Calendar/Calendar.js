@@ -43,13 +43,8 @@ const CalendarMonth = () => {
     console.log(res)
     const items = {};
     for (let event of res) {
-      if (!items[key]) {
-        items[key] = {};
-      }
       // const key = new Date(event.RDVdate).toISOString().split('T')[0]
       const key = isoDate(event.RDVdate)
-
-
       items[key] = { marked: true, dotColor: 'green', activeOpacity: 0 }
     }
     setEvents(items)
@@ -99,7 +94,7 @@ const CalendarMonth = () => {
         onDayPress={(day) => {
           let date = day.dateString
           setDay(date)
-          navigation.navigate('DayViewCalendarMain', { date: date })
+          navigation.replace('DayViewCalendarMain', { date: date })
         }}
       />
       {/* {route.params.show && (
