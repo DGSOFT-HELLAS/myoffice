@@ -56,8 +56,7 @@ const ModalPersons = ({ query, setState, updateValue }) => {
 
   const RenderItem = ({ item, index }) => {
     return (
-      <ListItem item={item} />)
-
+      <ListItem item={item} style={styles.listItem} />)
   };
 
 
@@ -143,8 +142,6 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     backgroundColor: 'white',
-    // padding: 20,
-
     margin: 10,
   },
   addInput: {
@@ -173,8 +170,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   listItemText: {
-    color: '#656666'
+    color: '#656666',
+    minHeight: 50,
+    textAlignVertical: 'center',
+    width: '80%',
   },
+
   leftView: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -69,6 +69,7 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
       console.log(error)
     }
   }
+  console.log({ data })
 
   useEffect(() => {
     handleFetch();
@@ -116,7 +117,7 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
       </InputLabel >
       {/* Modal that opens and fetches data -> available customers, available services */}
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
+        <Modal visible={visible} onDismiss={hideModal} style={styles.containerStyle}>
           <View style={{ flexDirection: 'row', padding: 10 }}>
             <View style={styles.searchView}>
               <TextInput
@@ -172,7 +173,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flex: 1,
   },
-
   containerStyle: {
     backgroundColor: 'white',
     flex: 1,
