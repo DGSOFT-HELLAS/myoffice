@@ -169,7 +169,7 @@ const EditRantevou = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    paddingBottom: 120,
+    paddingBottom: 180,
   },
   topView: {
     minHeight: 60,

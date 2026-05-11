@@ -93,7 +93,7 @@ const AddRantevou = () => {
   }
   return (
     <Provider>
-      <ScrollView style={styles.scrollView} >
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <AddView>
           <HeaderWithDivider text={"Στοιχεία Ραντεβού"} />
           <ModalView title={"* Πελάτες:"} query="GetCustomers" setState={setState} updateValue={"customer"} addClient={true} />
@@ -126,6 +126,9 @@ const AddRantevou = () => {
 const styles = StyleSheet.create({
   scrollView: {
     padding: 8,
+  },
+  scrollContent: {
+    paddingBottom: 180,
   },
   addView: {
     backgroundColor: 'white',

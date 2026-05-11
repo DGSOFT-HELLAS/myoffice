@@ -1,8 +1,7 @@
 import { useState, useEffect, useContext, memo } from 'react';
-import { StyleSheet, View, TouchableOpacity, FlatList, TextInput } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, FlatList, TextInput, Keyboard, KeyboardAvoidingView, Platform, Modal } from 'react-native'
 import Text from "../../Atoms/Text";
 import React from 'react'
-import { Modal, RadioButton, Portal, Provider } from 'react-native-paper';
 import { COLORS } from '../../../shared/COLORS';
 //Import Icons:
 import { UserContext } from '../../../useContext/useContect';
@@ -32,6 +31,7 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
 
   };
   const hideModal = () => {
+    Keyboard.dismiss()
     setVisible(false)
   };
 
@@ -116,9 +116,9 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
         </TouchableOpacity>
       </InputLabel >
       {/* Modal that opens and fetches data -> available customers, available services */}
-      <Portal>
-        <Modal visible={visible} onDismiss={hideModal} style={styles.containerStyle}>
-          <View style={{ flexDirection: 'row', padding: 10 }}>
+      <Modal visible={visible} animationType="slide" onRequestClose={hideModal}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.containerStyle}>
+          <View style={styles.searchRow}>
             <View style={styles.searchView}>
               <TextInput
                 style={styles.textInputStyle}
@@ -129,21 +129,30 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
               />
             </View>
             {addClient &&
-              <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('Προσθήκη πελάτη')}>
+              <TouchableOpacity style={styles.addIcon} onPress={() => {
+                Keyboard.dismiss()
+                navigation.navigate('Προσθήκη πελάτη')
+              }}>
                 <Ion name="person-add-sharp" size={20} color={COLORS.secondaryColor} />
               </TouchableOpacity>}
+            <TouchableOpacity style={styles.closeIcon} onPress={hideModal}>
+              <AntDesign name="close" size={24} color={COLORS.deleteBtn} />
+            </TouchableOpacity>
           </View>
           <FlatList
             data={filteredDataSource}
             renderItem={RenderItem}
             keyExtractor={item => item.id}
             ItemSeparatorComponent={Seperator}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+            contentContainerStyle={styles.listContent}
             maxToRenderPerBatch={20}
             initialNumToRender={13}
             updateCellsBatchingPeriod={10}
           />
-        </Modal>
-      </Portal>
+        </KeyboardAvoidingView>
+      </Modal>
 
     </>
 
@@ -177,6 +186,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     justifyContent: 'flex-start',
+  },
+  searchRow: {
+    flexDirection: 'row',
+    padding: 10,
   },
   searchView: {
     justifyContent: 'center',
@@ -213,12 +226,21 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
   },
+  listContent: {
+    paddingBottom: 24,
+  },
   addIcon: {
     width: 35,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 10,
 
+  },
+  closeIcon: {
+    width: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
   }
 
 })

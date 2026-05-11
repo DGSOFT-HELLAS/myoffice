@@ -56,7 +56,7 @@ const ModalFullEvent = ({ isVisible, setIsVisible, event, setState }) => {
             <AntDesign name="closecircle" size={20} color={'#ea2a15'} />
           </TouchableOpacity>
         </View>
-        <ScrollView style={styles.bodyView}>
+        <ScrollView style={styles.bodyView} contentContainerStyle={styles.bodyContent}>
           <ListBody data={event} onEditBtn={onEditBtn} setState={setState} raw={raw} setIsVisible={setIsVisible} />
         </ScrollView>
       </View>
@@ -201,6 +201,9 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     backgroundColor: "white",
+  },
+  bodyContent: {
+    paddingBottom: 180,
   },
   closeIcon: {
     borderWidth: 2,
