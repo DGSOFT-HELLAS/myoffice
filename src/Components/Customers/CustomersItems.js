@@ -37,6 +37,7 @@ const CustomerItems = (props) => {
       }}
       initialNumToRender={10}
       maxToRenderPerBatch={20}
+      contentContainerStyle={{ paddingBottom: 100 }}
       getItemLayout={(data, index) => (
         { length: 60, offset: 60 * index, index }
       )}

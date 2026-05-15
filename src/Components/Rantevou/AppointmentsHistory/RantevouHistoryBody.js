@@ -42,6 +42,7 @@ const RantevouListBody = ({ data, setState }) => {
       keyExtractor={(item, index) => {
         return index;
       }}
+      contentContainerStyle={{ paddingBottom: 100 }}
       initialNumToRender={8}
     />
 

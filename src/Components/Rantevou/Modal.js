@@ -93,6 +93,7 @@ const ModalPersons = ({ query, setState, updateValue }) => {
                   renderItem={RenderItem}
                   keyExtractor={item => item.id}
                   ItemSeparatorComponent={Seperator}
+                  contentContainerStyle={{ paddingBottom: 100 }}
 
                 />
 

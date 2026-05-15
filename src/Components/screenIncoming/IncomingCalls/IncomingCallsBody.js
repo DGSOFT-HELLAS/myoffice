@@ -37,6 +37,7 @@ const IncomingCallsBody = (props) => {
       }}
       initialNumToRender={10}
       maxToRenderPerBatch={20}
+      contentContainerStyle={{ paddingBottom: 100 }}
       getItemLayout={(data, index) => (
         { length: 73.8, offset: 73.8 * index, index }
       )}

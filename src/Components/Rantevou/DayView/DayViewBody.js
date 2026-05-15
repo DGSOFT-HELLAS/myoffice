@@ -47,6 +47,7 @@ const DayViewBody = ({ data, setState }) => {
         keyExtractor={(item, index) => {
           return index;
         }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         initialNumToRender={12}
       />
 

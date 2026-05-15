@@ -179,7 +179,7 @@ const DayViewCalendarMain = () => {
   }
 
   return (
-    <Provider>
+    <Provider >
       {!isVisible ? (
         <View style={styles.container}>
           <ModalPersons title={"Στέλεχος"} query="GetPersons" setState={setState} updateValue={"stelexos"} hideLabel={true} />
@@ -257,7 +257,7 @@ const eventItem = (event) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   calendarWrap: {
     flex: 1,

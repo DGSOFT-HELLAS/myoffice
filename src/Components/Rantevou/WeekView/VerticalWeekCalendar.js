@@ -36,6 +36,7 @@ const VerticalWeekView = ({ week, data, days, loading, state, setState }) => {
                     keyExtractor={(item, index2) => {
                         return index2;
                     }}
+                    contentContainerStyle={{ paddingBottom: 100 }}
                 />
 
             </View>

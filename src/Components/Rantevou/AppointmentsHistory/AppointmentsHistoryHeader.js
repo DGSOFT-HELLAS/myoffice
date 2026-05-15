@@ -21,7 +21,6 @@ const AppointmentsHistory = () => {
     stelexos: 0,
     delete: false,
   })
-  console.log(state.delete)
 
   const onChangeStartDay = (selectedDate) => {
     setState(prev => {

@@ -31,7 +31,7 @@ const IncomingEmailsBody = (props) => {
       }}
       initialNumToRender={10}
       maxToRenderPerBatch={20}
-
+      contentContainerStyle={{ paddingBottom: 100 }}
     />
 
   )

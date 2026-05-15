@@ -150,6 +150,7 @@ const ModalView = ({ title, query, setState, updateValue, hideLabel, addClient }
             maxToRenderPerBatch={20}
             initialNumToRender={13}
             updateCellsBatchingPeriod={10}
+            contentContainerStyle={{ paddingBottom: 100 }}
           />
         </KeyboardAvoidingView>
       </Modal>
